@@ -9,9 +9,6 @@ the build process so that the parsed data is ready to go as soon as the module h
 
 console.log("HELLO RELOAD");
 
-const square = d3.selectAll("rect");
-square.style("fill", "orange");
-
 function component() {
   let element = document.createElement('div');
   var btn = document.createElement('button');
@@ -37,3 +34,32 @@ if (module.hot) {
     document.body.appendChild(element);
   })
 }
+
+//====================================================================================================
+
+const w = 300;
+const h = 100;
+const padding = 2;
+const dataset = [5, 10, 15, 20, 25];
+const svg = d3.select(".barChart").append("svg")
+              .attr("width", w)
+              .attr("height", h)
+
+svg.selectAll("rect")
+    .data(dataset)
+    .enter()
+    .append("rect")
+      .attr("x", function(d, i){
+        return i * (w / dataset.length);
+      })
+      .attr("y", function(d){
+        return h - (d*4);
+      })
+      .attr("width", w / dataset.length - padding)
+      .attr("height", function(d){
+        return d*4;
+      })
+      .attr("fill", function(d){
+        return "rgb(" + (d*5) + ", 0, 250)";
+      });
+
