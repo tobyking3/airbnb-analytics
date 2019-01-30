@@ -2,6 +2,7 @@ import _ from 'lodash';
 import printMe from './print.js';
 import './styles.css';
 import * as d3 from 'd3';
+import 'd3-selection-multi';
 
 /*This can be especially helpful when implementing some sort of data visualization using a tool like d3.
 Instead of making an ajax request and parsing the data at runtime you can load it into your module during
@@ -49,30 +50,10 @@ svg.selectAll("rect")
     .data(dataset)
     .enter()
     .append("rect")
-      .attr("x", function(d, i){
-        return i * (w / dataset.length);
-      })
-      .attr("y", function(d){
-        return h - (d*4);
-      })
-      .attr("width", w / dataset.length - padding)
-      .attr("height", function(d){
-        return d*4;
-      })
-      .attr("fill", function(d){
-        return "rgb(" + (d*5) + ", 0, 250)";
+  .attrs({
+        x: function(d, i) {return i * (w / dataset.length);},
+        y: function(d) {return h - (d*4);},
+        width: w / dataset.length - padding,
+        height: function(d) {return d*4;},
+        fill: function(d) {return "rgb(0, " + (d*10) + ", 0)";}
       });
-
-//============================DOESN'T WORk========================================================================
-
-// svg.selectAll("rect")
-//     .data(dataset)
-//     .enter()
-//     .append("rect")
-//   .attr({
-//         x: function(d, i) {return i * (w / dataset.length);},
-//         y: function(d) {return h - (d*4);},
-//         width: w / dataset.length - padding,
-//         height: function(d) {return d*4;},
-//         fill: function(d) {return "rgb(0, " + (d*10) + ", 0)";}
-//       });
