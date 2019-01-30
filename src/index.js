@@ -63,3 +63,16 @@ svg.selectAll("rect")
         return "rgb(" + (d*5) + ", 0, 250)";
       });
 
+//============================DOESN'T WORk========================================================================
+
+// svg.selectAll("rect")
+//     .data(dataset)
+//     .enter()
+//     .append("rect")
+//   .attr({
+//         x: function(d, i) {return i * (w / dataset.length);},
+//         y: function(d) {return h - (d*4);},
+//         width: w / dataset.length - padding,
+//         height: function(d) {return d*4;},
+//         fill: function(d) {return "rgb(0, " + (d*10) + ", 0)";}
+//       });
