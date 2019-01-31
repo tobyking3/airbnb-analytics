@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: 'src/index.html',
@@ -39,11 +40,23 @@ module.exports = {
         use: [
           'file-loader'
         ]
+      },
+      {
+        test: /\.(csv)$/,
+        use: [
+           'file-loader'
+        ],
+      },
+      {
+        test: /\.xml$/,
+         use: [
+          'xml-loader'
+        ]
       }
     ]
   },
+  devtool: 'inline-source-map',
   plugins: [
-    new CleanWebpackPlugin(['dist']),
     HtmlWebpackPluginConfig,
     new webpack.HotModuleReplacementPlugin()
   ],

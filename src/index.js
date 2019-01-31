@@ -4,11 +4,23 @@ import './styles.css';
 import * as d3 from 'd3';
 import 'd3-selection-multi';
 
+import Data from './data.xml';
+import Data2 from './MonthlySales.csv';
+import DataJSON from './MonthlySales.json';
+
+console.log("xml => ")
+console.log(Data);
+console.log("csv => ")
+console.log(Data2);
+
+
+// import Data2 from './MonthlySales.csv';
+
+// console.log(Data2);
+
 /*This can be especially helpful when implementing some sort of data visualization using a tool like d3.
 Instead of making an ajax request and parsing the data at runtime you can load it into your module during
 the build process so that the parsed data is ready to go as soon as the module hits the browser.*/
-
-console.log("HELLO RELOAD");
 
 function component() {
   let element = document.createElement('div');
@@ -186,3 +198,54 @@ var labels = svg3.selectAll("text")
       "fill": "orange",
       "dy": ".35em"
     });
+
+    //=======================================================================================
+
+// const w3 = 100;
+// const h3 = 400;
+// let ds;
+
+// d3.csv("Data2", function(error, data){
+//   if(error) {
+//     console.log(error);
+//   } else {
+//     console.log(data);
+//     ds = data;
+//   }
+
+//   var externalData = d3.line()
+//     .x(function(d) {return ((d.month-20190001) / 3.25)})
+//     .y(function(d) {return h2-d.sales; })
+//     .curve(d3.curveLinear);
+
+//   var svg4 = d3.select(".externalLineChart").append("svg")
+//     .attr("width", w2)
+//     .attr("height", h2);
+
+// });
+
+//===========================================================================================
+
+// const w3 = 100;
+// const h3 = 400;
+// let ds;
+
+// console.log("JSON DATA");
+// console.log(DataJSON);
+
+
+// d3.json("./MonthlySales.json", function(error, data){
+//   if(error) {
+//     console.log(error);
+//   } else {
+//     console.log(data);
+//     ds = data;
+//   }
+// });
+
+
+
+
+
+
+
