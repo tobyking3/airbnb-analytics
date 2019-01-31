@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -58,7 +58,13 @@ module.exports = {
   devtool: 'inline-source-map',
   plugins: [
     HtmlWebpackPluginConfig,
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyWebpackPlugin([
+      { from: 'src/data/MonthlySales.csv', to: 'MonthlySales.csv' }
+    ]),
+    new CopyWebpackPlugin([
+      { from: 'src/data/MonthlySales.json', to: 'MonthlySales.json' }
+    ])
   ],
   output: {
     filename: '[name].bundle.js',
