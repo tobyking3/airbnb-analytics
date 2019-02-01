@@ -34,12 +34,37 @@ if (module.hot) {
   })
 }
 
-//==========================CSV Data==========================================================
+//==========================JSON Data==========================================================
+
+// const w = 600;
+// const h = 100;
+
+// let ds = DataJSON;
+
+//   var externalLine = d3.line()
+//     .x(function(d) { console.log(d); return ((d.Month-20190001) / 3.25)})
+//     .y(function(d) {return h-d.Sales; })
+
+//   var svg = d3.select(".externalLineChart").append("svg")
+//     .attr("width", w)
+//     .attr("height", h);
+
+//   var viz = svg.append("path")
+//   .attrs({
+//     d: externalLine(ds),
+//     "stroke": "purple",
+//     "stroke-width": 2,
+//     "fill": "none"
+//   })
+
+//======================CSV DATA=============================================================
 
 const w = 600;
 const h = 100;
+let ds;
 
-let ds = DataJSON;
+d3.csv("MonthlySales.csv").then(function(data) {
+  ds = data;
 
   var externalLine = d3.line()
     .x(function(d) { console.log(d); return ((d.Month-20190001) / 3.25)})
@@ -56,3 +81,4 @@ let ds = DataJSON;
     "stroke-width": 2,
     "fill": "none"
   })
+})
