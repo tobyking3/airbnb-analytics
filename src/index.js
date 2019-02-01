@@ -3,83 +3,8 @@ import printMe from './print.js';
 import './styles.css';
 import * as d3 from 'd3';
 import 'd3-selection-multi';
-
+import DataJSON from './data/MonthlySales.json';
 // import DataCSV from './MonthlySales.csv';
-// import DataJSON from './MonthlySales.json';
-
-//==========================CSV Data==========================================================
-
-// const w = 100;
-// const h = 400;
-
-// let ds;
-
-// d3.csv("MonthlySales.csv").then(function(data) {
-  
-//   console.log(data);
-//   ds = data;
-
-//   var externalLine = d3.line()
-//     .x(function(d) {return ((d.month-20190001) / 3.25)})
-//     .y(function(d) {return h-d.sales; })
-//     .curve(d3.curveLinear);
-
-//   var svg = d3.select(".externalLineChart").append("svg")
-//     .attr("width", w)
-//     .attr("height", h);
-
-//   var viz = svg.append("path")
-//   .attrs({
-//     d: externalLine(data),
-//     "stroke": "purple",
-//     "stroke-width": 2,
-//     "fill": "none"
-//   })
-
-// });
-
-const w = 100;
-const h = 400;
-let ds;
-
-d3.csv("MonthlySales.csv", convert, init)
-
-function convert(d) {
-  return {
-    date: new Date(d.date),
-    value: +d.value         // convert string to number
-  };
-} 
-
-function init(csv){
-  // console.log(csv);
-  ds = csv;
-
-  var externalLine = d3.line()
-    .x(function(d) {return ((d.month-20190001) / 3.25)})
-    .y(function(d) {return h-d.sales; })
-    .curve(d3.curveLinear);
-
-  var svg = d3.select(".externalLineChart").append("svg")
-    .attr("width", w)
-    .attr("height", h);
-
-  var viz = svg.append("path")
-  .attrs({
-    d: externalLine(ds),
-    "stroke": "purple",
-    "stroke-width": 2,
-    "fill": "none"
-  })
-}
-
-
-
-
-
-d3.json("MonthlySales.json").then(function(data) {
-  console.log(data);
-});
 
 //====================================================================================
 
@@ -109,9 +34,25 @@ if (module.hot) {
   })
 }
 
+//==========================CSV Data==========================================================
 
+const w = 600;
+const h = 100;
 
+let ds = DataJSON;
 
+  var externalLine = d3.line()
+    .x(function(d) { console.log(d); return ((d.Month-20190001) / 3.25)})
+    .y(function(d) {return h-d.Sales; })
 
+  var svg = d3.select(".externalLineChart").append("svg")
+    .attr("width", w)
+    .attr("height", h);
 
-
+  var viz = svg.append("path")
+  .attrs({
+    d: externalLine(ds),
+    "stroke": "purple",
+    "stroke-width": 2,
+    "fill": "none"
+  })
