@@ -34,20 +34,12 @@ if (module.hot) {
   })
 }
 
-
-
-
-
 //======================JSON DATA=============================================================
 
 const w = 600;
 const h = 100;
-let ds;
-let salesTotal = 0.0;
-let salesAvg = 0.0;
-let metrics = [];
 
-function buildLine(){
+function buildLine(ds){
   var externalLine = d3.line()
     .x(function(d) {return ((d.month-20130001) / 3.25)})
     .y(function(d) {return h-d.sales; })
@@ -65,18 +57,27 @@ function buildLine(){
   })
 }
 
-function showHeader(){
+function showHeader(ds){
   d3.select(".JSONChart").append("h2")
     .text(ds.category + "Sales (2013)");
 }
 
-d3.json("MonthlySalesbyCategory.json").then(function(data) {
-  ds = data;
-  showHeader();
-  buildLine();
+d3.json("https://api.github.com/repos/tobyking3/airbnb-analytics/contents/src/data/MonthlySalesbyCategoryMultiple.json").then(function(data) {
+  
+  console.log(data);
+
+  var decodedData = JSON.parse(window.atob(data.content));
+
+  console.log(decodedData);
+
+  decodedData.contents.forEach(function(ds){
+    console.log(ds)
+    showHeader(ds);
+    buildLine(ds);
+  })
 })
 
-
+//======================WED API's============================================================
 
 
 
