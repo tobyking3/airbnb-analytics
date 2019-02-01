@@ -34,7 +34,11 @@ if (module.hot) {
   })
 }
 
-//======================CSV DATA=============================================================
+
+
+
+
+//======================JSON DATA=============================================================
 
 const w = 600;
 const h = 100;
@@ -45,71 +49,32 @@ let metrics = [];
 
 function buildLine(){
   var externalLine = d3.line()
-    .x(function(d) { console.log(d); return ((d.Month-20190001) / 3.25)})
-    .y(function(d) {return h-d.Sales; })
+    .x(function(d) {return ((d.month-20130001) / 3.25)})
+    .y(function(d) {return h-d.sales; })
 
-  var svg = d3.select(".externalLineChart").append("svg")
+  var svg = d3.select(".JSONChart").append("svg")
     .attr("width", w)
     .attr("height", h);
 
   var viz = svg.append("path")
   .attrs({
-    d: externalLine(ds),
+    d: externalLine(ds.monthlySales),
     "stroke": "purple",
     "stroke-width": 2,
     "fill": "none"
   })
 }
 
-function showTotals(){
-  var t = d3.select(".externalLineChart").append("table");
-  //get total
-  for (var i = 0; i < ds.length; i++){
-    salesTotal += ds[i]['Sales']*1;
-  }
-
-  salesAvg = salesTotal / ds.length;
-
-  metrics.push("Sales Total: " + salesTotal);
-  metrics.push("Sales Average: " + salesAvg.toFixed(2));
-
-  var tr = t.selectAll("tr")
-      .data(metrics)
-      .enter()
-      .append("tr")
-      .append("td")
-      .text(function(d){ return d; });
-
+function showHeader(){
+  d3.select(".JSONChart").append("h2")
+    .text(ds.category + "Sales (2013)");
 }
 
-d3.csv("MonthlySales.csv").then(function(data) {
+d3.json("MonthlySalesbyCategory.json").then(function(data) {
   ds = data;
+  showHeader();
   buildLine();
-  showTotals();
 })
-
-//==========================JSON Data==========================================================
-
-// const w = 600;
-// const h = 100;
-
-// let ds = DataJSON;
-
-//   var externalLine = d3.line()
-//     .x(function(d) { console.log(d); return ((d.Month-20190001) / 3.25)})
-//     .y(function(d) {return h-d.Sales; })
-
-//   var svg = d3.select(".externalLineChart").append("svg")
-//     .attr("width", w)
-//     .attr("height", h);
-
-//   var viz = svg.append("path")
-//   .attrs({
-//     d: externalLine(ds),
-//     "stroke": "purple",
-//     "stroke-width": 2,
-//     "fill": "none"
-//   })
 
 
 

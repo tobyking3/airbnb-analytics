@@ -63,7 +63,7 @@ module.exports = {
       { from: 'src/data/MonthlySales.csv', to: 'MonthlySales.csv' }
     ]),
     new CopyWebpackPlugin([
-      { from: 'src/data/MonthlySales.json', to: 'MonthlySales.json' }
+      { from: 'src/data', to: './' }
     ])
   ],
   output: {
