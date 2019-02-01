@@ -34,6 +34,60 @@ if (module.hot) {
   })
 }
 
+//======================CSV DATA=============================================================
+
+const w = 600;
+const h = 100;
+let ds;
+let salesTotal = 0.0;
+let salesAvg = 0.0;
+let metrics = [];
+
+function buildLine(){
+  var externalLine = d3.line()
+    .x(function(d) { console.log(d); return ((d.Month-20190001) / 3.25)})
+    .y(function(d) {return h-d.Sales; })
+
+  var svg = d3.select(".externalLineChart").append("svg")
+    .attr("width", w)
+    .attr("height", h);
+
+  var viz = svg.append("path")
+  .attrs({
+    d: externalLine(ds),
+    "stroke": "purple",
+    "stroke-width": 2,
+    "fill": "none"
+  })
+}
+
+function showTotals(){
+  var t = d3.select(".externalLineChart").append("table");
+  //get total
+  for (var i = 0; i < ds.length; i++){
+    salesTotal += ds[i]['Sales']*1;
+  }
+
+  salesAvg = salesTotal / ds.length;
+
+  metrics.push("Sales Total: " + salesTotal);
+  metrics.push("Sales Average: " + salesAvg.toFixed(2));
+
+  var tr = t.selectAll("tr")
+      .data(metrics)
+      .enter()
+      .append("tr")
+      .append("td")
+      .text(function(d){ return d; });
+
+}
+
+d3.csv("MonthlySales.csv").then(function(data) {
+  ds = data;
+  buildLine();
+  showTotals();
+})
+
 //==========================JSON Data==========================================================
 
 // const w = 600;
@@ -57,28 +111,10 @@ if (module.hot) {
 //     "fill": "none"
 //   })
 
-//======================CSV DATA=============================================================
 
-const w = 600;
-const h = 100;
-let ds;
 
-d3.csv("MonthlySales.csv").then(function(data) {
-  ds = data;
 
-  var externalLine = d3.line()
-    .x(function(d) { console.log(d); return ((d.Month-20190001) / 3.25)})
-    .y(function(d) {return h-d.Sales; })
 
-  var svg = d3.select(".externalLineChart").append("svg")
-    .attr("width", w)
-    .attr("height", h);
 
-  var viz = svg.append("path")
-  .attrs({
-    d: externalLine(ds),
-    "stroke": "purple",
-    "stroke-width": 2,
-    "fill": "none"
-  })
-})
+
+
