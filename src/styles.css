@@ -96,6 +96,11 @@ div.tooltip {
 
 .continent {
     fill: #00BFFF;
-    stroke: #ffffff;
+    stroke: #FFFFFF;
     stroke-width: 0.5;
+}
+
+.borough-labels {
+  font-size: 0.35em;
+  text-anchor: middle;
 }

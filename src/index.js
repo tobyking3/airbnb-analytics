@@ -386,7 +386,7 @@ if (module.hot) {
 var wMap = 500;
 var hMap = 300;
 
-var svgMap = d3.select("body")
+var svgMap = d3.select(".map")
   .append("svg")
   .attr("preserveAspectRatio", "xMinYMin meet")
   .attr("viewBox", "0 0 " + wMap + " " + hMap);
@@ -405,4 +405,57 @@ d3.json("map.geojson").then(function(json){
     .append("path")
     .attr("class","continent")
     .attr("d", path);
+
+    svgMap.selectAll('.circle-icon')
+      .data(json.features)
+      .enter().append('circle')
+        .each(function(d) {
+          d3.select(this)
+            .attr("r", 2)
+            .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+            .attr("fill", "black")
+            .attr("stroke", "none");
+        });
+
+    svgMap.selectAll('.borough-label')
+      .data(json.features)
+      .enter().append('text')
+        .each(function(d) {
+          d3.select(this)
+            .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+            .text(function(d) { return d.properties.neighbourhood })
+            .attr("class","borough-labels");
+        })
 });
+
+
+
+
+// .on("mouseover", function(d){
+//     svg.append("text")
+//     .text(d)
+//     .attrs({
+//       "text-anchor": "middle",
+//       x: parseFloat(d3.select(this).attr("x")) + parseFloat(d3.select(this).attr("width")/2),
+//       y: parseFloat(d3.select(this).attr("y")) + 12,
+//       "font-family": "sans-serif",
+//       "font-size": 12,
+//       "fill": "#ffffff",
+//       "id": "tooltip"
+//     });
+//   })
+//   .on("mouseout", function(d){
+//     d3.select("#tooltip").remove();
+//   })
+
+
+
+
+
+
+
+
+
+
+
+
