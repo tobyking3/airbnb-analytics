@@ -1,0 +1,20 @@
+id,name,host_id,host_name,neighbourhood_group,neighbourhood,latitude,longitude,room_type,price,minimum_nights,number_of_reviews,last_review,reviews_per_month,calculated_host_listings_count,availability_365
+9554,"Cozy, 3 minutes to Piccadilly Line",31655,Guy,,Haringey,51.587767046892864,-0.10566647135902682,Private room,35,1,133,2018-08-13,1.65,4,291
+11076,The Sanctuary,40471,Rosa,,Ealing,51.51564502087072,-0.3145082381228601,Private room,70,2,3,2018-10-18,0.09,6,0
+13913,Holiday London DB Room Let-on going,54730,Alina,,Islington,51.56801694691075,-0.11120804311014201,Private room,65,1,14,2018-06-17,0.14,3,364
+17402,Superb 3-Bed/2 Bath & Wifi: Trendy W1,67564,Liz,,Westminster,51.52098247579589,-0.14002357513620964,Entire home/apt,300,3,39,2018-10-15,0.42,13,360
+24328,Battersea 2 bedroom house & parking,41759,Joe,,Wandsworth,51.4729809775772,-0.1637638798070717,Entire home/apt,150,90,92,2016-09-07,0.94,1,363
+25023,All-comforts 2-bed flat near Wimbledon tennis,102813,Amanda,,Wandsworth,51.44687190569451,-0.21874395308623648,Entire home/apt,65,5,26,2018-07-11,0.77,1,40
+25123,Clean big Room in London (Room 1),103583,Grace,,Barnet,51.57224300907506,-0.20905976432774065,Private room,29,15,118,2018-11-01,1.12,3,0
+26682,"Bright, comfortable flat in Chelsea",113354,Kamen,,Kensington and Chelsea,51.48503699765389,-0.18554677697067698,Private room,75,1,5,2018-07-08,0.05,1,363
+28010,Cosy Dbl Bedroom in Shoreditch!,119316,Valentina,,Tower Hamlets,51.524968637995784,-0.07372683071814562,Private room,50,3,38,2018-01-02,0.49,3,69
+29256,Family House in North London ,125781,Tariq,,Barnet,51.615091570049294,-0.15829068574995905,Entire home/apt,185,7,1,2013-08-29,0.02,2,0
+31361,"Restful Room, Friendly House, East London",134606,Cryn,,Newham,51.53484108241098,0.02707103549309449,Private room,34,1,109,2018-11-21,1.06,2,334
+33332,Twickenham Stadium & Wimbledon easy reach Ensuite,144444,Chi-Chi,,Hounslow,51.46507417059338,-0.32420734730083606,Private room,100,1,4,2018-11-04,0.04,2,364
+34825,"Zone 1, Dbl Room, Central London",150078,Michael,,Camden,51.52513129367496,-0.11749230827602526,Private room,45,1,168,2018-11-19,1.64,2,352
+36299,Kew Gardens 3BR house in cul-de-sac,155938,Geert,,Richmond upon Thames,51.479344744739244,-0.2806615135840534,Entire home/apt,195,3,61,2018-11-04,0.62,1,270
+36660,You are GUARANTEED to love this,157884,Agri & Roger,,Haringey,51.584612088935884,-0.1616955793064733,Private room,72,2,467,2018-12-04,4.66,2,268
+37384,In the footsteps of William Blake..,161459,Liz,,Southwark,51.46871269024409,-0.0645521093196185,Private room,70,2,52,2018-10-09,0.51,1,340
+38151,Double room/ lounge,163634,Lisa,,Croydon,51.41939690052524,-0.087219006560612,Private room,65,1,0,,,1,365
+38407,Canary Wharf Immaculate Apt for 2,164566,John,,Tower Hamlets,51.49994512977172,-0.026242640231637113,Entire home/apt,79,2,137,2017-04-21,1.37,1,0
+38605,SUNNY ROOM PRIVATE BATHROOM PLUS BREAKFAST,165579,Elisa & Dom,,Hammersmith and Fulham,51.50686711165169,-0.23328091267126655,Private room,62,2,318,2018-12-06,3.22,2,315

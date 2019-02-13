@@ -94,13 +94,15 @@ div.tooltip {
 }
 
 
-.continent {
+.borough {
     fill: #00BFFF;
     stroke: #FFFFFF;
     stroke-width: 0.5;
 }
 
 .borough-labels {
-  font-size: 0.35em;
-  text-anchor: middle;
+  background-color: grey;
+  font-size: 0.8em;
+  text-anchor: right;
+  font-weight: 800;
 }
