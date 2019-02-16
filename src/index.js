@@ -383,28 +383,60 @@ if (module.hot) {
         
 //     }); 
 
-var wMap = 500;
+var wMap = 400;
 var hMap = 300;
+var scaleMap = 23000;
+var active = d3.select(null);
 
 var svgMap = d3.select(".map")
   .append("svg")
   .attr("preserveAspectRatio", "xMinYMin meet")
   .attr("viewBox", "0 0 " + wMap + " " + hMap);
 
-var projection = d3.geoMercator()
-  .center([-0.330679,51.329011])
-  .scale(23000)
-  .translate([wMap/4, hMap - 40]);
+var projection = d3.geoMercator();
 
-var path = d3.geoPath().projection(projection);
-   
-d3.json("map.geojson").then(function(json){  
-  svgMap.selectAll("path")
-    .data(json.features)
-    .enter()
-    .append("path")
-    .attr("class","continent")
-    .attr("d", path);
+var path = d3.geoPath()
+  .projection(projection);
+
+var zoom = d3.zoom()
+  .scaleExtent([1, 8])
+  .on("zoom", zoomed);
+
+
+d3.csv("listings.csv").then(function(csv){
+
+  d3.json("map.geojson").then(function(json){
+
+    projection.center([-0.330679,51.329011])
+      .scale(scaleMap)
+      .translate([wMap/4, hMap - 40]);
+
+    svgMap.selectAll("path")
+      .data(json.features)
+      .enter()
+      .append("path")
+      .attr("class","continent")
+      .attr("d", path)
+      .attr("fill", "#00bfff")
+      .on("click", clicked);
+      // .on("mouseover", handleMouseOver)
+      // .on("mouseout", handleMouseOut);
+
+    svgMap.selectAll('.property-label')
+      .data(csv)
+      .enter()
+      .append('circle')
+        .each(function(d) {
+          d3.select(this)
+            .attr("r", "0.4px")
+            .attr("cx", projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0])
+            .attr("cy", projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1])
+            .attr("fill", "#a2e7ff")
+            .attr("class","points")
+            .style("opacity", 0.5)
+            ;
+        })
+      .on("mouseover", propertyDetails);
 
     svgMap.selectAll('.circle-icon')
       .data(json.features)
@@ -413,8 +445,9 @@ d3.json("map.geojson").then(function(json){
           d3.select(this)
             .attr("r", 2)
             .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-            .attr("fill", "black")
-            .attr("stroke", "none");
+            .attr("fill", "#008ab9")
+            .attr("stroke", "#005673")
+            .attr("class","circle-icon");
         });
 
     svgMap.selectAll('.borough-label')
@@ -422,36 +455,65 @@ d3.json("map.geojson").then(function(json){
       .enter().append('text')
         .each(function(d) {
           d3.select(this)
-            .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+            .attr("transform", function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; })
             .text(function(d) { return d.properties.neighbourhood })
-            .attr("class","borough-labels");
+            .attr("class","borough-labels")
+            .attr("text-anchor", "left")
+            .attr("pointer-events", "none");
         })
+  });
+
 });
 
+//=============================BOUNDING BOX==================================//
 
+function handleMouseOver(d, i) {
+  d3.select(this)
+    .attr("fill", "#d0f3ff");
+}
+function handleMouseOut(d, i) {
+  d3.select(this)
+    .attr("fill", "#00bfff");
+}
+function propertyDetails(d, i) {
+  console.log(d);
+  console.log(i);
+  d3.select(".property-name").text(d.name);
+  d3.select(".property-room_type").text(d.room_type);
+  d3.select(".property-price").text("£" + d.price + " per night");
+};
 
+function clicked(d) {
+  if (active.node() === this) return reset();
 
-// .on("mouseover", function(d){
-//     svg.append("text")
-//     .text(d)
-//     .attrs({
-//       "text-anchor": "middle",
-//       x: parseFloat(d3.select(this).attr("x")) + parseFloat(d3.select(this).attr("width")/2),
-//       y: parseFloat(d3.select(this).attr("y")) + 12,
-//       "font-family": "sans-serif",
-//       "font-size": 12,
-//       "fill": "#ffffff",
-//       "id": "tooltip"
-//     });
-//   })
-//   .on("mouseout", function(d){
-//     d3.select("#tooltip").remove();
-//   })
+  active.classed("active", false);
+  active = d3.select(this).classed("active", true);
 
+  var bounds = path.bounds(d),
+      dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 4,
+      y = (bounds[0][1] + bounds[1][1]) / 4,
+      scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / wMap, dy / hMap))),
+      translate = [wMap / 4 - scale * x, hMap - 40 - scale * y];
 
+  svgMap.transition()
+      .duration(1000)
+      .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) );
+}
 
+function zoomed() {
+  svgMap.attr("transform", d3.event.transform);
+}
 
+function reset() {
+  active.classed("active", false);
+  active = d3.select(null);
 
+  svgMap.transition()
+      .duration(750)
+      .call( zoom.transform, d3.zoomIdentity );
+}
 
 
 

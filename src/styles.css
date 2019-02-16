@@ -95,12 +95,34 @@ div.tooltip {
 
 
 .continent {
-    fill: #00BFFF;
     stroke: #FFFFFF;
     stroke-width: 0.5;
 }
 
 .borough-labels {
   font-size: 0.35em;
-  text-anchor: middle;
+  text-anchor: right;
+}
+
+.circle-icon {
+  cursor: pointer;
+}
+
+.map-wrapper {
+  margin: 0 auto;
+  height: 80vh;
+}
+
+.map {
+  width: 70vw;
+  float: left;
+}
+
+.panel {
+  color: white;
+  text-align: center;
+  background-color: grey;
+  width: 25vw;
+  height: 500px;
+  float: left;
 }
