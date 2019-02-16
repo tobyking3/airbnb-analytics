@@ -119,10 +119,66 @@ div.tooltip {
 }
 
 .panel {
-  color: white;
   text-align: center;
-  background-color: grey;
   width: 25vw;
   height: 500px;
   float: left;
 }
+
+h3 {
+  font-size: 3vw;
+  color: black;
+}
+
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 120px;          
+    height: 160px;         
+    padding: 2px;          
+    background: #f5f7ff; 
+    border: none;   
+    border-radius: 2px;     
+    pointer-events: none;     
+}
+
+table.panel-table-home, table.panel-table-shared, table.panel-table-private, table.panel-table-comparison {
+  width: 100%;
+  margin-top: 10px;
+}
+
+table.panel-table-home th, table.panel-table-shared th, table.panel-table-private th, table.panel-table-comparison th {
+  text-align: left;
+}
+
+table.panel-table-home td, table.panel-table-shared td, table.panel-table-private td, table.panel-table-comparison td {
+  text-align: right;
+}
+
+/*---------------------------------------------------------*/
+
+
+.propertyTypeContainer{
+  width: 100%;
+}
+
+.propertyTypeContainer .propertyTypeMenu {
+  border-bottom: solid 3px blue;
+}
+
+.propertyTypeContainer .propertyTypeMenu button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.propertyTypeContainer .propertyTypeMenu button:hover {
+  background-color: blue;
+}
+
+.propertyTypeContainer .propertyType {
+  display: none;
+}
+
+

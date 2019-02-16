@@ -393,6 +393,14 @@ var svgMap = d3.select(".map")
   .attr("preserveAspectRatio", "xMinYMin meet")
   .attr("viewBox", "0 0 " + wMap + " " + hMap);
 
+var div = d3.select(".map").append("div") 
+    .attr("class", "tooltip")       
+    .style("opacity", 0);
+
+var header = d3.select(".tooltip").append("h3") 
+    .attr("class", "tooltipheader")       
+    .style("opacity", 0);
+
 var projection = d3.geoMercator();
 
 var path = d3.geoPath()
@@ -417,10 +425,8 @@ d3.csv("listings.csv").then(function(csv){
       .append("path")
       .attr("class","continent")
       .attr("d", path)
-      .attr("fill", "#00bfff")
+      .attr("fill", "#a2e7ff")
       .on("click", clicked);
-      // .on("mouseover", handleMouseOver)
-      // .on("mouseout", handleMouseOut);
 
     svgMap.selectAll('.property-label')
       .data(csv)
@@ -431,12 +437,21 @@ d3.csv("listings.csv").then(function(csv){
             .attr("r", "0.4px")
             .attr("cx", projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0])
             .attr("cy", projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1])
-            .attr("fill", "#a2e7ff")
+            .attr("fill", function(d){
+              if(d.room_type === "Entire home/apt"){
+                return "#17c4ff"
+              } else if (d.room_type === "Private room"){
+                return "#00688b"
+              } else if (d.room_type === "Shared room"){
+                return "#003445"
+              }
+            })
             .attr("class","points")
             .style("opacity", 0.5)
             ;
-        })
-      .on("mouseover", propertyDetails);
+        })        
+        .on("mouseover", showPropertyDetails)
+        .on("mouseout", hidePropertyDetails);
 
     svgMap.selectAll('.circle-icon')
       .data(json.features)
@@ -448,11 +463,13 @@ d3.csv("listings.csv").then(function(csv){
             .attr("fill", "#008ab9")
             .attr("stroke", "#005673")
             .attr("class","circle-icon");
-        });
+        })
+      .on("click", boroughStats);
 
     svgMap.selectAll('.borough-label')
       .data(json.features)
-      .enter().append('text')
+      .enter()
+      .append('text')
         .each(function(d) {
           d3.select(this)
             .attr("transform", function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; })
@@ -475,13 +492,24 @@ function handleMouseOut(d, i) {
   d3.select(this)
     .attr("fill", "#00bfff");
 }
-function propertyDetails(d, i) {
-  console.log(d);
-  console.log(i);
-  d3.select(".property-name").text(d.name);
-  d3.select(".property-room_type").text(d.room_type);
-  d3.select(".property-price").text("£" + d.price + " per night");
+function showPropertyDetails(d, i) {
+  div.transition()    
+      .duration(200)    
+      .style("opacity", .9);    
+  div .html(d.name)  
+      .style("left", (d3.event.pageX) + "px")   
+      .style("top", (d3.event.pageY) + "px"); 
 };
+
+function boroughStats(d, i){
+  d3.select(".borough-name").text(d.properties.neighbourhood);
+}
+
+function hidePropertyDetails(){
+  div.transition()    
+    .duration(500)    
+    .style("opacity", 0);
+}
 
 function clicked(d) {
   if (active.node() === this) return reset();
@@ -492,8 +520,8 @@ function clicked(d) {
   var bounds = path.bounds(d),
       dx = bounds[1][0] - bounds[0][0],
       dy = bounds[1][1] - bounds[0][1],
-      x = (bounds[0][0] + bounds[1][0]) / 4,
-      y = (bounds[0][1] + bounds[1][1]) / 4,
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
       scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / wMap, dy / hMap))),
       translate = [wMap / 4 - scale * x, hMap - 40 - scale * y];
 
@@ -514,6 +542,51 @@ function reset() {
       .duration(750)
       .call( zoom.transform, d3.zoomIdentity );
 }
+
+
+
+
+
+
+
+
+
+
+var typeButtons = document.querySelectorAll(".propertyTypeContainer .propertyTypeMenu button");
+var typePanels = document.querySelectorAll(".propertyTypeContainer .propertyType");
+
+var typeHome = document.querySelector("#typeHome");
+var typePrivate = document.querySelector("#typePrivate");
+var typeShared = document.querySelector("#typeShared");
+var typeMenuContainer = document.querySelector(".propertyTypeMenu");
+
+//Initial panel state
+showPanel(0, "#17c4ff");
+
+typeHome.addEventListener("click", function(){showPanel(0, "#17c4ff");}, false);
+typePrivate.addEventListener("click", function(){showPanel(1, "#00688b");}, false);
+typeShared.addEventListener("click", function(){showPanel(2, "#003445");}, false);
+
+function showPanel(panelIndex, colorCode){
+  typeButtons.forEach(function(node){
+    node.style.backgroundColor="white";
+    node.style.color=""
+  })
+  typeButtons[panelIndex].style.backgroundColor= colorCode;
+  typeMenuContainer.style.borderColor= colorCode;
+  typeButtons[panelIndex].style.color= "white";
+
+  typePanels.forEach(function(node){
+    node.style.display="none";
+  })
+  typePanels[panelIndex].style.display="block";
+}
+
+
+
+
+
+
 
 
 
