@@ -136,10 +136,11 @@ div.tooltip {
     width: 120px;          
     height: 160px;         
     padding: 2px;          
-    background: #f5f7ff; 
+    background: #003445; 
     border: none;   
     border-radius: 2px;     
-    pointer-events: none;     
+    pointer-events: none;
+    color: white;   
 }
 
 table.panel-table-home, table.panel-table-shared, table.panel-table-private, table.panel-table-comparison {

@@ -497,7 +497,7 @@ function showPropertyDetails(d, i) {
       .duration(200)    
       .style("opacity", .9);    
   div .html(d.name)  
-      .style("left", (d3.event.pageX) + "px")   
+      .style("left", (d3.event.pageX + 15) + "px")   
       .style("top", (d3.event.pageY) + "px"); 
 };
 
@@ -581,6 +581,145 @@ function showPanel(panelIndex, colorCode){
   })
   typePanels[panelIndex].style.display="block";
 }
+
+
+
+
+
+// var pieChartHeight = 100;
+// var pieChartWidth = 100;
+// var pieChartRadius = 100;
+
+// var pieChartData = [
+//   {
+//     "type":"Entire home/apt",
+//     "value":20
+//   }, 
+//   {
+//     "type":"Private room",
+//     "value":50
+//   }, 
+//   {
+//     "type":"Shared room",
+//     "value":30
+//   }
+// ];
+
+// var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+// // var pieChartColors = d3.scaleOrdinal()
+// //   .domain(["Entire home/apt", "Private room", "Shared room"])
+// //   .range(["#17c4ff", "#00688b", "#003445"]);
+
+// var pieChartSVG = d3.select(".panel-piechart-comparison")
+//   .append("svg")
+//   .data(pieChartData)
+//     .attr("width", pieChartWidth)
+//     .attr("width", pieChartHeight)
+//   .append("g")
+//     .attr("transform", "translate(" + pieChartRadius + "," + pieChartRadius + ")")
+
+// var arc = d3.arc()
+//   .outerRadius(pieChartRadius)
+//   .innerRadius(pieChartRadius);
+
+// var labelArc = d3.arc()
+//   .outerRadius(pieChartRadius)
+//   .innerRadius(pieChartRadius);
+
+// var pieChart = d3.pie()
+//   .value(function(d) { return d.value; });
+
+//  var arcs = pieChartSVG.selectAll("g.slice")
+//         .data(pieChart)
+//         .enter()
+//             .append("g")
+//                 .attr("class", "slice");
+
+//         arcs.append("path")
+//                 .attr("fill", function(d, i) { return color(i); } )
+//                 .attr("d", arc);
+
+        // arcs.append("text")
+        //         .attr("transform", function(d) {
+        //         d.innerRadius = 0;
+        //         d.outerRadius = pieChartRadius;
+        //         return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
+        //     })
+        //     .attr("text-anchor", "middle")                          //center the text on it's origin
+        //     .text(function(d, i) { return data[i].label; });
+
+
+
+
+
+// pie.colors(function(d){ return pieChartColors(d.fruitType); });
+
+
+
+
+
+
+var data = [10, 20, 100];
+
+var pieChartData = [
+  {
+    "type":"Entire home/apt",
+    "value":20
+  }, 
+  {
+    "type":"Private room",
+    "value":50
+  }, 
+  {
+    "type":"Shared room",
+    "value":30
+  }
+];
+
+var pieChartHeight = 200;
+var pieChartWidth = 200;
+var pieChartRadius = 100;
+
+var color = d3.scaleOrdinal()
+    .range(["#17c4ff", "#00688b", "#003445"]);
+
+var pieChartColors = d3.scaleOrdinal()
+    .domain(["Entire home/apt", "Private room", "Shared room"])
+    .range(["#17c4ff", "#00688b", "#003445"]);
+
+var arc = d3.arc()
+    .outerRadius(pieChartRadius)
+    .innerRadius(0);
+
+var labelArc = d3.arc()
+    .outerRadius(pieChartRadius - 50)
+    .innerRadius(pieChartRadius - 50);
+
+var pie = d3.pie()
+    .sort(null)
+    .value(function(d) { return d; });
+
+var svg = d3.select(".panel-piechart-comparison")
+  .append("svg")
+  .attr("width", pieChartWidth)
+  .attr("height", pieChartHeight)
+  .append("g")
+  .attr("transform", "translate(" + pieChartWidth / 2 + "," + pieChartHeight / 2 + ")");
+
+  var g = svg.selectAll(".arc")
+      .data(pie(data))
+    .enter().append("g")
+      .attr("class", "arc");
+
+  g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return color(d.data); });
+
+  g.append("text")
+      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .text(function(d) { return d.data; });
 
 
 
