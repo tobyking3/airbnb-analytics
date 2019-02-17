@@ -11,13 +11,13 @@ body {
 }
 
 .header { 
-  height: 70vh;
+  height: 90vh;
   position: relative;
 }
 
 h1 {
     text-align: center;
-    color: red;
+    color: #00688b;
     font-family: 'MainFont';
     font-size: 6em;
     margin: 0;
@@ -33,11 +33,12 @@ ul {
   padding: 0;
   overflow: hidden;
   background: #0F2027;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
+  z-index: 100;
 }
 
 li {
@@ -130,18 +131,42 @@ h3 {
   color: black;
 }
 
-div.tooltip { 
-    position: absolute;     
-    text-align: center;     
-    width: 120px;          
-    height: 160px;         
-    padding: 2px;          
-    background: #003445; 
-    border: none;   
-    border-radius: 2px;     
-    pointer-events: none;
-    color: white;   
+/*--------------------TOOLTIP--------------------*/
+
+div.tooltipDiv {
+  background-color: white;
+  position: absolute;     
+  width: 180px;          
+  height: 140px;         
+  padding: 2px;          
+  border: none;   
+  border-radius: 2px;     
+  pointer-events: none;
 }
+
+div.tooltipDiv .tooltip-price {
+  text-align: center;
+  background: #003445; 
+  font-size: 20px;
+  font-weight: 900;
+  color: #fafafa;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin: 0;
+}
+div.tooltipDiv .tooltip-type {
+  text-align: left;
+  color: grey;
+  font-weight: 700;
+  font-size: 12px;
+}
+div.tooltipDiv .tooltip-description {
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/*---------------------TABLE-----------------------*/
 
 table.panel-table-home, table.panel-table-shared, table.panel-table-private, table.panel-table-comparison {
   width: 100%;
@@ -172,6 +197,7 @@ table.panel-table-home td, table.panel-table-shared td, table.panel-table-privat
   outline: none;
   cursor: pointer;
   border-radius: 8px 8px 0px 0px;
+  width: 30%;
 }
 
 .propertyTypeContainer .propertyTypeMenu button:hover {
@@ -182,4 +208,8 @@ table.panel-table-home td, table.panel-table-shared td, table.panel-table-privat
   display: none;
 }
 
+/*------------------------------------------------------*/
 
+.panel-piechart-comparison text {
+
+}

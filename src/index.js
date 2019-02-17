@@ -393,13 +393,14 @@ var svgMap = d3.select(".map")
   .attr("preserveAspectRatio", "xMinYMin meet")
   .attr("viewBox", "0 0 " + wMap + " " + hMap);
 
-var div = d3.select(".map").append("div") 
-    .attr("class", "tooltip")       
-    .style("opacity", 0);
+var tooltipDiv = d3.select(".tooltipDiv")
+  .style("opacity", 0);
 
-var header = d3.select(".tooltip").append("h3") 
-    .attr("class", "tooltipheader")       
-    .style("opacity", 0);
+var tooltipPrice = d3.select(".tooltip-price");
+
+var tooltipType = d3.select(".tooltip-type");
+
+var tooltipDescription = d3.select(".tooltip-description");
 
 var projection = d3.geoMercator();
 
@@ -407,7 +408,7 @@ var path = d3.geoPath()
   .projection(projection);
 
 var zoom = d3.zoom()
-  .scaleExtent([1, 8])
+  .scaleExtent([1, 4])
   .on("zoom", zoomed);
 
 
@@ -464,7 +465,21 @@ d3.csv("listings.csv").then(function(csv){
             .attr("stroke", "#005673")
             .attr("class","circle-icon");
         })
-      .on("click", boroughStats);
+      .on("click", boroughStats)
+      .on("mouseover", function(d) {
+        d3.select(this)
+        .transition()    
+        .duration(200)
+        .attr("r", 4)
+        .attr("stroke", "yellow");
+      })
+      .on("mouseout", function(d) {
+        d3.select(this)
+        .transition()    
+        .duration(100)
+        .attr("r", 2)
+        .attr("stroke", "#005673");
+      });
 
     svgMap.selectAll('.borough-label')
       .data(json.features)
@@ -493,12 +508,16 @@ function handleMouseOut(d, i) {
     .attr("fill", "#00bfff");
 }
 function showPropertyDetails(d, i) {
-  div.transition()    
-      .duration(200)    
-      .style("opacity", .9);    
-  div .html(d.name)  
-      .style("left", (d3.event.pageX + 15) + "px")   
-      .style("top", (d3.event.pageY) + "px"); 
+  tooltipDiv.transition()    
+    .duration(200)    
+    .style("opacity", .9);    
+  tooltipDiv
+    .style("left", (d3.event.pageX + 15) + "px")   
+    .style("top", (d3.event.pageY) + "px");
+
+  tooltipPrice.html("£" + d.price);
+  tooltipType.html(d.room_type);
+  tooltipDescription.html(d.name);
 };
 
 function boroughStats(d, i){
@@ -506,7 +525,7 @@ function boroughStats(d, i){
 }
 
 function hidePropertyDetails(){
-  div.transition()    
+  tooltipDiv.transition()    
     .duration(500)    
     .style("opacity", 0);
 }
@@ -523,7 +542,7 @@ function clicked(d) {
       x = (bounds[0][0] + bounds[1][0]) / 2,
       y = (bounds[0][1] + bounds[1][1]) / 2,
       scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / wMap, dy / hMap))),
-      translate = [wMap / 4 - scale * x, hMap - 40 - scale * y];
+      translate = [wMap / 4 - scale * 2, hMap - 40 - scale * 2];
 
   svgMap.transition()
       .duration(1000)
@@ -544,13 +563,7 @@ function reset() {
 }
 
 
-
-
-
-
-
-
-
+//=======================Panel=============================//
 
 var typeButtons = document.querySelectorAll(".propertyTypeContainer .propertyTypeMenu button");
 var typePanels = document.querySelectorAll(".propertyTypeContainer .propertyType");
@@ -583,84 +596,8 @@ function showPanel(panelIndex, colorCode){
 }
 
 
+//======================PIE CHART=========================//
 
-
-
-// var pieChartHeight = 100;
-// var pieChartWidth = 100;
-// var pieChartRadius = 100;
-
-// var pieChartData = [
-//   {
-//     "type":"Entire home/apt",
-//     "value":20
-//   }, 
-//   {
-//     "type":"Private room",
-//     "value":50
-//   }, 
-//   {
-//     "type":"Shared room",
-//     "value":30
-//   }
-// ];
-
-// var color = d3.scaleOrdinal(d3.schemeCategory10);
-
-// // var pieChartColors = d3.scaleOrdinal()
-// //   .domain(["Entire home/apt", "Private room", "Shared room"])
-// //   .range(["#17c4ff", "#00688b", "#003445"]);
-
-// var pieChartSVG = d3.select(".panel-piechart-comparison")
-//   .append("svg")
-//   .data(pieChartData)
-//     .attr("width", pieChartWidth)
-//     .attr("width", pieChartHeight)
-//   .append("g")
-//     .attr("transform", "translate(" + pieChartRadius + "," + pieChartRadius + ")")
-
-// var arc = d3.arc()
-//   .outerRadius(pieChartRadius)
-//   .innerRadius(pieChartRadius);
-
-// var labelArc = d3.arc()
-//   .outerRadius(pieChartRadius)
-//   .innerRadius(pieChartRadius);
-
-// var pieChart = d3.pie()
-//   .value(function(d) { return d.value; });
-
-//  var arcs = pieChartSVG.selectAll("g.slice")
-//         .data(pieChart)
-//         .enter()
-//             .append("g")
-//                 .attr("class", "slice");
-
-//         arcs.append("path")
-//                 .attr("fill", function(d, i) { return color(i); } )
-//                 .attr("d", arc);
-
-        // arcs.append("text")
-        //         .attr("transform", function(d) {
-        //         d.innerRadius = 0;
-        //         d.outerRadius = pieChartRadius;
-        //         return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
-        //     })
-        //     .attr("text-anchor", "middle")                          //center the text on it's origin
-        //     .text(function(d, i) { return data[i].label; });
-
-
-
-
-
-// pie.colors(function(d){ return pieChartColors(d.fruitType); });
-
-
-
-
-
-
-var data = [10, 20, 100];
 
 var pieChartData = [
   {
@@ -668,11 +605,11 @@ var pieChartData = [
     "value":20
   }, 
   {
-    "type":"Private room",
+    "type":"Shared room",
     "value":50
   }, 
   {
-    "type":"Shared room",
+    "type":"Private room",
     "value":30
   }
 ];
@@ -680,9 +617,6 @@ var pieChartData = [
 var pieChartHeight = 200;
 var pieChartWidth = 200;
 var pieChartRadius = 100;
-
-var color = d3.scaleOrdinal()
-    .range(["#17c4ff", "#00688b", "#003445"]);
 
 var pieChartColors = d3.scaleOrdinal()
     .domain(["Entire home/apt", "Private room", "Shared room"])
@@ -697,29 +631,28 @@ var labelArc = d3.arc()
     .innerRadius(pieChartRadius - 50);
 
 var pie = d3.pie()
-    .sort(null)
-    .value(function(d) { return d; });
+    .value(function(d) { return d.value; });
 
-var svg = d3.select(".panel-piechart-comparison")
+var svgPieChart = d3.select(".panel-piechart-comparison")
   .append("svg")
   .attr("width", pieChartWidth)
   .attr("height", pieChartHeight)
   .append("g")
   .attr("transform", "translate(" + pieChartWidth / 2 + "," + pieChartHeight / 2 + ")");
 
-  var g = svg.selectAll(".arc")
-      .data(pie(data))
+  var g = svgPieChart.selectAll(".arc")
+      .data(pie(pieChartData))
     .enter().append("g")
       .attr("class", "arc");
 
   g.append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color(d.data); });
+      .style("fill", function(d) { return pieChartColors(d.data.type)});
 
   g.append("text")
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
-      .text(function(d) { return d.data; });
+      .text(function(d) { return d.data.value; });
 
 
 
