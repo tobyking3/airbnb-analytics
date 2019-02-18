@@ -387,6 +387,221 @@ var wMap = 400;
 var hMap = 300;
 var scaleMap = 23000;
 var active = d3.select(null);
+var boroughs = {
+  "Kingston upon Thames": {
+    "name": "Kingston upon Thames",
+    "Entire home/apt": 126.2971429,
+    "Private room": 45.86281588,
+    "Shared room": 27.5
+  },
+  "Croydon": {
+    "name": "Croydon",
+    "Entire home/apt": 88.66461538,
+    "Private room": 38.28271405,
+    "Shared room": 33
+  },
+  "Bromley": {
+    "name": "Bromley",
+    "Entire home/apt": 84.54585153,
+    "Private room": 41.35649547,
+    "Shared room": 71.57142857
+  },
+  "Hounslow": {
+    "name": "Hounslow",
+    "Entire home/apt": 140.3659148,
+    "Private room": 54.36891386,
+    "Shared room": 36.4
+  },
+  "Ealing": {
+    "name": "Ealing",
+    "Entire home/apt": 125.4304933,
+    "Private room": 43.17416378,
+    "Shared room": 39.92857143
+  },
+  "Havering": {
+    "name": "Havering",
+    "Entire home/apt": 114.6097561,
+    "Private room": 40.52,
+    "Shared room": 30
+  },
+  "Hillingdon": {
+    "name": "Hillingdon",
+    "Entire home/apt": 106.3614458,
+    "Private room": 42.53089888,
+    "Shared room": 46.33333333
+  },
+  "Harrow": {
+    "name": "Harrow",
+    "Entire home/apt": 144.6304348,
+    "Private room": 42.85365854,
+    "Shared room": 34
+  },
+  "Brent": {
+    "name": "Brent",
+    "Entire home/apt": 126.9706458,
+    "Private room": 47.06060606,
+    "Shared room": 28.3
+  },
+  "Barnet": {
+    "name": "Barnet",
+    "Entire home/apt": 114.8375912,
+    "Private room": 54.2853688,
+    "Shared room": 66.38461538
+  },
+  "Enfield": {
+    "name": "Enfield",
+    "Entire home/apt": 125.6075269,
+    "Private room": 41.67261905,
+    "Shared room": 48.11111111
+  },
+  "Waltham Forest": {
+    "name": "Waltham Forest",
+    "Entire home/apt": 99.5913371,
+    "Private room": 43.30351906,
+    "Shared room": 34
+  },
+  "Redbridge": {
+    "name": "Redbridge",
+    "Entire home/apt": 106.2067039,
+    "Private room": 41.63869464,
+    "Shared room": 68
+  },
+  "Sutton": {
+    "name": "Sutton",
+    "Entire home/apt": 90.51282051,
+    "Private room": 38.46987952,
+    "Shared room": 35.66666667
+  },
+  "Lambeth": {
+    "name": "Lambeth",
+    "Entire home/apt": 128.4144454,
+    "Private room": 50.49531041,
+    "Shared room": 37.15789474
+  },
+  "Southwark": {
+    "name": "Southwark",
+    "Entire home/apt": 130.3827314,
+    "Private room": 55.62080378,
+    "Shared room": 33.47058824
+  },
+  "Lewisham": {
+    "name": "Lewisham",
+    "Entire home/apt": 99.02640643,
+    "Private room": 39.86363636,
+    "Shared room": 35.96428571
+  },
+  "Greenwich": {
+    "name": "Greenwich",
+    "Entire home/apt": 120.2273425,
+    "Private room": 46.59449761,
+    "Shared room": 44.25
+  },
+  "Bexley": {
+    "name": "Bexley",
+    "Entire home/apt": 88.10526316,
+    "Private room": 35.03870968,
+    "Shared room": 46.33333333
+  },
+  "Richmond upon Thames": {
+    "name": "Richmond upon Thames",
+    "Entire home/apt": 169.4846527,
+    "Private room": 61.91141732,
+    "Shared room": 88.33333333
+  },
+  "Merton": {
+    "name": "Merton",
+    "Entire home/apt": 153.8395062,
+    "Private room": 60.64892086,
+    "Shared room": 41.9
+  },
+  "Wandsworth": {
+    "name": "Wandsworth",
+    "Entire home/apt": 149.7388683,
+    "Private room": 62.536,
+    "Shared room": 45.3
+  },
+  "Hammersmith and Fulham": {
+    "name": "Hammersmith and Fulham",
+    "Entire home/apt": 151.4496418,
+    "Private room": 61.9179453,
+    "Shared room": 55.17391304
+  },
+  "Kensington and Chelsea": {
+    "name": "Kensington and Chelsea",
+    "Entire home/apt": 226.5305249,
+    "Private room": 88.45454545,
+    "Shared room": 49.54054054
+  },
+  "City of London": {
+    "name": "City of London",
+    "Entire home/apt": 181.1173469,
+    "Private room": 114.4464286,
+    "Shared room": 72
+  },
+  "Westminster": {
+    "name": "Westminster",
+    "Entire home/apt": 218.3176509,
+    "Private room": 104.9324197,
+    "Shared room": 62.14583333
+  },
+  "Camden": {
+    "name": "Camden",
+    "Entire home/apt": 169.6361582,
+    "Private room": 65.72305141,
+    "Shared room": 34.38392857
+  },
+  "Tower Hamlets": {
+    "name": "Tower Hamlets",
+    "Entire home/apt": 129.6455456,
+    "Private room": 50.23064602,
+    "Shared room": 35.10810811
+  },
+  "Islington": {
+    "name": "Islington",
+    "Entire home/apt": 139.8642017,
+    "Private room": 56.93056346,
+    "Shared room": 48.74074074
+  },
+  "Hackney": {
+    "name": "Hackney",
+    "Entire home/apt": 120.356599,
+    "Private room": 50.96588408,
+    "Shared room": 46.44827586
+  },
+  "Haringey": {
+    "name": "Haringey",
+    "Entire home/apt": 123.7856328,
+    "Private room": 41.96883348,
+    "Shared room": 57.61538462
+  },
+  "Newham": {
+    "name": "Newham",
+    "Entire home/apt": 131.3907381,
+    "Private room": 46.48501873,
+    "Shared room": 25.44262295
+  },
+  "Barking and Dagenham": {
+    "name": "Barking and Dagenham",
+    "Entire home/apt": 104.5822785,
+    "Private room": 38.85245902,
+    "Shared room": 57.14285714
+  }
+};
+
+
+
+
+
+// const obj = {};
+
+//  for (const item of boroughs) {
+//       obj[item.name] = item;
+//  }
+
+// console.log(JSON.stringify(obj));
+
+
+
 
 var svgMap = d3.select(".map")
   .append("svg")
@@ -481,11 +696,29 @@ d3.csv("listings.csv").then(function(csv){
         .attr("stroke", "#005673");
       });
 
+
+
+
+
+
+      for (var i = 0; i < json.features.length; i++) {
+        json.features[i].properties['Entire home/apt'] = boroughs[json.features[i].properties.neighbourhood]['Entire home/apt'];
+        json.features[i].properties['Private room'] = boroughs[json.features[i].properties.neighbourhood]['Private room'];
+        json.features[i].properties['Shared room'] = boroughs[json.features[i].properties.neighbourhood]['Shared room'];
+      }
+
+      console.log(JSON.stringify(json));
+
+
+
+
+
     svgMap.selectAll('.borough-label')
       .data(json.features)
       .enter()
       .append('text')
         .each(function(d) {
+
           d3.select(this)
             .attr("transform", function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; })
             .text(function(d) { return d.properties.neighbourhood })
