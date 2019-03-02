@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Airbnb Analytics</h1>
+  </div>
+
+  <ul class="main-menu">
+    <li><a class="active" href="#home">Home</a></li>
+    <li><a href="#news">Location</a></li>
+    <li><a href="#contact">Property Type</a></li>
+  </ul>
+
+  <!-- MAP ----------------------------------------------->
+
+  <div class="map-wrapper">
+
+    <div class="map"></div>
+
+    <div class="map-tooltip">
+      <p class="map-tooltip_price"></p>
+      <p class="map-tooltip_type"></p>
+      <p class="map-tooltip_description"></p>
+    </div>
+
+    <div class="map-panel">
+      <h3 class="borough-name">London</h3>
+
+      <%= require('./html/panel_average_prices.html') %>
+
+      <%= require('./html/panel_room_type.html') %>
+
+      <div class="panel-piechart-comparison"></div>
+    </div>
+
+  </div>
+
+  <!-- CHARTS -------------------------------------------->
+
+  <div class="chart-wrapper">
+
+    <%= require('./html/chart_bar.html') %>
+    <%= require('./html/chart_line.html') %>
+
+  </div>
+
+</body>
+</html>

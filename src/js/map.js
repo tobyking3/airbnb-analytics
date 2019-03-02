@@ -3,32 +3,31 @@ import * as d3 from 'd3';
 var mWidth = 400;
 var mHeight = 300;
 var mScale = 23000;
+
+var ColorEntire = "#17c4ff"
+var ColorPrivate = "#00688b"
+var ColorShared = "#003445"
+
 var active = d3.select(null);
+
+var tooltipDiv = d3.select(".map-tooltip");
+var tooltipPrice = d3.select(".map-tooltip_price");
+var tooltipType = d3.select(".map-tooltip_type");
+var tooltipDescription = d3.select(".map-tooltip_description");
+
+var projection = d3.geoMercator();
+
+var path = d3.geoPath().projection(projection);
+
+var zoom = d3.zoom().scaleExtent([1, 4]).on("zoom", zoomed);
 
 //Initialize Map
 var svgMap = d3.select(".map")
   .append("svg")
-  .attr("preserveAspectRatio", "xMinYMin meet")
-  .attr("viewBox", "0 0 " + mWidth + " " + mHeight);
-
-var tooltipDiv = d3.select(".tooltipDiv")
-  .style("opacity", 0);
-
-var tooltipPrice = d3.select(".tooltip-price");
-
-var tooltipType = d3.select(".tooltip-type");
-
-var tooltipDescription = d3.select(".tooltip-description");
-
-var projection = d3.geoMercator();
-
-var path = d3.geoPath()
-  .projection(projection);
-
-var zoom = d3.zoom()
-  .scaleExtent([1, 4])
-  .on("zoom", zoomed);
-
+  .attrs({
+    "preserveAspectRatio": "xMinYMin meet",
+    "viewBox": "0 0 " + mWidth + " " + mHeight
+  });
 
 d3.csv("listings.csv").then(function(csv){
 
@@ -42,9 +41,11 @@ d3.csv("listings.csv").then(function(csv){
       .data(json.features)
       .enter()
       .append("path")
-      .attr("class","continent")
-      .attr("d", path)
-      .attr("fill", "#a2e7ff")
+      .attrs({
+        "class": "map_borough-path",
+        "d": path,
+        "fill": "#a2e7ff"
+      })
       .on("click", clicked);
 
     svgMap.selectAll('.property-label')
@@ -53,50 +54,50 @@ d3.csv("listings.csv").then(function(csv){
       .append('circle')
         .each(function(d) {
           d3.select(this)
-            .attr("r", "0.4px")
-            .attr("cx", projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0])
-            .attr("cy", projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1])
-            .attr("fill", function(d){
-              if(d.room_type === "Entire home/apt"){
-                return "#17c4ff"
-              } else if (d.room_type === "Private room"){
-                return "#00688b"
-              } else if (d.room_type === "Shared room"){
-                return "#003445"
-              }
+            .attrs({
+              "r": "0.4px",
+              "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
+              "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
+              "fill": propertyTypeColor(d.room_type),
+              "class": "points",
             })
-            .attr("class","points")
             .style("opacity", 0.5)
             ;
         })        
         .on("mouseover", showPropertyDetails)
         .on("mouseout", hidePropertyDetails);
 
-    svgMap.selectAll('.circle-icon')
+    svgMap.selectAll('.map_borough-point')
       .data(json.features)
       .enter().append('circle')
         .each(function(d) {
           d3.select(this)
-            .attr("r", 2)
-            .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-            .attr("fill", "#008ab9")
-            .attr("stroke", "#005673")
-            .attr("class","circle-icon");
+            .attrs({
+              "r": 2,
+              "transform": function(d) { return "translate(" + path.centroid(d) + ")"; },
+              "fill": "#008ab9",
+              "stroke": "#005673",
+              "class": "map_borough-point"
+            });
         })
       .on("click", boroughStats)
       .on("mouseover", function(d) {
         d3.select(this)
         .transition()    
         .duration(200)
-        .attr("r", 4)
-        .attr("stroke", "yellow");
+        .attrs({
+          "r": 4,
+          "stroke": "yellow"
+        });
       })
       .on("mouseout", function(d) {
         d3.select(this)
         .transition()    
         .duration(100)
-        .attr("r", 2)
-        .attr("stroke", "#005673");
+        .attrs({
+          "r": 2,
+          "stroke": "#005673"
+        });
       });
 
     svgMap.selectAll('.borough-label')
@@ -105,26 +106,37 @@ d3.csv("listings.csv").then(function(csv){
       .append('text')
         .each(function(d) {
           d3.select(this)
-            .attr("transform", function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; })
             .text(function(d) { return d.properties.neighbourhood })
-            .attr("class","borough-labels")
-            .attr("text-anchor", "left")
-            .attr("pointer-events", "none");
+            .attrs({
+              "transform": function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; },
+              "class": "map_borough-label",
+              "text-anchor": "left",
+              "pointer-events": "none"
+            })
         })
   });
 
 });
 
-//=============================BOUNDING BOX==================================//
+
+function propertyTypeColor(type){
+  if(type === "Entire home/apt"){
+    return ColorEntire
+  } else if (type === "Private room"){
+    return ColorPrivate
+  } else if (type === "Shared room"){
+    return ColorShared
+  }
+}
 
 function handleMouseOver(d, i) {
-  d3.select(this)
-    .attr("fill", "#d0f3ff");
+  d3.select(this).attr("fill", "#d0f3ff");
 }
+
 function handleMouseOut(d, i) {
-  d3.select(this)
-    .attr("fill", "#00bfff");
+  d3.select(this).attr("fill", "#00bfff");
 }
+
 function showPropertyDetails(d, i) {
   tooltipDiv.transition()    
     .duration(200)    
@@ -183,39 +195,6 @@ function boroughStats(d, i){
   d3.select(".shared-type-average").text("£" + Math.round(d.properties["Shared room"]));
 }
 
-//=======================Panel=============================//
-
-var typeButtons = document.querySelectorAll(".propertyTypeContainer .propertyTypeMenu button");
-var typePanels = document.querySelectorAll(".propertyTypeContainer .propertyType");
-
-var typeHome = document.querySelector("#typeHome");
-var typePrivate = document.querySelector("#typePrivate");
-var typeShared = document.querySelector("#typeShared");
-var typeMenuContainer = document.querySelector(".propertyTypeMenu");
-
-//Initial panel state
-showPanel(0, "#17c4ff");
-
-typeHome.addEventListener("click", function(){showPanel(0, "#17c4ff");}, false);
-typePrivate.addEventListener("click", function(){showPanel(1, "#00688b");}, false);
-typeShared.addEventListener("click", function(){showPanel(2, "#003445");}, false);
-
-function showPanel(panelIndex, colorCode){
-  typeButtons.forEach(function(node){
-    node.style.backgroundColor="white";
-    node.style.color=""
-  })
-  typeButtons[panelIndex].style.backgroundColor= colorCode;
-  typeMenuContainer.style.borderColor= colorCode;
-  typeButtons[panelIndex].style.color= "white";
-
-  typePanels.forEach(function(node){
-    node.style.display="none";
-  })
-  typePanels[panelIndex].style.display="block";
-}
-
-
 //======================PIE CHART=========================//
 
 
@@ -240,7 +219,7 @@ var pieChartRadius = 100;
 
 var pieChartColors = d3.scaleOrdinal()
     .domain(["Entire home/apt", "Private room", "Shared room"])
-    .range(["#17c4ff", "#00688b", "#003445"]);
+    .range([ColorEntire, ColorPrivate, ColorShared]);
 
 var arc = d3.arc()
     .outerRadius(pieChartRadius)

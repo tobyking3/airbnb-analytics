@@ -1,0 +1,207 @@
+@import "colours";
+
+@font-face {
+  font-family: 'MainFont';
+  src:  url('../fonts/soybean.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+body {
+  background: $off-white;
+  margin: 0;
+}
+
+h1 {
+    text-align: center;
+    color: $blue-mid;
+    font-family: 'MainFont';
+    font-size: 6em;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h3 {
+  font-size: 3vw;
+  color: black;
+}
+
+.header { 
+  height: 90vh;
+  position: relative;
+}
+
+/*===================MENU=====================*/
+
+ul.main-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: $slate-dark;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, $slate-light, $slate-mid, $slate-dark);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, $slate-light, $slate-mid, $slate-dark); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  li {
+    float: left;
+
+    a {
+      display: block;
+      color: $off-white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      background-color: $off-black;
+    }
+
+    a.active {
+      background-color: $slate-dark;
+    }
+  }
+}
+
+/*===================AXIS=====================*/
+
+// .x-axis path, .y-axis path, .x-axis line, .y-axis line {
+//   fill: none;
+//   stroke: black;
+//   shape-rendering: crispEdges;
+// }
+
+// .x-axis text, .y-axis text {
+//   font-family: sans-serif;
+//   font-size: 10px;
+// }
+
+// h2 {
+//   font-weight: 300;
+//   font-size: 16px;
+// }
+
+/*=================TOOLTIP==================*/
+
+.map-wrapper {
+  margin: 0 auto;
+  height: 80vh;
+}
+
+.map {
+  width: 70vw;
+  float: left;
+}
+
+.map_borough-path {
+    stroke: $off-white;
+    stroke-width: 0.5;
+    fill: "#a2e7ff";
+}
+
+.map_borough-label {
+  font-size: 0.35em;
+  text-anchor: right;
+}
+
+.map_borough-point {
+  cursor: pointer;
+}
+
+.map-panel {
+  text-align: center;
+  width: 25vw;
+  height: 500px;
+  float: left;
+}
+
+/*--------------------TOOLTIP--------------------*/
+
+div.map-tooltip {
+  background-color: $off-white;
+  position: absolute;     
+  width: 180px;          
+  height: 140px;         
+  padding: 2px;          
+  border: none;   
+  border-radius: 2px;     
+  pointer-events: none;
+  opacity: 0;
+
+  .map-tooltip_price {
+    text-align: center;
+    background: $blue-dark; 
+    font-size: 20px;
+    font-weight: 900;
+    color: $off-white;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 0;
+  }
+  .map-tooltip_type {
+    text-align: left;
+    color: grey;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .map-tooltip_description {
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+  }
+}
+
+/*---------------------TABLE-----------------------*/
+
+table.panel-table-home, table.panel-table-shared, table.panel-table-private, table.panel-table-comparison {
+  width: 100%;
+  margin-top: 10px;
+}
+
+table.panel-table-home th, table.panel-table-shared th, table.panel-table-private th, table.panel-table-comparison th {
+  text-align: left;
+}
+
+table.panel-table-home td, table.panel-table-shared td, table.panel-table-private td, table.panel-table-comparison td {
+  text-align: right;
+}
+
+/*---------------------------------------------------------*/
+
+
+.average-prices_container{
+  width: 100%;
+}
+
+.average-prices_menu {
+  border-bottom: solid 3px blue;
+}
+
+.average-prices_menu button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px 8px 0px 0px;
+  width: 30%;
+}
+
+.average-prices_menu button:hover {
+  background-color: blue;
+}
+
+.average-prices_container .average-prices_type {
+  display: none;
+}
+
+/*------------------------------------------------------*/
+
+.panel-piechart-comparison text {
+
+}

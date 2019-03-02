@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: 'src/index.html',
-  title: 'Custom template'
+  title: 'AirBNB Insights',
+  template: 'src/index.html.ejs'
 });
 
 const path = require('path');
@@ -32,8 +32,8 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -52,6 +52,10 @@ module.exports = {
          use: [
           'xml-loader'
         ]
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
       }
     ]
   },
