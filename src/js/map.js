@@ -60,7 +60,7 @@ d3.csv("listings.csv").then(function(csv){
               "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
               "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
               "fill": propertyTypeColor(d.room_type),
-              "class": "points",
+              "class": "point-" + d.neighbourhood,
             })
             .style("opacity", 0.5)
             ;
@@ -191,6 +191,7 @@ function reset() {
 
 function boroughStats(d, i){
   d3.select(".borough-name").text(d.properties.neighbourhood);
+  d3.select(".average-prices_total-properties").text(d.properties["stats"]["totalNumProperties"] + " properties");
 
   createPieChart(d, i);
 

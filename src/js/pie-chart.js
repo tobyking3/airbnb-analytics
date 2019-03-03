@@ -1,50 +1,118 @@
 import * as d3 from 'd3';
 
+var width = 150, height = 150, radius = Math.min(width, height) / 2;
+
 var ColorEntire = "#17c4ff";
 var ColorPrivate = "#00688b";
 var ColorShared = "#003445";
 
-var pieChartHeight = 200;
-var pieChartWidth = 200;
-var pieChartRadius = 100;
+var startValues = [
+  {"propertyType":"Entire home/apt","numberOfProperties":1},
+  {"propertyType":"Private room","numberOfProperties":1},
+  {"propertyType":"Shared room","numberOfProperties":1}
+]
 
-export default function createPieChart(data, i) {
+//setup svg
+var svg = d3.select(".panel-piechart-comparison")
+.append("svg")
+.attr("width", width)
+.attr("height", height)
+.append("g")
+.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  var propertiesData = data.properties.stats.propertiesComparison;
+//create segments group
+svg.append("g").attr("class", "segments");
 
-  var pieChartColors = d3.scaleOrdinal()
-  .domain(["Entire home/apt", "Private room", "Shared room"])
-  .range([ColorEntire, ColorPrivate, ColorShared]);
+//create pie chart
+var pie = d3.pie()
+  .sort(null)
+  .value(function(d) {return d.numberOfProperties;});
 
-  var arc = d3.arc()
-  .outerRadius(pieChartRadius)
+//define arc
+var arc = d3.arc()
+  .outerRadius(radius)
   .innerRadius(0);
 
-  var labelArc = d3.arc()
-  .outerRadius(pieChartRadius - 50)
-  .innerRadius(pieChartRadius - 50);
+//create key
+var key = function(d) { return d.data.propertyType; };
 
-  var pie = d3.pie()
-  .value(function(d) { return d.numberOfProperties; });
+//create colour scale
+var segmentColor = d3
+.scaleOrdinal()
+.range([ColorEntire, ColorPrivate, ColorShared])
+.domain(["Entire home/apt", "Private room", "Shared room"]);
 
-  var svgPieChart = d3.select(".panel-piechart-comparison")
-  .append("svg")
-  .attr("width", pieChartWidth)
-  .attr("height", pieChartHeight)
-  .append("g")
-  .attr("transform", "translate(" + pieChartWidth / 2 + "," + pieChartHeight / 2 + ")");
+//initialize pie chart
+update(startValues);
 
-  var g = svgPieChart.selectAll(".arc")
-  .data(pie(propertiesData))
-  .enter().append("g")
-  .attr("class", "arc");
+function mergeWithFirstEqualZero(first, second){
+  var secondSet = d3.set();
+  second.forEach(function(d) { secondSet.add(d.propertyType); });
 
-  g.append("path")
-  .attr("d", arc)
-  .style("fill", function(d) { return pieChartColors(d.data.propertyType)});
+  var onlyFirst = first
+  .filter(function(d){ return !secondSet.has(d.propertyType) })
+  .map(function(d) { return {propertyType: d.propertyType, numberOfProperties: 0}; });
 
-  g.append("text")
-  .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-  .attr("dy", ".35em")
-  .text(function(d) { return d.data.numberOfProperties; });
+  var sortedMerge = d3.merge([ second, onlyFirst ])
+  .sort(function(a, b) {
+    return d3.ascending(a.propertyType, b.propertyType);
+  });
+
+  return sortedMerge;
+}
+
+  function update(data) {
+
+    var duration = 500;
+
+    var oldData = svg
+    .select(".segments")
+    .selectAll("path")
+    .data()
+    .map(function(d) { return d.data });
+
+    if (oldData.length == 0) oldData = data;
+
+    var was = mergeWithFirstEqualZero(data, oldData);
+    var is = mergeWithFirstEqualZero(oldData, data);
+
+    var segment = svg.select(".segments")
+    .selectAll("path")
+    .data(pie(was), key);
+
+    segment.enter()
+    .insert("path")
+    .attr("class", "segment")
+    .style("fill", function(d) { return segmentColor(d.data.propertyType); })
+    .each(function(d) {this._current = d;});
+
+    segment = svg.select(".segments")
+    .selectAll("path")
+    .data(pie(is), key);
+
+    segment.transition()
+    .duration(duration)
+    .attrTween("d", function(d) {
+      var interpolate = d3.interpolate(this._current, d);
+      var _this = this;
+      return function(t) {
+        _this._current = interpolate(t);
+        return arc(_this._current);
+      };
+    });
+
+    segment = svg.select(".segments")
+    .selectAll("path")
+    .data(pie(data), key);
+
+    segment.exit()
+    .transition()
+    .delay(duration)
+    .duration(0)
+    .remove();
+  };
+
+export default function createPieChart(data, i) {
+  var _data = data.properties.stats.propertiesComparison
+  update(_data);
 }

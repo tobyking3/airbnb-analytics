@@ -19,22 +19,21 @@
 
   <div class="map-wrapper">
 
-    <div class="map"></div>
-
-    <div class="map-tooltip">
-      <p class="map-tooltip_price"></p>
-      <p class="map-tooltip_type"></p>
-      <p class="map-tooltip_description"></p>
+    <div class="map">
+      <div class="map-tooltip">
+        <p class="map-tooltip_price"></p>
+        <p class="map-tooltip_type"></p>
+        <p class="map-tooltip_description"></p>
+      </div>
     </div>
 
     <div class="map-panel">
       <h3 class="borough-name">London</h3>
-
+      <div><p class="average-prices_total-properties"></p></div>
+      <div class="panel-piechart-comparison"></div>
+      <%= require('./html/panel_room_type.html') %>
       <%= require('./html/panel_average_prices.html') %>
 
-      <%= require('./html/panel_room_type.html') %>
-
-      <div class="panel-piechart-comparison"></div>
     </div>
 
   </div>
