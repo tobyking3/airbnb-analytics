@@ -1,5 +1,7 @@
 import * as d3 from 'd3';
 
+//https://bl.ocks.org/rshaker/225c6df494811f46f6ea53eba63da817
+
 var width = 150, height = 150, radius = Math.min(width, height) / 2;
 
 var ColorEntire = "#17c4ff";
