@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import createPieChart from './pie-chart.js';
 
 var mWidth = 400;
 var mHeight = 300;
@@ -191,6 +192,8 @@ function reset() {
 function boroughStats(d, i){
   d3.select(".borough-name").text(d.properties.neighbourhood);
 
+  createPieChart(d, i);
+
   d3.select(".home-type-average").text("£" + Math.round(d.properties["stats"]["entireAveragePrice"]));
   d3.select(".home-type-properties").text(d.properties["stats"]["entireNumProperties"]);
   d3.select(".home-type-percentage").text((d.properties["stats"]["entirePercentage"] * 100).toFixed(2) + "%");
@@ -203,61 +206,3 @@ function boroughStats(d, i){
   d3.select(".shared-type-properties").text(d.properties["stats"]["sharedNumProperties"]);
   d3.select(".shared-type-percentage").text((d.properties["stats"]["sharedPercentage"] * 100).toFixed(2) + "%");
 }
-
-//======================PIE CHART=========================//
-
-
-var pieChartData = [
-  {
-    "type":"Entire home/apt",
-    "value":20
-  }, 
-  {
-    "type":"Shared room",
-    "value":50
-  }, 
-  {
-    "type":"Private room",
-    "value":30
-  }
-];
-
-var pieChartHeight = 200;
-var pieChartWidth = 200;
-var pieChartRadius = 100;
-
-var pieChartColors = d3.scaleOrdinal()
-    .domain(["Entire home/apt", "Private room", "Shared room"])
-    .range([ColorEntire, ColorPrivate, ColorShared]);
-
-var arc = d3.arc()
-    .outerRadius(pieChartRadius)
-    .innerRadius(0);
-
-var labelArc = d3.arc()
-    .outerRadius(pieChartRadius - 50)
-    .innerRadius(pieChartRadius - 50);
-
-var pie = d3.pie()
-    .value(function(d) { return d.value; });
-
-var svgPieChart = d3.select(".panel-piechart-comparison")
-  .append("svg")
-  .attr("width", pieChartWidth)
-  .attr("height", pieChartHeight)
-  .append("g")
-  .attr("transform", "translate(" + pieChartWidth / 2 + "," + pieChartHeight / 2 + ")");
-
-  var g = svgPieChart.selectAll(".arc")
-      .data(pie(pieChartData))
-    .enter().append("g")
-      .attr("class", "arc");
-
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return pieChartColors(d.data.type)});
-
-  g.append("text")
-      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-      .attr("dy", ".35em")
-      .text(function(d) { return d.data.value; });

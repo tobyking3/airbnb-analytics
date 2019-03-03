@@ -105,12 +105,17 @@ Object.keys(dSortedListings).forEach(function(key) {
     "privatePercentage": numberOfPrivateProperties / dSortedListings[key].length,
     "sharedAveragePrice": sharedAverage,
     "sharedNumProperties": numberOfSharedProperties,
-    "sharedPercentage": numberOfSharedProperties / dSortedListings[key].length
+    "sharedPercentage": numberOfSharedProperties / dSortedListings[key].length,
+    "propertiesComparison": [
+      {"propertyType":"Entire home/apt", "numberOfProperties":numberOfEntireProperties}, 
+      {"propertyType":"Private room", "numberOfProperties":numberOfPrivateProperties}, 
+      {"propertyType":"Shared room", "numberOfProperties":numberOfSharedProperties}
+    ]
   };
 });
 
 // console.log(JSON.stringify(dAverages));
-// console.log(dAverages);
+// console.log(JSON.stringify(dAverages["Barking and Dagenham"]["properties"]));
 
 dMap["features"].forEach(function(featuresItem){
   delete featuresItem["properties"]["Entire home/apt"];
@@ -122,6 +127,7 @@ dMap["features"].forEach(function(featuresItem){
   featuresItem["properties"]["stats"] = dAverages[neighbourhood];
 })
 
+// console.log(JSON.stringify(dMap));
 
 //Initialize Panel
 showPanel(0, "#17c4ff");
