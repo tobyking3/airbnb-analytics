@@ -160,16 +160,16 @@ div.map-tooltip {
 
 /*---------------------TABLE-----------------------*/
 
-table.panel-table-home, table.panel-table-shared, table.panel-table-private, table.panel-table-comparison {
+.average-prices_type table, .percentage-type-comparison {
   width: 100%;
   margin-top: 10px;
 }
 
-table.panel-table-home th, table.panel-table-shared th, table.panel-table-private th, table.panel-table-comparison th {
+.average-prices_type th, .percentage-type-comparison th {
   text-align: left;
 }
 
-table.panel-table-home td, table.panel-table-shared td, table.panel-table-private td, table.panel-table-comparison td {
+.average-prices_type td, .percentage-type-comparison td {
   text-align: right;
 }
 

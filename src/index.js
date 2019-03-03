@@ -5,33 +5,123 @@ import * as d3 from 'd3';
 import 'd3-selection-multi';
 import map from './js/map.js'
 import showPanel from './js/panel.js'
+import dListings from './data/listings.json'
+import dMap from './data/mapRaw.json'
+
+var dSortedListings = [];
+var dAverages = {};
+
+var neighbourhoodList =
+["Kingston upon Thames",
+"Croydon",
+"Bromley",
+"Hounslow",
+"Ealing",
+"Havering",
+"Hillingdon",
+"Harrow",
+"Brent",
+"Barnet",
+"Enfield",
+"Waltham Forest",
+"Redbridge",
+"Sutton",
+"Lambeth",
+"Southwark",
+"Lewisham",
+"Greenwich",
+"Bexley",
+"Richmond upon Thames",
+"Merton",
+"Wandsworth",
+"Hammersmith and Fulham",
+"Kensington and Chelsea",
+"City of London",
+"Westminster",
+"Camden",
+"Tower Hamlets",
+"Islington",
+"Hackney",
+"Haringey",
+"Newham",
+"Barking and Dagenham"];
+
+neighbourhoodList.forEach(function(nItem, nIndex){
+  dSortedListings[nItem] = [];
+    dListings.forEach(function(item, index){
+        if(item['neighbourhood'] === nItem){
+          dSortedListings[nItem].push(item);
+        }
+    });
+});
+
+Object.keys(dSortedListings).forEach(function(key) {
+  var totalEntirePrice = 0;
+  var totalPrivatePrice = 0;
+  var totalSharedPrice = 0;
+
+  var numberOfEntireProperties = 0;
+  var numberOfPrivateProperties = 0;
+  var numberOfSharedProperties = 0;
+
+  var entireAverage = 0;
+  var privateAverage = 0;
+  var sharedAverage = 0;
+
+  var entireUpper = 0;
+  var privateUpper = 0;
+  var sharedUpper = 0;
+
+  var entireLower = 0;
+  var privateLower = 0;
+  var sharedLower = 0;
+
+  dSortedListings[key].forEach(function(nItem, nIndex){
+    if(nItem["room_type"] === "Entire home/apt"){
+      numberOfEntireProperties++;
+      totalEntirePrice = totalEntirePrice + nItem["price"];
+    }
+    if(nItem["room_type"] === "Private room"){
+      numberOfPrivateProperties++;
+      totalPrivatePrice = totalPrivatePrice + nItem["price"];
+    }
+    if(nItem["room_type"] === "Shared room"){
+      numberOfSharedProperties++;
+      totalSharedPrice = totalSharedPrice + nItem["price"];
+    }
+  })
+
+  entireAverage = totalEntirePrice / numberOfEntireProperties;
+  privateAverage = totalPrivatePrice / numberOfPrivateProperties;
+  sharedAverage = totalSharedPrice / numberOfSharedProperties;
+
+  dAverages[key] = {
+    "totalNumProperties": dSortedListings[key].length,
+    "entireAveragePrice": entireAverage,
+    "entireNumProperties": numberOfEntireProperties,
+    "entirePercentage": numberOfEntireProperties / dSortedListings[key].length,
+    "privateAveragePrice": privateAverage,
+    "privateNumProperties": numberOfPrivateProperties,
+    "privatePercentage": numberOfPrivateProperties / dSortedListings[key].length,
+    "sharedAveragePrice": sharedAverage,
+    "sharedNumProperties": numberOfSharedProperties,
+    "sharedPercentage": numberOfSharedProperties / dSortedListings[key].length
+  };
+});
+
+// console.log(JSON.stringify(dAverages));
+// console.log(dAverages);
+
+dMap["features"].forEach(function(featuresItem){
+  delete featuresItem["properties"]["Entire home/apt"];
+  delete featuresItem["properties"]["Private room"];
+  delete featuresItem["properties"]["Shared room"];
+  delete featuresItem["properties"]["neighbourhood_group"];
+
+  var neighbourhood = featuresItem["properties"]["neighbourhood"];
+  featuresItem["properties"]["stats"] = dAverages[neighbourhood];
+})
+
 
 //Initialize Panel
 showPanel(0, "#17c4ff");
-
-
-function component() {
-  let element = document.createElement('div');
-  var btn = document.createElement('button');
-
-  element.innerHTML = _.join(['Airbnb', 'Analytics'], ' ');
-
-  btn.innerHTML = 'Click me and check the console!';
-  btn.onclick = printMe;
-
-  element.appendChild(btn);
-
-  return element;
-}
-
-let element = component(); // Store the element to re-render on print.js changes
-document.body.appendChild(element);
-
-if (module.hot) {
-  module.hot.accept('./print.js', function() {
-    console.log('Accepting the updated printMe module!');
-    document.body.removeChild(element);
-    element = component(); // Re-render the "component" to update the click handler
-    document.body.appendChild(element);
-  })
-}

@@ -190,9 +190,18 @@ function reset() {
 
 function boroughStats(d, i){
   d3.select(".borough-name").text(d.properties.neighbourhood);
-  d3.select(".home-type-average").text("£" + Math.round(d.properties["Entire home/apt"]));
-  d3.select(".private-type-average").text("£" + Math.round(d.properties["Private room"]));
-  d3.select(".shared-type-average").text("£" + Math.round(d.properties["Shared room"]));
+
+  d3.select(".home-type-average").text("£" + Math.round(d.properties["stats"]["entireAveragePrice"]));
+  d3.select(".home-type-properties").text(d.properties["stats"]["entireNumProperties"]);
+  d3.select(".home-type-percentage").text((d.properties["stats"]["entirePercentage"] * 100).toFixed(2) + "%");
+
+  d3.select(".private-type-average").text("£" + Math.round(d.properties["stats"]["privateAveragePrice"]));
+  d3.select(".private-type-properties").text(d.properties["stats"]["privateNumProperties"]);
+  d3.select(".private-type-percentage").text((d.properties["stats"]["privatePercentage"] * 100).toFixed(2) + "%");
+
+  d3.select(".shared-type-average").text("£" + Math.round(d.properties["stats"]["sharedAveragePrice"]));
+  d3.select(".shared-type-properties").text(d.properties["stats"]["sharedNumProperties"]);
+  d3.select(".shared-type-percentage").text((d.properties["stats"]["sharedPercentage"] * 100).toFixed(2) + "%");
 }
 
 //======================PIE CHART=========================//

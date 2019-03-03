@@ -64,9 +64,6 @@ module.exports = {
     HtmlWebpackPluginConfig,
     new webpack.HotModuleReplacementPlugin(),
     new CopyWebpackPlugin([
-      { from: 'src/data/MonthlySales.csv', to: 'MonthlySales.csv' }
-    ]),
-    new CopyWebpackPlugin([
       { from: 'src/data', to: './' }
     ])
   ],
