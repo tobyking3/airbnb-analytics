@@ -1,0 +1,105 @@
+.map-wrapper {
+  border-top: solid red;
+  border-bottom: solid red;
+  margin: 0 auto;
+  height: 80vh;
+}
+
+.map {
+  width: 70vw;
+  float: left;
+}
+
+.map_borough-path {
+    stroke: $off-white;
+    stroke-width: 0.5;
+    fill: "#a2e7ff";
+}
+
+.map_borough-label {
+  font-size: 0.35em;
+  text-anchor: right;
+}
+
+.map_borough-point {
+  cursor: pointer;
+}
+
+.map-panel {
+  text-align: center;
+  width: 25vw;
+  height: 500px;
+  float: left;
+}
+
+/*--------------------TOOLTIP--------------------*/
+
+div.map-tooltip {
+  background-color: $off-white;
+  position: absolute;     
+  width: 180px;          
+  height: 140px;         
+  padding: 2px;          
+  border: none;   
+  border-radius: 2px;     
+  pointer-events: none;
+  opacity: 0;
+
+  .map-tooltip_price {
+    text-align: center;
+    background: $blue-dark; 
+    font-size: 20px;
+    font-weight: 900;
+    color: $off-white;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 0;
+  }
+  .map-tooltip_type {
+    text-align: left;
+    color: grey;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .map-tooltip_description {
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+  }
+}
+
+/*---------------------PERCENTAGES-----------------------*/
+
+.average-prices_type table, .percentage-type-comparison {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.average-prices_type, .percentage-type-comparison {
+  th {text-align: left;}
+  td {text-align: right;}
+}
+
+/*---------------------AVERAGES--------------------------*/
+
+
+.average-prices_container{
+  width: 100%;
+  .average-prices_type {
+    display: none;
+  }
+}
+
+.average-prices_menu {
+  border-bottom: solid 3px blue;
+  button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px 2px 0px 0px;
+    width: 30%;
+  }
+  button:hover {
+    background-color: blue;
+  }
+}
