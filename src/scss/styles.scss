@@ -21,14 +21,14 @@ body {
 
 .page-section1 {
   background-color: $off-white;
-  height: calc(100vh - 58px);
-  width: 100vw;
+  height: calc(100vh - 47px);
+  width: 100%;
 }
 
 .page-section2 {
   background-color: $lavender;
-  height: calc(100vh - 58px);
-  width: 100vw;
+  height: calc(100vh - 47px);
+  width: 100%;
 }
 
 /*=================HEADERS====================*/
@@ -53,7 +53,6 @@ h3 {
 /*===================MENU=====================*/
 
 ul.main-menu {
-  width: 100vw;
   font-family: 'GilroyLight';
   list-style-type: none;
   margin: 0;

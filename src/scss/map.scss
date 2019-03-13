@@ -6,6 +6,12 @@ $padding: 15px;
     border-radius: 4px;
   }
 
+.box-style-dark {
+    background-color: #0A32A8;
+    box-shadow: 2px 2px 2px 2px #061c5e;
+    border-radius: 4px;
+  }
+
 /*-----------------MAP LAYOUT-------------------*/
 .map-layout-left {
   background:$lavender;
@@ -32,7 +38,7 @@ $padding: 15px;
     }
     .map-value-borough {
       font-family: 'GilroyBold';
-      font-size:34px;
+      font-size:40px;
       color:$darkblue;
       margin: 5px;
       margin-left: 10px;
@@ -58,7 +64,7 @@ $padding: 15px;
     }
     .map-value-properties {
       font-family: 'GilroyBold';
-      font-size:34px;
+      font-size:40px;
       color:$darkblue;
       margin: 5px;
       margin-left: 10px;
@@ -153,20 +159,58 @@ div.map-tooltip {
 
 /*---------------------STATS-----------------------*/
 
-.average-prices_menu {
-  background-color: red;
+.panel-select-type {
+  select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 30px;
+   width: calc(100% - #{$padding} * 2);
+   color: #fff;
+   outline: none;
+   cursor: pointer;
+ }
 
-  .average-prices_type-btn {
-    width: calc(100% - #{$padding} * 2);
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+ margin-left: $padding;
+ margin-right: $padding;
+ height: 30px;
+ overflow: hidden;
+ width: calc(100% - #{$padding} * 2);
+ -webkit-border-radius: 4px;
+ -moz-border-radius: 4px;
+ border-radius: 4px;
+ background-color: $toyblue;
+}
+
+.panel-pie-key{
+  font-family: 'GilroyLight';
+  color: $off-white;
+  .panel-pie-key-entire svg {fill: $entire;}
+  .panel-pie-key-private svg {fill: $private;}
+  .panel-pie-key-shared svg {fill: $shared;}
+  div{
+    margin: $padding;
   }
 }
+
+.panel-average, .panel-properties {
+  margin-left: $padding;
+  margin-right: $padding;
+}
+
+.panel-average-label, .panel-properties-label {
+  color: $off-white;
+  font-family: 'GilroyLight'
+}
+
+.panel-average-value, .panel-properties-value {
+  margin: 0;
+  color: white;
+  font-family: 'GilroyBold';
+  font-size: 50px;
+  text-align: center;
+}
+
 
 // .average-prices_type table, .percentage-type-comparison {
 //   width: 100%;

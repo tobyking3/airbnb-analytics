@@ -41,14 +41,41 @@
 
     <div class="map-layout-right">
       <div class="panel-pie-chart box-style"></div>
-      <div class="panel-pie-key"></div>
-      <!-- <div class="average-prices_menu">
-        <button class="average-prices_type-btn" id="average-prices_type-btn--home">Home / Apartment</button>
-        <button class="average-prices_type-btn" id="average-prices_type-btn--private">Private Room</button>
-        <button class="average-prices_type-btn" id="average-prices_type-btn--shared">Shared Room</button>
-      </div> -->
-      <div class="panel-average"></div>
-      <div class="panel-properties"></div>
+      <div class="panel-pie-key">
+        <div class="panel-pie-key-entire">
+          <svg width="20px" height="20px">
+            <rect x="0" y="0" width="20" height="20" rx="4" ry="4" />
+          </svg>
+          Home / Apartment
+        </div>
+        <div class="panel-pie-key-private">
+          <svg width="20px" height="20px">
+            <rect x="0" y="0" width="20" height="20" rx="4" ry="4" />
+          </svg>
+          Private Room
+        </div>
+        <div class="panel-pie-key-shared">
+          <svg width="20px" height="20px">
+            <rect x="0" y="0" width="20" height="20" rx="4" ry="4" />
+          </svg>
+          Shared Room
+        </div>
+      </div>
+      <div class="panel-select-type panel-select-type-color">
+          <select>
+            <option>Home / Apartment</option>
+            <option>Private Room</option>
+            <option>Shared Room</option>
+          </select>
+      </div>
+      <div class="panel-average box-style-dark">
+        <p class="panel-average-label">Average Price</p>
+        <p class="panel-average-value">£89.39</p>
+      </div>
+      <div class="panel-properties box-style-dark">
+        <p class="panel-properties-label">Number of Properties</p>
+        <p class="panel-properties-value">437</p>
+      </div>
     </div>
     
   </div>

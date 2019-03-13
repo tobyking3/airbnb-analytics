@@ -5,9 +5,9 @@ var mWidth = 400;
 var mHeight = 250;
 var mScale = 20000;
 
-var ColorEntire = "#17c4ff"
-var ColorPrivate = "#00688b"
-var ColorShared = "#003445"
+var ColorEntire = "#DC2B61"
+var ColorPrivate = "#FFBA01"
+var ColorShared = "#57DEE3"
 
 var active = d3.select(null);
 
@@ -49,24 +49,24 @@ d3.csv("listings.csv").then(function(csv){
       })
       .on("click", clicked);
 
-    // svgMap.selectAll('.property-label')
-    //   .data(csv)
-    //   .enter()
-    //   .append('circle')
-    //     .each(function(d) {
-    //       d3.select(this)
-    //         .attrs({
-    //           "r": "0.4px",
-    //           "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
-    //           "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
-    //           "fill": propertyTypeColor(d.room_type),
-    //           "class": "point-" + d.neighbourhood,
-    //         })
-    //         .style("opacity", 0.5)
-    //         ;
-    //     })        
-    //     .on("mouseover", showPropertyDetails)
-    //     .on("mouseout", hidePropertyDetails);
+    svgMap.selectAll('.property-label')
+      .data(csv)
+      .enter()
+      .append('circle')
+        .each(function(d) {
+          d3.select(this)
+            .attrs({
+              "r": "0.2px",
+              "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
+              "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
+              "fill": propertyTypeColor(d.room_type),
+              "class": "point-" + d.neighbourhood,
+            })
+            .style("opacity", 0)
+            ;
+        })        
+        .on("mouseover", showPropertyDetails)
+        .on("mouseout", hidePropertyDetails);
 
     svgMap.selectAll('.map_borough-point')
       .data(json.features)
@@ -190,6 +190,10 @@ function reset() {
 }
 
 function boroughStats(d, i){
+  d3.selectAll(".point-" + d.properties.neighbourhood)
+    .style("opacity", 0.5);
+
+
   d3.select(".map-value-borough").text(d.properties.neighbourhood);
   d3.select(".map-value-properties").text(d.properties["stats"]["totalNumProperties"]);
 
