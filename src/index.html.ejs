@@ -5,45 +5,55 @@
 </head>
 <body>
 
-  <div class="header">
-    <h1>Airbnb Analytics</h1>
+  <div class="page-section1">
+    <div class="header">
+      <h1>Airbnb Analytics</h1>
+    </div>
   </div>
 
   <ul class="main-menu">
-    <li><a class="active" href="#home">Home</a></li>
-    <li><a href="#news">Location</a></li>
-    <li><a href="#contact">Property Type</a></li>
+    <li><a class="active" href="#about">About</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+    <li><a href="#calculator">Calculator</a></li>
   </ul>
 
-  <!-- MAP ----------------------------------------------->
-
-  <div class="map-wrapper">
-
-    <div class="map">
+  <div class="page-section2">
+    <div class="map-layout-left">
+      <div class="map-layout-borough box-style">
+        <p class="map-label-borough">Borough:</p>
+        <p class="map-value-borough">Camden</p>
+      </div>
+      <div class="map-layout-properties box-style">
+        <p class="map-label-properties">Properties:</p>
+        <p class="map-value-properties">389</p>
+      </div>
+      <div class="map-layout-map">
+        
+      </div>
     </div>
-    <div class="map-tooltip">
+
+    <div class="map-layout-right">
+
+    </div>
+    <!-- <div class="map-wrapper">
+
+      <div class="map"></div>
+
+      <div class="map-tooltip">
         <p class="map-tooltip_price"></p>
         <p class="map-tooltip_type"></p>
         <p class="map-tooltip_description"></p>
       </div>
 
-    <div class="map-panel">
-      <h3 class="borough-name">London</h3>
-      <div><p class="average-prices_total-properties"></p></div>
-      <div class="panel-piechart-comparison"></div>
-      <%= require('./html/panel_room_type.html') %>
-      <%= require('./html/panel_average_prices.html') %>
-
-    </div>
-
+      <div class="map-panel">
+        <h3 class="borough-name">London</h3>
+        <div><p class="average-prices_total-properties"></p></div>
+        <div class="panel-piechart-comparison"></div>
+        <%= require('./html/panel_room_type.html') %>
+        <%= require('./html/panel_average_prices.html') %>
+      </div>
+    </div> -->
   </div>
-
-  <!-- CHARTS -------------------------------------------->
-
-  <div class="chart-wrapper">
-    <%= require('./html/chart_line.html') %>
-    <!-- <%= require('./html/chart_bar.html') %> -->
-  </div>
-
 </body>
 </html>

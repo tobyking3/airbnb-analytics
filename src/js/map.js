@@ -49,24 +49,24 @@ d3.csv("listings.csv").then(function(csv){
       })
       .on("click", clicked);
 
-    svgMap.selectAll('.property-label')
-      .data(csv)
-      .enter()
-      .append('circle')
-        .each(function(d) {
-          d3.select(this)
-            .attrs({
-              "r": "0.4px",
-              "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
-              "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
-              "fill": propertyTypeColor(d.room_type),
-              "class": "point-" + d.neighbourhood,
-            })
-            .style("opacity", 0.5)
-            ;
-        })        
-        .on("mouseover", showPropertyDetails)
-        .on("mouseout", hidePropertyDetails);
+    // svgMap.selectAll('.property-label')
+    //   .data(csv)
+    //   .enter()
+    //   .append('circle')
+    //     .each(function(d) {
+    //       d3.select(this)
+    //         .attrs({
+    //           "r": "0.4px",
+    //           "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
+    //           "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
+    //           "fill": propertyTypeColor(d.room_type),
+    //           "class": "point-" + d.neighbourhood,
+    //         })
+    //         .style("opacity", 0.5)
+    //         ;
+    //     })        
+    //     .on("mouseover", showPropertyDetails)
+    //     .on("mouseout", hidePropertyDetails);
 
     svgMap.selectAll('.map_borough-point')
       .data(json.features)
