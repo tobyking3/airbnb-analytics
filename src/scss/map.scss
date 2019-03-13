@@ -1,19 +1,94 @@
-.map-wrapper {
-  border-top: solid red;
-  border-bottom: solid red;
-  margin: 0 auto;
-  height: 80vh;
+$padding: 15px;
+
+.box-style {
+    background-color: $off-white;
+    box-shadow: 2px 2px 2px 2px #D9E3FC;
+    border-radius: 4px;
+  }
+
+/*-----------------MAP LAYOUT-------------------*/
+.map-layout-left {
+  background:$lavender;
+  height: 100%;
+  width: 70%;
+  float: left;
+
+  .map-layout-borough {
+    width: calc(75% - #{$padding} * 1.5);
+    height: 80px;
+    float: left;
+
+    margin-right:calc(#{$padding} / 2);
+    margin-left:$padding;
+    margin-top:$padding;
+    margin-bottom:$padding;
+
+    .map-label-borough {
+      font-family: 'GilroyLight';
+      font-size:12px;
+      color:$toyblue;
+      margin: 5px;
+      margin-left: 10px;
+    }
+    .map-value-borough {
+      font-family: 'GilroyBold';
+      font-size:34px;
+      color:$darkblue;
+      margin: 5px;
+      margin-left: 10px;
+    }
+  }
+
+  .map-layout-properties {
+    width: calc(25% - #{$padding} * 1.5);
+    height: 80px;
+    float: left;
+
+    margin-right:$padding;
+    margin-left:calc(#{$padding} / 2);
+    margin-top:$padding;
+    margin-bottom:$padding;
+
+    .map-label-properties {
+      font-family: 'GilroyLight';
+      font-size:12px;
+      color:$toyblue;
+      margin: 5px;
+      margin-left: 10px;
+    }
+    .map-value-properties {
+      font-family: 'GilroyBold';
+      font-size:34px;
+      color:$darkblue;
+      margin: 5px;
+      margin-left: 10px;
+    }
+  }
+
+  .map {
+    clear: both;
+    width: calc(100% - #{$padding} * 2);
+    margin-right:$padding;
+    margin-left:$padding;
+    margin-top:0;
+    margin-bottom:$padding;
+  }
+
 }
 
-.map {
-  width: 70vw;
+.map-layout-right {
+  background:$darkblue;
+  height: 100%;
+  width: 30%;
   float: left;
 }
+
+/*--------------------MAP-----------------------*/
 
 .map_borough-path {
     stroke: $off-white;
     stroke-width: 0.5;
-    fill: "#a2e7ff";
+    fill: #e4e4e4;
 }
 
 .map_borough-label {
@@ -23,13 +98,6 @@
 
 .map_borough-point {
   cursor: pointer;
-}
-
-.map-panel {
-  text-align: center;
-  width: 25vw;
-  height: 500px;
-  float: left;
 }
 
 /*--------------------TOOLTIP--------------------*/
@@ -68,38 +136,68 @@ div.map-tooltip {
   }
 }
 
-/*---------------------PERCENTAGES-----------------------*/
+/*---------------------PANEL-----------------------*/
 
-.average-prices_type table, .percentage-type-comparison {
-  width: 100%;
-  margin-top: 10px;
+.panel-pie-chart {
+  margin: $padding;
+  padding-top: $padding;
+  padding-bottom: $padding;
+  width: calc(100% - #{$padding} * 2);
+  box-shadow: none;
 }
 
-.average-prices_type, .percentage-type-comparison {
-  th {text-align: left;}
-  td {text-align: right;}
+.panel-pie-chart svg {
+  display: block;
+  margin: 0 auto;
 }
 
-/*---------------------AVERAGES--------------------------*/
-
-
-.average-prices_container{
-  width: 100%;
-  .average-prices_type {
-    display: none;
-  }
-}
+/*---------------------STATS-----------------------*/
 
 .average-prices_menu {
-  border-bottom: solid 3px blue;
-  button {
+  background-color: red;
+
+  .average-prices_type-btn {
+    width: calc(100% - #{$padding} * 2);
+    background-color: #4CAF50; /* Green */
     border: none;
-    outline: none;
-    cursor: pointer;
-    border-radius: 2px 2px 0px 0px;
-    width: 30%;
-  }
-  button:hover {
-    background-color: blue;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
   }
 }
+
+// .average-prices_type table, .percentage-type-comparison {
+//   width: 100%;
+//   margin-top: 10px;
+// }
+
+// .average-prices_type, .percentage-type-comparison {
+//   th {text-align: left;}
+//   td {text-align: right;}
+// }
+
+// /*---------------------AVERAGES--------------------------*/
+
+
+// .average-prices_container{
+//   width: 100%;
+//   .average-prices_type {
+//     display: none;
+//   }
+// }
+
+// .average-prices_menu {
+//   border-bottom: solid 3px blue;
+//   button {
+//     border: none;
+//     outline: none;
+//     cursor: pointer;
+//     border-radius: 2px 2px 0px 0px;
+//     width: 30%;
+//   }
+//   button:hover {
+//     background-color: blue;
+//   }
+// }

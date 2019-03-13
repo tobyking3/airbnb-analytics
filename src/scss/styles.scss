@@ -2,8 +2,6 @@
 @import "map";
 @import "chart";
 
-$padding: 30px;
-
 @font-face {
   font-family: 'GilroyLight';
   font-weight: 800;
@@ -14,7 +12,10 @@ $padding: 30px;
   src:  url('../fonts/Gilroy-ExtraBold.woff') format('woff');
 }
 
-body {margin: 0;}
+body {
+  // overflow-x: hidden;
+  margin: 0;
+}
 
 /*=================PAGE SECTION================*/
 
@@ -52,6 +53,7 @@ h3 {
 /*===================MENU=====================*/
 
 ul.main-menu {
+  width: 100vw;
   font-family: 'GilroyLight';
   list-style-type: none;
   margin: 0;
@@ -83,91 +85,6 @@ ul.main-menu {
       pointer-events: none;
     }
   }
-}
-
-/*=================MAP LAYOUT===================*/
-.map-layout-left {
-  background:$lavender;
-  height: 100%;
-  width: 70%;
-  position: absolute;
-
-  .box-style {
-    height: 80px;
-    margin: $padding;
-    background-color: $off-white;
-    position: absolute;
-    box-shadow: 2px 2px 2px 2px #D9E3FC;
-    border-radius: 4px;
-  }
-
-  .map-layout-borough {
-    width: calc(75% - #{$padding} - #{$padding} / 2);
-    .map-label-borough {
-      font-family: 'GilroyLight';
-      font-size:12px;
-      color:$toyblue;
-      margin: 5px;
-      margin-left: 10px;
-    }
-    .map-value-borough {
-      font-family: 'GilroyBold';
-      font-size:34px;
-      color:$darkblue;
-      margin: 5px;
-      margin-left: 10px;
-    }
-  }
-
-  .map-layout-properties {
-    width: calc(25% - #{$padding} - #{$padding} / 2);
-    right: 0px;
-    .map-label-properties {
-      font-family: 'GilroyLight';
-      font-size:12px;
-      color:$toyblue;
-      margin: 5px;
-      margin-left: 10px;
-    }
-    .map-value-properties {
-      font-family: 'GilroyBold';
-      font-size:34px;
-      color:$darkblue;
-      margin: 5px;
-      margin-left: 10px;
-    }
-  }
-
-  .map-layout-map {
-    width: calc(100% - $padding * 2);
-    height: 20px;
-    background-color: red;
-    position: absolute;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.map-layout-right {
-  background:$darkblue;
-  height: 100%;
-  width: 30%;
-  position: absolute;
-  right: 0;
 }
 
 

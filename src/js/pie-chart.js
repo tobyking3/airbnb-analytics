@@ -2,11 +2,11 @@ import * as d3 from 'd3';
 
 //https://bl.ocks.org/rshaker/225c6df494811f46f6ea53eba63da817
 
-var width = 150, height = 150, radius = Math.min(width, height) / 2;
+var width = 200, height = 200, radius = Math.min(width, height) / 2;
 
-var ColorEntire = "#17c4ff";
-var ColorPrivate = "#00688b";
-var ColorShared = "#003445";
+var ColorEntire = "#DC2B61";
+var ColorPrivate = "#FFBA01";
+var ColorShared = "#57DEE3";
 
 var startValues = [
   {"propertyType":"Entire home/apt","numberOfProperties":1},
@@ -15,7 +15,7 @@ var startValues = [
 ]
 
 //setup svg
-var svg = d3.select(".panel-piechart-comparison")
+var svg = d3.select(".panel-pie-chart")
 .append("svg")
 .attr("width", width)
 .attr("height", height)

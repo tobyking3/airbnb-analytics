@@ -2,8 +2,8 @@ import * as d3 from 'd3';
 import createPieChart from './pie-chart.js';
 
 var mWidth = 400;
-var mHeight = 300;
-var mScale = 23000;
+var mHeight = 250;
+var mScale = 20000;
 
 var ColorEntire = "#17c4ff"
 var ColorPrivate = "#00688b"
@@ -76,8 +76,8 @@ d3.csv("listings.csv").then(function(csv){
             .attrs({
               "r": 2,
               "transform": function(d) { return "translate(" + path.centroid(d) + ")"; },
-              "fill": "#008ab9",
-              "stroke": "#005673",
+              "fill": "#3E67FF",
+              "stroke": "#082783",
               "class": "map_borough-point"
             });
         })
@@ -190,8 +190,8 @@ function reset() {
 }
 
 function boroughStats(d, i){
-  d3.select(".borough-name").text(d.properties.neighbourhood);
-  d3.select(".average-prices_total-properties").text(d.properties["stats"]["totalNumProperties"] + " properties");
+  d3.select(".map-value-borough").text(d.properties.neighbourhood);
+  d3.select(".map-value-properties").text(d.properties["stats"]["totalNumProperties"]);
 
   createPieChart(d, i);
 

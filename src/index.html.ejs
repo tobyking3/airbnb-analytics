@@ -20,40 +20,38 @@
 
   <div class="page-section2">
     <div class="map-layout-left">
-      <div class="map-layout-borough box-style">
-        <p class="map-label-borough">Borough:</p>
-        <p class="map-value-borough">Camden</p>
+      <div class="map-layout-headers">
+        <div class="map-layout-borough box-style">
+          <p class="map-label-borough">Borough:</p>
+          <p class="map-value-borough">Camden</p>
+        </div>
+        <div class="map-layout-properties box-style">
+          <p class="map-label-properties">Properties:</p>
+          <p class="map-value-properties">389</p>
+        </div>
       </div>
-      <div class="map-layout-properties box-style">
-        <p class="map-label-properties">Properties:</p>
-        <p class="map-value-properties">389</p>
-      </div>
-      <div class="map-layout-map">
-        
-      </div>
-    </div>
 
-    <div class="map-layout-right">
-
-    </div>
-    <!-- <div class="map-wrapper">
-
-      <div class="map"></div>
-
+      <div class="map box-style"></div>
       <div class="map-tooltip">
         <p class="map-tooltip_price"></p>
         <p class="map-tooltip_type"></p>
         <p class="map-tooltip_description"></p>
       </div>
+    </div>
 
-      <div class="map-panel">
-        <h3 class="borough-name">London</h3>
-        <div><p class="average-prices_total-properties"></p></div>
-        <div class="panel-piechart-comparison"></div>
-        <%= require('./html/panel_room_type.html') %>
-        <%= require('./html/panel_average_prices.html') %>
-      </div>
-    </div> -->
+    <div class="map-layout-right">
+      <div class="panel-pie-chart box-style"></div>
+      <div class="panel-pie-key"></div>
+      <!-- <div class="average-prices_menu">
+        <button class="average-prices_type-btn" id="average-prices_type-btn--home">Home / Apartment</button>
+        <button class="average-prices_type-btn" id="average-prices_type-btn--private">Private Room</button>
+        <button class="average-prices_type-btn" id="average-prices_type-btn--shared">Shared Room</button>
+      </div> -->
+      <div class="panel-average"></div>
+      <div class="panel-properties"></div>
+    </div>
+    
   </div>
+
 </body>
 </html>
