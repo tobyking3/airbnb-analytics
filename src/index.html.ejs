@@ -32,6 +32,7 @@
       </div>
 
       <div class="map box-style"></div>
+
       <div class="map-tooltip">
         <p class="map-tooltip_price"></p>
         <p class="map-tooltip_type"></p>
@@ -62,19 +63,23 @@
         </div>
       </div>
       <div class="panel-select-type panel-select-type-color">
-          <select>
-            <option>Home / Apartment</option>
-            <option>Private Room</option>
-            <option>Shared Room</option>
+          <select id="panel-select-type-property">
+            <option value="Entire home/apt">Home / Apartment</option>
+            <option value="Private room">Private Room</option>
+            <option value="Shared room">Shared Room</option>
           </select>
       </div>
       <div class="panel-average box-style-dark">
         <p class="panel-average-label">Average Price</p>
-        <p class="panel-average-value">£89.39</p>
+        <p class="panel-average-value panel-average-value_entire"></p>
+        <p class="panel-average-value panel-average-value_private"></p>
+        <p class="panel-average-value panel-average-value_shared"></p>
       </div>
       <div class="panel-properties box-style-dark">
         <p class="panel-properties-label">Number of Properties</p>
-        <p class="panel-properties-value">437</p>
+        <p class="panel-properties-value panel-properties-value_entire"></p>
+        <p class="panel-properties-value panel-properties-value_private"></p>
+        <p class="panel-properties-value panel-properties-value_shared"></p>
       </div>
     </div>
     
