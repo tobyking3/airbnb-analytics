@@ -1,6 +1,6 @@
 @import "colours";
 @import "map";
-@import "chart";
+@import "calendar";
 
 @font-face {
   font-family: 'GilroyLight';
@@ -11,6 +11,8 @@
   font-family: 'GilroyBold';
   src:  url('../fonts/Gilroy-ExtraBold.woff') format('woff');
 }
+
+$padding: 15px;
 
 body {
   // overflow-x: hidden;
@@ -31,6 +33,13 @@ body {
   width: 100%;
 }
 
+.page-section3 {
+  padding-top: $padding;
+  background-color: $off-white;
+  height: calc(100vh - 47px);
+  width: 100%;
+}
+
 /*=================HEADERS====================*/
 
 h1 {
@@ -43,6 +52,14 @@ h1 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+h2 {
+  font-family: 'GilroyBold';
+  font-size:40px;
+  color:$darkblue;
+  margin-top: $padding;
+  margin-bottom: $padding;
 }
 
 h3 {
@@ -86,6 +103,16 @@ ul.main-menu {
   }
 }
 
+.box-style {
+    background-color: $off-white;
+    box-shadow: 2px 2px 2px 2px #D9E3FC;
+    border-radius: 4px;
+  }
 
+.box-style-dark {
+    background-color: #0A32A8;
+    box-shadow: 2px 2px 2px 2px #061c5e;
+    border-radius: 4px;
+  }
 
 

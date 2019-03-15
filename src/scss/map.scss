@@ -1,17 +1,5 @@
 $padding: 15px;
 
-.box-style {
-    background-color: $off-white;
-    box-shadow: 2px 2px 2px 2px #D9E3FC;
-    border-radius: 4px;
-  }
-
-.box-style-dark {
-    background-color: #0A32A8;
-    box-shadow: 2px 2px 2px 2px #061c5e;
-    border-radius: 4px;
-  }
-
 /*-----------------MAP LAYOUT-------------------*/
 .map-layout-left {
   background:$lavender;
@@ -204,7 +192,7 @@ div.map-tooltip {
 
 .panel-average-value, .panel-properties-value {
   margin: 0;
-  color: white;
+  color: $off-white;
   font-family: 'GilroyBold';
   font-size: 50px;
   text-align: center;

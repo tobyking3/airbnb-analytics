@@ -6,9 +6,7 @@
 <body>
 
   <div class="page-section1">
-    <div class="header">
-      <h1>Airbnb Analytics</h1>
-    </div>
+    <%= require('./html/landing-page.html') %>
   </div>
 
   <ul class="main-menu">
@@ -19,70 +17,11 @@
   </ul>
 
   <div class="page-section2">
-    <div class="map-layout-left">
-      <div class="map-layout-headers">
-        <div class="map-layout-borough box-style">
-          <p class="map-label-borough">Borough:</p>
-          <p class="map-value-borough">Camden</p>
-        </div>
-        <div class="map-layout-properties box-style">
-          <p class="map-label-properties">Properties:</p>
-          <p class="map-value-properties">389</p>
-        </div>
-      </div>
+    <%= require('./html/map.html') %>
+  </div>
 
-      <div class="map box-style"></div>
-
-      <div class="map-tooltip">
-        <p class="map-tooltip_price"></p>
-        <p class="map-tooltip_type"></p>
-        <p class="map-tooltip_description"></p>
-      </div>
-    </div>
-
-    <div class="map-layout-right">
-      <div class="panel-pie-chart box-style"></div>
-      <div class="panel-pie-key">
-        <div class="panel-pie-key-entire">
-          <svg width="20px" height="20px">
-            <rect x="0" y="0" width="20" height="20" rx="4" ry="4" />
-          </svg>
-          Home / Apartment
-        </div>
-        <div class="panel-pie-key-private">
-          <svg width="20px" height="20px">
-            <rect x="0" y="0" width="20" height="20" rx="4" ry="4" />
-          </svg>
-          Private Room
-        </div>
-        <div class="panel-pie-key-shared">
-          <svg width="20px" height="20px">
-            <rect x="0" y="0" width="20" height="20" rx="4" ry="4" />
-          </svg>
-          Shared Room
-        </div>
-      </div>
-      <div class="panel-select-type panel-select-type-color">
-          <select id="panel-select-type-property">
-            <option value="Entire home/apt">Home / Apartment</option>
-            <option value="Private room">Private Room</option>
-            <option value="Shared room">Shared Room</option>
-          </select>
-      </div>
-      <div class="panel-average box-style-dark">
-        <p class="panel-average-label">Average Price</p>
-        <p class="panel-average-value panel-average-value_entire"></p>
-        <p class="panel-average-value panel-average-value_private"></p>
-        <p class="panel-average-value panel-average-value_shared"></p>
-      </div>
-      <div class="panel-properties box-style-dark">
-        <p class="panel-properties-label">Number of Properties</p>
-        <p class="panel-properties-value panel-properties-value_entire"></p>
-        <p class="panel-properties-value panel-properties-value_private"></p>
-        <p class="panel-properties-value panel-properties-value_shared"></p>
-      </div>
-    </div>
-    
+  <div class="page-section3">
+    <%= require('./html/calendar.html') %>
   </div>
 
 </body>

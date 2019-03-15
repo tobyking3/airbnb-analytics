@@ -56,7 +56,7 @@ function buildLine(ds){
     .x(function(d) {return xScale(getDate(d.date));})
     .y(function(d) {return yScale(d.num_properties);})
 
-  var svg = d3.select(".lineChart").append("svg")
+  var svg = d3.select(".line-chart").append("svg")
     .attr("width", w)
     .attr("height", h)
     .attr("id", "svg-bookings");

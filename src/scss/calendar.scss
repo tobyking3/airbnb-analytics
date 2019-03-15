@@ -1,0 +1,43 @@
+$padding: 15px;
+
+.calendar-title {
+    margin-left: $padding;
+    margin-right: $padding;
+    border-top: 2px dotted $lavender;
+}
+
+.calendar-description {
+    overflow: auto;
+    margin-top: $padding;
+    margin-left: $padding;
+    margin-right: $padding;
+    padding-left: $padding;
+    padding-right: $padding;
+
+    p {
+        color: $off-white;
+        font-family: 'GilroyLight'
+    }
+}
+
+.line-chart {
+    margin-top: $padding;
+    margin-left: $padding;
+    margin-right: $padding;
+}
+
+// .x-axis path, .y-axis path, .x-axis line, .y-axis line {
+//   fill: none;
+//   stroke: black;
+//   shape-rendering: crispEdges;
+// }
+
+// .x-axis text, .y-axis text {
+//   font-family: sans-serif;
+//   font-size: 10px;
+// }
+
+// h2 {
+//   font-weight: 300;
+//   font-size: 16px;
+// }
