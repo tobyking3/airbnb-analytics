@@ -1,4 +1,23 @@
 import * as d3 from 'd3';
+import calendar_data from '../data/calendar.json';
+
+// var newArray = [];
+// var newObj = {};
+
+// for (var borough in calendar_data) {
+//   newObj[borough] = [];
+//   for (var date in calendar_data[borough]) {
+//     var formattedDate = date.replace(/-/g,"");
+//     newObj[borough].push(
+//       {
+//         "date":formattedDate,
+//         "booked":calendar_data[borough][date]
+//       }
+//     );
+//   }
+// }
+
+// console.log(JSON.stringify(newObj));
 
 //======================JSON DATA=============================================================
 
@@ -6,13 +25,13 @@ const h = 500;
 const w = 900;
 const padding = 20;
 
-d3.csv("properties-booked.csv").then(function(data) {
-  buildLine(data)
-  d3.select("select").on("change", function(d, i){
-    var sel=d3.select("#date-option").node().value;
-        data.splice(0,data.length-sel)
-        updateLine(data);
-  })
+d3.json("calendar-array.json").then(function(data) {
+  buildLine(data['Barking and Dagenham'])
+  // d3.select("select").on("change", function(d, i){
+  //   var sel=d3.select("#date-option").node().value;
+  //       data.splice(0,data.length-sel)
+  //       updateLine(data);
+  // })
 })
 
 function getDate(d){
@@ -25,12 +44,12 @@ function getDate(d){
 }
 
 function buildLine(ds){
-
+  console.log(ds);
   var xMin = d3.min(ds, function(d){return d.date;});
   var xMax = d3.max(ds, function(d){return d.date;});
 
-  var yMin = (d3.min(ds, function(d){return d.num_properties;}) - 500 );
-  var yMax = d3.max(ds, function(d){return d.num_properties;});
+  var yMin = (d3.min(ds, function(d){return d.booked;}));
+  var yMax = d3.max(ds, function(d){return d.booked;});
 
   var minDate = getDate(ds[0]['date']);
   var maxDate = getDate(ds[ds.length - 1]['date']);
@@ -54,7 +73,7 @@ function buildLine(ds){
 
   var externalLine = d3.line()
     .x(function(d) {return xScale(getDate(d.date));})
-    .y(function(d) {return yScale(d.num_properties);})
+    .y(function(d) {return yScale(d.booked);})
 
   var svg = d3.select(".line-chart").append("svg")
     .attr("width", w)
@@ -87,8 +106,8 @@ function buildLine(ds){
 
 function updateLine(ds){
 
-  var yMin = (d3.min(ds, function(d){return d.num_properties;}) - 500 );
-  var yMax = d3.max(ds, function(d){return d.num_properties;});
+  var yMin = (d3.min(ds, function(d){return d.booked;}) - 500 );
+  var yMax = d3.max(ds, function(d){return d.booked;});
 
   var minDate = getDate(ds[0]['date']);
   var maxDate = getDate(ds[ds.length - 1]['date']);
@@ -116,7 +135,7 @@ function updateLine(ds){
 
   var externalLine = d3.line()
     .x(function(d) {return xScale(getDate(d.date));})
-    .y(function(d) {return yScale(d.num_properties);})
+    .y(function(d) {return yScale(d.booked);})
 
   var svg = d3.select(".lineChart").select("#svg-bookings");
 
