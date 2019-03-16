@@ -3,7 +3,7 @@ $padding: 15px;
 .calendar-title {
     margin-left: $padding;
     margin-right: $padding;
-    border-top: 2px dotted $lavender;
+    border-top: 3px dotted $off-white;
 }
 
 .calendar-description {
@@ -24,8 +24,22 @@ $padding: 15px;
     margin-top: $padding;
     margin-left: $padding;
     margin-right: $padding;
+
+    padding: $padding;
 }
 
+.path-bookings {
+    stroke: $toyblue;
+    stroke-width: 1;
+    fill: none;
+}
+
+.calendar-borough-wrapper{
+
+ }
+ #calendar-borough-select{
+
+ }
 // .x-axis path, .y-axis path, .x-axis line, .y-axis line {
 //   fill: none;
 //   stroke: black;
