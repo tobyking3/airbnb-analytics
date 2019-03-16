@@ -6,19 +6,44 @@ $padding: 15px;
     border-top: 3px dotted $off-white;
 }
 
-.calendar-description {
-    overflow: auto;
-    margin-top: $padding;
-    margin-left: $padding;
-    margin-right: $padding;
-    padding-left: $padding;
-    padding-right: $padding;
-
-    p {
-        color: $off-white;
-        font-family: 'GilroyLight'
+.calendar-borough-wrapper {
+    width: calc(100% - #{$padding} * 2);
+    select  {
+      width: calc(100% - #{$padding} * 2);
     }
 }
+
+.calendar-panel {
+    margin-left: $padding;
+    margin-right: $padding;
+    p {
+        margin-top: 0;
+    }
+};
+
+.calendar-panel::after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.calendar-panel-text {
+    font-family: 'GilroyLight';
+    float: left;
+    width: 70%;
+};
+.calendar-panel-selector {
+    float: left;
+    width: 30%;
+
+    p {
+        margin-left: $padding;
+        font-family: 'GilroyBold';
+    }
+};
+
+//=====================Chart===========================
 
 .line-chart {
     margin-top: $padding;
@@ -33,25 +58,3 @@ $padding: 15px;
     stroke-width: 1;
     fill: none;
 }
-
-.calendar-borough-wrapper{
-
- }
- #calendar-borough-select{
-
- }
-// .x-axis path, .y-axis path, .x-axis line, .y-axis line {
-//   fill: none;
-//   stroke: black;
-//   shape-rendering: crispEdges;
-// }
-
-// .x-axis text, .y-axis text {
-//   font-family: sans-serif;
-//   font-size: 10px;
-// }
-
-// h2 {
-//   font-weight: 300;
-//   font-size: 16px;
-// }

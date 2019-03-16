@@ -75,8 +75,6 @@ function buildLine(ds){
   var minDate = getDate(ds[0]['date']);
   var maxDate = getDate(ds[ds.length - 1]['date']);
 
-  //==============================================================
-
   var xScale = d3.scaleTime()
     .domain([minDate, maxDate])
     .range([padding, w - padding]);
@@ -85,12 +83,8 @@ function buildLine(ds){
     .domain([yMin, yMax])
     .range([h-padding, 0]);
 
-  //==============================================================
-
   var yAxisGen = d3.axisLeft(yScale).ticks(20);
   var xAxisGen = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
-
-  //==============================================================
 
   var externalLine = d3.line()
     .x(function(d) {return xScale(getDate(d.date));})
@@ -124,8 +118,6 @@ function buildLine(ds){
   })
 }
 
-//==================================================================
-
 function updateLine(ds){
 
   var yMin = d3.min(ds, function(d){return d.booked;});
@@ -133,8 +125,6 @@ function updateLine(ds){
 
   var minDate = getDate(ds[0]['date']);
   var maxDate = getDate(ds[ds.length - 1]['date']);
-
-  //==============================================================
 
   var xScale = d3.scaleTime()
     .domain([minDate, maxDate])
@@ -144,11 +134,7 @@ function updateLine(ds){
     .domain([yMin, yMax])
     .range([h-padding, 0]);
 
-  //==============================================================
-
   var yAxisGen = d3.axisLeft(yScale).ticks(20);
-
-  //==============================================================
 
   var externalLine = d3.line()
     .x(function(d) {return xScale(getDate(d.date));})

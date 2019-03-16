@@ -1,0 +1,37 @@
+.calculator-title {
+    margin-left: $padding;
+    margin-right: $padding;
+    border-top: 3px dotted $off-white;
+}
+
+.calculator {
+    margin-left: $padding;
+    margin-right: $padding;
+    p {
+        margin-top: 0;
+    }
+};
+
+.calculator::after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.calculator-calc {
+    background-color: blue;
+    font-family: 'GilroyLight';
+    float: left;
+    width: 40%;
+};
+.calculator-results {
+    background-color: red;
+    float: left;
+    width: 60%;
+
+    p {
+        margin-left: $padding;
+        font-family: 'GilroyBold';
+    }
+};

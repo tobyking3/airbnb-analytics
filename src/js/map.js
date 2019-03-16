@@ -1,36 +1,207 @@
 import * as d3 from 'd3';
 import createPieChart from './pie-chart.js';
 
-var mWidth = 400;
-var mHeight = 250;
-var mScale = 20000;
+var color = {
+  highlighted: "#3E67FF",
+  unhighlighted: "#C6DAFB",
+  entire: "#DC2B61",
+  private: "#FFBA01",
+  shared: "#57DEE3"
+};
+
+var mapWidth = 400;
+var mapHeight = 250;
+var mapScale = 20000;
+
+var tooltip = {
+  div: d3.select(".map-tooltip"),
+  price: d3.select(".map-tooltip_price"),
+  property_type: d3.select(".map-tooltip_type"),
+  description: d3.select(".map-tooltip_description")
+};
+
+//================Initialize Map====================================
+
 var active = d3.select(null);
 
-var projection = d3.geoMercator();
-var zoom = d3.zoom().scaleExtent([1, 8]).on("zoom", zoomed);
+var projection = d3.geoMercator().center([-0.330679,51.329011]).scale(mapScale).translate([mapWidth/4, mapHeight - 40]);
+
 var path = d3.geoPath().projection(projection);
 
-//==============================================================
+var zoom = d3.zoom().scaleExtent([1, 8]).on("zoom", zoomed);
 
-var ColorHighlighted = "#3E67FF";
-var ColorUnhighlighted = "#C6DAFB";
+var svgMap = d3.select(".map").append("svg")
+  .attrs({
+    "preserveAspectRatio": "xMinYMin meet",
+    "viewBox": "0 0 " + mapWidth + " " + mapHeight
+  });
 
-var ColorEntire = "#DC2B61";
-var ColorPrivate = "#FFBA01";
-var ColorShared = "#57DEE3";
+svgMap.append("rect")
+  .attrs({
+    "class": "background",
+    "width": mapWidth,
+    "height": mapHeight
+  })
+  .style("fill", "none")
+  .style("pointer-events", "all")
+  .on("click", reset);
 
-var tooltipDiv = d3.select(".map-tooltip");
-var tooltipPrice = d3.select(".map-tooltip_price");
-var tooltipType = d3.select(".map-tooltip_type");
-var tooltipDescription = d3.select(".map-tooltip_description");
+var g = svgMap.append("g");
 
-//==============================================================
+svgMap.call(zoom);
 
+d3.csv("listings.csv").then(function(csv){
+  d3.json("map.geojson").then(function(json){
+
+    g.selectAll("path")
+    .data(json.features)
+    .enter()
+    .append("path")
+    .attrs({
+      "d": path,
+      "class": "map_borough-path",
+      "fill": color.unhighlighted,
+    })
+    .on("click", clicked)
+    .on("mouseover", highlightBorough)
+    .on("mouseout", unhighlightBorough);
+
+    //append borough points on map
+    g.selectAll('.map_borough-point')
+    .data(json.features)
+    .enter().append('circle')
+    .each(function(d) {
+      d3.select(this)
+      .attrs({
+        "r": 2,
+        "transform": function(d) { return "translate(" + path.centroid(d) + ")"; },
+        "fill": "#3E67FF",
+        "stroke": "#082783",
+        "class": "map_borough-point"
+      });
+    })
+    .on("mouseover", highlightBoroughPoint)
+    .on("mouseout", unhighlightBoroughPoint);
+
+    //append borough labels on map
+    g.selectAll('.borough-label')
+    .data(json.features)
+    .enter()
+    .append('text')
+    .each(function(d) {
+      d3.select(this)
+      .text(function(d) { return d.properties.neighbourhood })
+      .attrs({
+        "transform": function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; },
+        "class": "map_borough-label",
+        "text-anchor": "left",
+        "pointer-events": "none",
+        "font-family": "GilroyLight"
+      })
+    });
+
+    //append property points on map
+    g.selectAll('.property-label')
+    .data(csv)
+    .enter()
+    .append('circle')
+    .each(function(d) {
+      d3.select(this)
+      .attrs({
+        "r": "0.2px",
+        "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
+        "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
+        "fill": propertyTypeColor(d.room_type),
+        "class": "point-" + d.neighbourhood.replace(/\s+/g, '-')
+      })
+      .style("opacity", 0.8)
+      .style("display", "none")
+      ;
+    })        
+    .on("mouseover", showPropertyDetails)
+    .on("mouseout", hidePropertyDetails);
+  });
+
+});
+
+function propertyTypeColor(type){
+  if(type === "Entire home/apt"){return color.entire}
+  else if (type === "Private room"){return color.private}
+  else if (type === "Shared room"){return color.shared}
+}
+
+function showPropertyDetails(d, i) {
+  tooltip.div.transition().duration(200).style("opacity", .9);    
+  tooltip.div.style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY) + "px");
+  tooltip.price.html("£" + d.price);
+  tooltip.property_type.html(d.room_type);
+  tooltip.description.html(d.name);
+};
+
+function hidePropertyDetails(){
+  tooltip.div.transition().duration(500).style("opacity", 0);
+}
+
+// Borough Highlighting
+
+function highlightBorough(d) {d3.select(this).attr("fill", color.highlighted)}
+
+function unhighlightBorough(d) {d3.select(this).attr("fill", color.unhighlighted)}
+
+function highlightBoroughPoint(d) {
+  d3.select(this)
+  .transition()    
+  .duration(200)
+  .attrs({
+    "r": 4,
+    "stroke": "yellow"
+  });
+}
+
+function unhighlightBoroughPoint(d) {
+  d3.select(this)
+  .transition()    
+  .duration(100)
+  .attrs({
+    "r": 2,
+    "stroke": "#005673"
+  });
+}
+
+// Handle the display of stats
+
+d3.selectAll(".panel-value").style("display", "none");
+d3.selectAll(".panel-average-value_entire").style("display", "block");
+d3.selectAll(".panel-properties-value_entire").style("display", "block");
+
+d3.select(".panel-select-type select")
+.on("change", function(d, i){
+  var select = d3.select("#panel-select-type-property").node().value;
+  if(select === 'Entire home/apt'){
+    d3.selectAll(".panel-value").style("display", "none");
+    d3.selectAll(".panel-average-value_entire").style("display", "block");
+    d3.selectAll(".panel-properties-value_entire").style("display", "block");
+  };
+  if(select === 'Private room'){
+    d3.selectAll(".panel-value").style("display", "none");
+    d3.selectAll(".panel-average-value_private").style("display", "block");
+    d3.selectAll(".panel-properties-value_private").style("display", "block");
+  };
+  if(select === 'Shared room'){
+    d3.selectAll(".panel-value").style("display", "none");
+    d3.selectAll(".panel-average-value_shared").style("display", "block");
+    d3.selectAll(".panel-properties-value_shared").style("display", "block");
+  };
+  
+})
+
+//===============================ZOOM========================================
 
 function clicked(d, i) {
+  //show property points
   d3.selectAll(".point-" + d.properties.neighbourhood.replace(/\s+/g, '-')).style("display", "block");
-  d3.select(".map-value-borough").text(d.properties.neighbourhood);
 
+  //initiate zoom
   if (active.node() === this) return reset();
   active.classed("active", false);
   active = d3.select(this).classed("active", true);
@@ -40,249 +211,38 @@ function clicked(d, i) {
       dy = bounds[1][1] - bounds[0][1],
       x = (bounds[0][0] + bounds[1][0]) / 2,
       y = (bounds[0][1] + bounds[1][1]) / 2,
-      scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / mWidth, dy / mHeight))),
-      translate = [mWidth / 2 - scale * x, mHeight / 2 - scale * y];
+      scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / mapWidth, dy / mapHeight))),
+      translate = [mapWidth / 2 - scale * x, mapHeight / 2 - scale * y];
 
   svgMap.transition()
       .duration(750)
       .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) );
 
+  //update panel
   createPieChart(d, i);
 
   d3.select(".map-value-borough").text(d.properties.neighbourhood);
   d3.select(".map-value-properties").text(d.properties["stats"]["totalNumProperties"]);
 
   d3.select(".panel-average-value_entire").text("£" + Math.round(d.properties["stats"]["entireAveragePrice"]));
-  d3.select(".panel-properties-value_entire").text(d.properties["stats"]["entireNumProperties"]);
-
   d3.select(".panel-average-value_private").text("£" + Math.round(d.properties["stats"]["privateAveragePrice"]));
-  d3.select(".panel-properties-value_private").text(d.properties["stats"]["privateNumProperties"]);
-
   d3.select(".panel-average-value_shared").text("£" + Math.round(d.properties["stats"]["sharedAveragePrice"]));
+
+  d3.select(".panel-properties-value_entire").text(d.properties["stats"]["entireNumProperties"]);
+  d3.select(".panel-properties-value_private").text(d.properties["stats"]["privateNumProperties"]);
   d3.select(".panel-properties-value_shared").text(d.properties["stats"]["sharedNumProperties"]);
 }
 
 function reset() {
   active.classed("active", false);
   active = d3.select(null);
-  console.log("reset");
-
-  svgMap.transition()
-      .duration(750)
-      .call( zoom.transform, d3.zoomIdentity );
+  svgMap.transition().duration(750).call( zoom.transform, d3.zoomIdentity );
 }
 
 function zoomed() {
-  g.style("stroke-width", 2 / d3.event.transform.k + "px");
   g.attr("transform", d3.event.transform);
 }
 
 function stopped() {
   if (d3.event.defaultPrevented) d3.event.stopPropagation();
 }
-
-//==============================================================
-
-//Initialize Map
-var svgMap = d3.select(".map").append("svg")
-  .attrs({
-    "preserveAspectRatio": "xMinYMin meet",
-    "viewBox": "0 0 " + mWidth + " " + mHeight
-  });
-
-svgMap.append("rect")
-    .attr("class", "background")
-    .attr("width", mWidth)
-    .attr("height", mHeight)
-    .style("fill", "none")
-    .style("pointer-events", "all")
-    .on("click", reset);
-
-var g = svgMap.append("g");
-
-svgMap.call(zoom);
-
-d3.csv("listings.csv").then(function(csv){
-  d3.json("map.geojson").then(function(json){
-
-    projection.center([-0.330679,51.329011])
-      .scale(mScale)
-      .translate([mWidth/4, mHeight - 40]);
-
-    g.selectAll("path")
-      .data(json.features)
-      .enter()
-      .append("path")
-      .attrs({
-        "d": path,
-        "class": "map_borough-path",
-        "fill": ColorUnhighlighted,
-      })
-      .on("click", clicked)
-      .on("mouseover", highlightBorough)
-      .on("mouseout", unhighlightBorough);
-
-    g.selectAll('.property-label')
-      .data(csv)
-      .enter()
-      .append('circle')
-        .each(function(d) {
-          d3.select(this)
-            .attrs({
-              "r": "0.2px",
-              "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
-              "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
-              "fill": propertyTypeColor(d.room_type),
-              "class": "point-" + d.neighbourhood.replace(/\s+/g, '-')
-            })
-            .style("opacity", 0.8)
-            .style("display", "none")
-            ;
-        })        
-        .on("mouseover", showPropertyDetails)
-        .on("mouseout", hidePropertyDetails);
-
-    g.selectAll('.map_borough-point')
-      .data(json.features)
-      .enter().append('circle')
-        .each(function(d) {
-          d3.select(this)
-            .attrs({
-              "r": 2,
-              "transform": function(d) { return "translate(" + path.centroid(d) + ")"; },
-              "fill": "#3E67FF",
-              "stroke": "#082783",
-              "class": "map_borough-point"
-            });
-        })
-      .on("click", boroughStats)
-      .on("mouseover", function(d) {
-        d3.select(this)
-        .transition()    
-        .duration(200)
-        .attrs({
-          "r": 4,
-          "stroke": "yellow"
-        });
-      })
-      .on("mouseout", function(d) {
-        d3.select(this)
-        .transition()    
-        .duration(100)
-        .attrs({
-          "r": 2,
-          "stroke": "#005673"
-        });
-      });
-
-    g.selectAll('.borough-label')
-      .data(json.features)
-      .enter()
-      .append('text')
-        .each(function(d) {
-          d3.select(this)
-            .text(function(d) { return d.properties.neighbourhood })
-            .attrs({
-              "transform": function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; },
-              "class": "map_borough-label",
-              "text-anchor": "left",
-              "pointer-events": "none"
-            })
-        })
-  });
-
-});
-
-function propertyTypeColor(type){
-  if(type === "Entire home/apt"){
-    return ColorEntire
-  } else if (type === "Private room"){
-    return ColorPrivate
-  } else if (type === "Shared room"){
-    return ColorShared
-  }
-}
-
-function showPropertyDetails(d, i) {
-  tooltipDiv.transition()    
-    .duration(200)    
-    .style("opacity", .9);    
-  tooltipDiv
-    .style("left", (d3.event.pageX + 15) + "px")   
-    .style("top", (d3.event.pageY) + "px");
-
-  tooltipPrice.html("£" + d.price);
-  tooltipType.html(d.room_type);
-  tooltipDescription.html(d.name);
-};
-
-function hidePropertyDetails(){
-  tooltipDiv.transition()    
-    .duration(500)    
-    .style("opacity", 0);
-}
-
-// Borough Highlighting
-
-function highlightBorough(d) {
-  d3.select(this)
-  .attrs({
-    "fill": ColorHighlighted // add striped fill
-  });
-}
-
-function unhighlightBorough(d) {
-  d3.select(this)
-  .attrs({
-    "fill": ColorUnhighlighted // add striped fill
-  });
-}
-
-// Print the Stats
-
-function boroughStats(d, i){
-  createPieChart(d, i);
-
-  d3.select(".map-value-borough").text(d.properties.neighbourhood);
-  d3.select(".map-value-properties").text(d.properties["stats"]["totalNumProperties"]);
-
-  d3.select(".panel-average-value_entire").text("£" + Math.round(d.properties["stats"]["entireAveragePrice"]));
-  d3.select(".panel-properties-value_entire").text(d.properties["stats"]["entireNumProperties"]);
-
-  d3.select(".panel-average-value_private").text("£" + Math.round(d.properties["stats"]["privateAveragePrice"]));
-  d3.select(".panel-properties-value_private").text(d.properties["stats"]["privateNumProperties"]);
-
-  d3.select(".panel-average-value_shared").text("£" + Math.round(d.properties["stats"]["sharedAveragePrice"]));
-  d3.select(".panel-properties-value_shared").text(d.properties["stats"]["sharedNumProperties"]);
-}
-
-// Handle the display of stats
-
-d3.selectAll(".panel-average-value").style("display", "none");
-d3.selectAll(".panel-properties-value").style("display", "none");
-d3.selectAll(".panel-average-value_entire").style("display", "block");
-d3.selectAll(".panel-properties-value_entire").style("display", "block");
-
-d3.select(".panel-select-type select")
-.on("change", function(d, i){
-  var select = d3.select("#panel-select-type-property").node().value;
-  if(select === 'Entire home/apt'){
-    d3.selectAll(".panel-average-value").style("display", "none");
-    d3.selectAll(".panel-properties-value").style("display", "none");
-    d3.selectAll(".panel-average-value_entire").style("display", "block");
-    d3.selectAll(".panel-properties-value_entire").style("display", "block");
-  };
-  if(select === 'Private room'){
-    d3.selectAll(".panel-average-value").style("display", "none");
-    d3.selectAll(".panel-properties-value").style("display", "none");
-    d3.selectAll(".panel-average-value_private").style("display", "block");
-    d3.selectAll(".panel-properties-value_private").style("display", "block");
-  };
-  if(select === 'Shared room'){
-    d3.selectAll(".panel-average-value").style("display", "none");
-    d3.selectAll(".panel-properties-value").style("display", "none");
-    d3.selectAll(".panel-average-value_shared").style("display", "block");
-    d3.selectAll(".panel-properties-value_shared").style("display", "block");
-  };
-  
-})

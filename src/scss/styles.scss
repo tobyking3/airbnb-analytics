@@ -1,6 +1,7 @@
 @import "colours";
 @import "map";
 @import "calendar";
+@import "calculator";
 
 @font-face {
   font-family: 'GilroyLight';
@@ -36,6 +37,13 @@ body {
 .page-section3 {
   padding-top: $padding;
   background-color: $lavender;
+  height: calc(100vh - 47px);
+  width: 100%;
+}
+
+.page-section4 {
+  padding-top: $padding;
+  background-color: $off-white;
   height: calc(100vh - 47px);
   width: 100%;
 }

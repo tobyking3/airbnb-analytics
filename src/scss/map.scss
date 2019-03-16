@@ -81,7 +81,6 @@ $padding: 15px;
 
 .map_borough-path {
     stroke: $off-white;
-    stroke-width: 0.5;
 }
 
 .map_borough-label {
@@ -146,13 +145,16 @@ div.map-tooltip {
 
 /*---------------------STATS-----------------------*/
 
-.panel-select-type {
+.panel-select-type, .panel-select-type select  {
+  width: calc(100% - #{$padding} * 2);
+}
+
+.select-style {
   select {
    background: transparent;
    border: none;
    font-size: 14px;
    height: 30px;
-   width: calc(100% - #{$padding} * 2);
    color: #fff;
    outline: none;
    cursor: pointer;
@@ -162,7 +164,6 @@ div.map-tooltip {
  margin-right: $padding;
  height: 30px;
  overflow: hidden;
- width: calc(100% - #{$padding} * 2);
  -webkit-border-radius: 4px;
  -moz-border-radius: 4px;
  border-radius: 4px;
@@ -185,50 +186,15 @@ div.map-tooltip {
   margin-right: $padding;
 }
 
-.panel-average-label, .panel-properties-label {
+.panel-label {
   color: $off-white;
   font-family: 'GilroyLight'
 }
 
-.panel-average-value, .panel-properties-value {
+.panel-value {
   margin: 0;
   color: $off-white;
   font-family: 'GilroyBold';
   font-size: 50px;
   text-align: center;
 }
-
-
-// .average-prices_type table, .percentage-type-comparison {
-//   width: 100%;
-//   margin-top: 10px;
-// }
-
-// .average-prices_type, .percentage-type-comparison {
-//   th {text-align: left;}
-//   td {text-align: right;}
-// }
-
-// /*---------------------AVERAGES--------------------------*/
-
-
-// .average-prices_container{
-//   width: 100%;
-//   .average-prices_type {
-//     display: none;
-//   }
-// }
-
-// .average-prices_menu {
-//   border-bottom: solid 3px blue;
-//   button {
-//     border: none;
-//     outline: none;
-//     cursor: pointer;
-//     border-radius: 2px 2px 0px 0px;
-//     width: 30%;
-//   }
-//   button:hover {
-//     background-color: blue;
-//   }
-// }
