@@ -17,7 +17,8 @@ var tooltip = {
   div: d3.select(".map-tooltip"),
   price: d3.select(".map-tooltip_price"),
   property_type: d3.select(".map-tooltip_type"),
-  description: d3.select(".map-tooltip_description")
+  description: d3.select(".map-tooltip_description"),
+  img: d3.select(".map-tooltip_img")
 };
 
 //================Initialize Map====================================
@@ -50,7 +51,7 @@ var g = svgMap.append("g");
 
 svgMap.call(zoom);
 
-d3.csv("listings.csv").then(function(csv){
+d3.csv("listings-cleansed.csv").then(function(csv){
   d3.json("map.geojson").then(function(json){
 
     g.selectAll("path")
@@ -108,11 +109,11 @@ d3.csv("listings.csv").then(function(csv){
     .each(function(d) {
       d3.select(this)
       .attrs({
-        "r": "0.2px",
+        "r": "0.3px",
         "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
         "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
         "fill": propertyTypeColor(d.room_type),
-        "class": "point-" + d.neighbourhood.replace(/\s+/g, '-')
+        "class": "point-" + d.neighbourhood_cleansed.replace(/\s+/g, '-')
       })
       .style("opacity", 0.8)
       .style("display", "none")
@@ -131,11 +132,13 @@ function propertyTypeColor(type){
 }
 
 function showPropertyDetails(d, i) {
-  tooltip.div.transition().duration(200).style("opacity", .9);    
+  tooltip.div.transition().duration(200).style("opacity", 1);    
   tooltip.div.style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY) + "px");
-  tooltip.price.html("£" + d.price);
+  tooltip.price.html("£" + d.price.substr(1))
+  .style("background", propertyTypeColor(d.room_type));
   tooltip.property_type.html(d.room_type);
   tooltip.description.html(d.name);
+  tooltip.img.attr("src",d.picture_url);
 };
 
 function hidePropertyDetails(){

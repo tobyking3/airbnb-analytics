@@ -97,12 +97,11 @@ $padding: 15px;
 div.map-tooltip {
   background-color: $off-white;
   position: absolute;     
-  width: 180px;          
-  height: 140px;         
+  width: 250px;                  
   padding: 2px;          
   border: none;   
   border-radius: 2px;     
-  pointer-events: none;
+  // pointer-events: none;
   opacity: 0;
 
   .map-tooltip_price {
@@ -126,6 +125,7 @@ div.map-tooltip {
     font-weight: 700;
     font-size: 14px;
   }
+  img {width: 100%};
 }
 
 /*---------------------PANEL-----------------------*/
