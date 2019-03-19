@@ -1,0 +1,30 @@
+{
+    "Barking and Dagenham": [
+        {
+            "accommodates": 1,
+            "averagePrice": 25,
+        },
+        {
+            "accommodates": 2,
+            "averagePrice": 34,
+        },
+        {
+            "accommodates": 3,
+            "averagePrice": 52,
+        }
+    ],
+    "Barnet": [
+        {
+            "accommodates": 1,
+            "averagePrice": 21,
+        },
+        {
+            "accommodates": 2,
+            "averagePrice": 29,
+        },
+        {
+            "accommodates": 3,
+            "averagePrice": 37,
+        }
+    ]
+}

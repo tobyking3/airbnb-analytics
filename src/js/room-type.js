@@ -1,37 +1,53 @@
-import listingsCleansed from '../data/listings-cleansed.json';
+import data from '../data/listings-cleansed.json';
 
 var neighbourhoods = ["Kingston upon Thames","Croydon","Bromley","Hounslow","Ealing","Havering","Hillingdon","Harrow","Brent","Barnet","Enfield","Waltham Forest","Redbridge","Sutton","Lambeth","Southwark","Lewisham","Greenwich","Bexley","Richmond upon Thames","Merton","Wandsworth","Hammersmith and Fulham","Kensington and Chelsea","City of London","Westminster","Camden","Tower Hamlets","Islington","Hackney","Haringey","Newham","Barking and Dagenham"];
 
-var sortedListings = [];
+// var neighbourhoods = ["Barnet", "Haringey", "Islington", "Kensington and Chelsea", "Wandsworth", "Westminster"];
+
+var listingsByBorough = [];
 
 neighbourhoods.forEach(function(nItem, nIndex){
-  sortedListings[nItem] = [];
-    listingsCleansed.forEach(function(item, index){
+  listingsByBorough[nItem] = [];
+    data.forEach(function(item, index){
         if(item['neighbourhood_cleansed'] === nItem){
-          sortedListings[nItem].push(item);
+          listingsByBorough[nItem].push(item);
         }
     });
 });
 
-//console.log(sortedListings);
+var accommodates = {};
 
-var accommodates = neighbourhoods;
+Object.keys(listingsByBorough).forEach(function(key) {
 
-Object.keys(sortedListings).forEach(function(key) {
+accommodates[key] = {};
 
-    var obj = {};
+  listingsByBorough[key].forEach(function(nItem, nIndex){
 
-    sortedListings[key].forEach(function(nItem, nIndex){
-        var format = nItem.price.substr(1);
-        var price = parseFloat(format);
+    if(nItem.accommodates in accommodates[key]){
+        accommodates[key][nItem.accommodates]["count"] = accommodates[key][nItem.accommodates]["count"] + 1;
+    } else {
+        accommodates[key][nItem.accommodates] = {"count": 1};
+    }
 
-        if(!(nItem.accommodates in obj)){
-            obj[nItem.accommodates] = price;
-        } else {
-            obj[nItem.accommodates] = obj[nItem.accommodates] + price;
+    var priceStr = nItem.price.substr(1);
+    var priceFlo = parseFloat(priceStr);
+
+    Object.keys(accommodates[key]).forEach(function(newKey) {
+        if(nItem.accommodates == newKey){
+            if("total" in accommodates[key][nItem.accommodates]){
+                accommodates[key][nItem.accommodates]["total"] = accommodates[key][nItem.accommodates]["total"] + priceFlo;
+            } else {
+                accommodates[key][nItem.accommodates]["total"] = priceFlo;
+            }
         }
     })
 
-    console.log(obj);
+    Object.keys(accommodates[key]).forEach(function(newKey) {
+        accommodates[key][nItem.accommodates]["average"] = accommodates[key][nItem.accommodates]["total"] / accommodates[key][nItem.accommodates]["count"];
+    })
+
+
+  })
 })
 
+console.log(JSON.stringify(accommodates));

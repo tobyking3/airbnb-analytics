@@ -1,0 +1,93 @@
+[
+  {
+    "id": 9554,
+    "neighbourhood_cleansed": "Haringey",
+    "listing_url": "https://www.airbnb.com/rooms/9554",
+    "name": "Cozy, 3 minutes to Piccadilly Line",
+    "picture_url": "https://a0.muscache.com/im/pictures/77912984/a1461f87_original.jpg?aki_policy=large",
+    "host_is_superhost": "t",
+    "latitude": 51.587767046892864,
+    "longitude": -0.10566647135902682,
+    "room_type": "Private room",
+    "accommodates": 2,
+    "price": "$35.00"
+  },
+  {
+    "id": 13913,
+    "neighbourhood_cleansed": "Islington",
+    "listing_url": "https://www.airbnb.com/rooms/13913",
+    "name": "Holiday London DB Room Let-on going",
+    "picture_url": "https://a0.muscache.com/im/pictures/985879/b0680c62_original.jpg?aki_policy=large",
+    "host_is_superhost": "f",
+    "latitude": 51.56801694691075,
+    "longitude": -0.111208043110142,
+    "room_type": "Private room",
+    "accommodates": 2,
+    "price": "$65.00"
+  },
+  {
+    "id": 15400,
+    "neighbourhood_cleansed": "Kensington and Chelsea",
+    "listing_url": "https://www.airbnb.com/rooms/15400",
+    "name": "Bright Chelsea  Apartment. Chelsea!",
+    "picture_url": "https://a0.muscache.com/im/pictures/428392/462d262a_original.jpg?aki_policy=large",
+    "host_is_superhost": "f",
+    "latitude": 51.4879616353039,
+    "longitude": -0.1689805833412696,
+    "room_type": "Entire home/apt",
+    "accommodates": 2,
+    "price": "$100.00"
+  },
+  {
+    "id": 17402,
+    "neighbourhood_cleansed": "Westminster",
+    "listing_url": "https://www.airbnb.com/rooms/17402",
+    "name": "Superb 3-Bed/2 Bath & Wifi: Trendy W1",
+    "picture_url": "https://a0.muscache.com/im/pictures/5673eb4f-a853-4102-8518-a9e8180a9cf1.jpg?aki_policy=large",
+    "host_is_superhost": "t",
+    "latitude": 51.52098247579589,
+    "longitude": -0.14002357513620964,
+    "room_type": "Entire home/apt",
+    "accommodates": 6,
+    "price": "$300.00"
+  },
+  {
+    "id": 24328,
+    "neighbourhood_cleansed": "Wandsworth",
+    "listing_url": "https://www.airbnb.com/rooms/24328",
+    "name": "Battersea 2 bedroom house & parking",
+    "picture_url": "https://a0.muscache.com/im/pictures/428381/d92f98ab_original.jpg?aki_policy=large",
+    "host_is_superhost": "t",
+    "latitude": 51.4729809775772,
+    "longitude": -0.1637638798070717,
+    "room_type": "Entire home/apt",
+    "accommodates": 4,
+    "price": "$175.00"
+  },
+  {
+    "id": 25023,
+    "neighbourhood_cleansed": "Wandsworth",
+    "listing_url": "https://www.airbnb.com/rooms/25023",
+    "name": "All-comforts 2-bed flat near Wimbledon tennis",
+    "picture_url": "https://a0.muscache.com/im/pictures/d693d930-06a8-49ec-98c2-2d4646ab3224.jpg?aki_policy=large",
+    "host_is_superhost": "t",
+    "latitude": 51.4468719056945,
+    "longitude": -0.21874395308623648,
+    "room_type": "Entire home/apt",
+    "accommodates": 5,
+    "price": "$65.00"
+  },
+  {
+    "id": 25123,
+    "neighbourhood_cleansed": "Barnet",
+    "listing_url": "https://www.airbnb.com/rooms/25123",
+    "name": "Clean big Room in London (Room 1)",
+    "picture_url": "https://a0.muscache.com/im/pictures/456905/a004b96b_original.jpg?aki_policy=large",
+    "host_is_superhost": "t",
+    "latitude": 51.57224300907506,
+    "longitude": -0.20905976432774065,
+    "room_type": "Private room",
+    "accommodates": 2,
+    "price": "$29.00"
+  }
+]
