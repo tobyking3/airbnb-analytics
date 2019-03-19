@@ -25,43 +25,83 @@ Object.keys(listingsByBorough).forEach(function(key) {
     })
 })
 
-console.log(JSON.stringify(accommodatesArr));
+Object.keys(accommodatesArr).forEach(function(key) {
 
-//===================================================================================================================
+    var boroughArray = accommodatesArr[key];
+    boroughArray.sort(compare);
 
-var accommodates = {};
+    listingsByBorough[key].forEach(function(listing, nIndex){
 
-Object.keys(listingsByBorough).forEach(function(key) {
+        var listingPriceStr = listing.price.substr(1);
+        var listingPrice = parseFloat(listingPriceStr);
+        var listingAccommodates = listing.accommodates;
 
-    accommodates[key] = {};
+        for(var i = 0; i < boroughArray.length; i++){
+            if(listingAccommodates === accommodatesArr[key][i]["accommodates"]){
 
-    listingsByBorough[key].forEach(function(nItem, nIndex){
-
-        if(nItem.accommodates in accommodates[key]){
-            accommodates[key][nItem.accommodates]["count"] = accommodates[key][nItem.accommodates]["count"] + 1;
-        } else {
-            accommodates[key][nItem.accommodates] = {"count": 1};
-        }
-
-        var priceStr = nItem.price.substr(1);
-        var priceFlo = parseFloat(priceStr);
-
-        Object.keys(accommodates[key]).forEach(function(newKey) {
-            if(nItem.accommodates == newKey){
-                if("total" in accommodates[key][nItem.accommodates]){
-                    accommodates[key][nItem.accommodates]["total"] = accommodates[key][nItem.accommodates]["total"] + priceFlo;
+                if(!("totalPrice" in accommodatesArr[key][i])){
+                    accommodatesArr[key][i]["totalPrice"] = listingPrice;
                 } else {
-                    accommodates[key][nItem.accommodates]["total"] = priceFlo;
+                    accommodatesArr[key][i]["totalPrice"] = accommodatesArr[key][i]["totalPrice"] + listingPrice;
                 }
+
+                if(!("count" in accommodatesArr[key][i])){
+                    accommodatesArr[key][i]["count"] = 1;
+                } else {
+                    accommodatesArr[key][i]["count"] = accommodatesArr[key][i]["count"] + 1;
+                }
+
+                accommodatesArr[key][i]["average"] = accommodatesArr[key][i]["totalPrice"] / accommodatesArr[key][i]["count"];
             }
-        })
-
-        Object.keys(accommodates[key]).forEach(function(newKey) {
-            accommodates[key][nItem.accommodates]["average"] = accommodates[key][nItem.accommodates]["total"] / accommodates[key][nItem.accommodates]["count"];
-        })
-
-
+        }
     })
 })
 
-console.log(JSON.stringify(accommodates));
+function compare(a,b) {
+  if (a.accommodates < b.accommodates)
+    return -1;
+  if (a.accommodates > b.accommodates)
+    return 1;
+  return 0;
+}
+
+console.log(accommodatesArr);
+
+//===================================================================================================================
+
+// var accommodates = {};
+
+// Object.keys(listingsByBorough).forEach(function(key) {
+
+//     accommodates[key] = {};
+
+//     listingsByBorough[key].forEach(function(nItem, nIndex){
+
+//         if(nItem.accommodates in accommodates[key]){
+//             accommodates[key][nItem.accommodates]["count"] = accommodates[key][nItem.accommodates]["count"] + 1;
+//         } else {
+//             accommodates[key][nItem.accommodates] = {"count": 1};
+//         }
+
+//         var priceStr = nItem.price.substr(1);
+//         var priceFlo = parseFloat(priceStr);
+
+//         Object.keys(accommodates[key]).forEach(function(newKey) {
+//             if(nItem.accommodates == newKey){
+//                 if("total" in accommodates[key][nItem.accommodates]){
+//                     accommodates[key][nItem.accommodates]["total"] = accommodates[key][nItem.accommodates]["total"] + priceFlo;
+//                 } else {
+//                     accommodates[key][nItem.accommodates]["total"] = priceFlo;
+//                 }
+//             }
+//         })
+
+//         Object.keys(accommodates[key]).forEach(function(newKey) {
+//             accommodates[key][nItem.accommodates]["average"] = accommodates[key][nItem.accommodates]["total"] / accommodates[key][nItem.accommodates]["count"];
+//         })
+
+
+//     })
+// })
+
+// console.log(JSON.stringify(accommodates));
