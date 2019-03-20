@@ -1,10 +1,19 @@
-.calculator-title {
+$padding: 15px;
+
+.section-title {
     margin-left: $padding;
     margin-right: $padding;
     border-top: 3px dotted $off-white;
 }
 
-.calculator {
+.section-borough-wrapper {
+    width: calc(100% - #{$padding} * 2);
+    select  {
+      width: calc(100% - #{$padding} * 2);
+    }
+}
+
+.section-panel {
     margin-left: $padding;
     margin-right: $padding;
     p {
@@ -12,23 +21,21 @@
     }
 };
 
-.calculator::after { 
+.section-panel::after { 
    content: " ";
    display: block; 
    height: 0; 
    clear: both;
 }
 
-.calculator-calc {
-    background-color: blue;
+.section-panel-text {
     font-family: 'GilroyLight';
     float: left;
-    width: 40%;
+    width: 70%;
 };
-.calculator-results {
-    background-color: red;
+.section-panel-selector {
     float: left;
-    width: 60%;
+    width: 30%;
 
     p {
         margin-left: $padding;

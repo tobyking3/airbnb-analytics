@@ -1,7 +1,8 @@
 @import "colours";
+@import "section";
 @import "map";
 @import "calendar";
-@import "calculator";
+@import "accommodates";
 
 @font-face {
   font-family: 'GilroyLight';
@@ -43,7 +44,7 @@ body {
 
 .page-section4 {
   padding-top: $padding;
-  background-color: $off-white;
+  background-color: $lavender;
   height: calc(100vh - 47px);
   width: 100%;
 }

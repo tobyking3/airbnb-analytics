@@ -1,0 +1,42 @@
+$padding: 15px;
+
+//=====================Chart===========================
+
+.bar-chart {
+    margin-top: $padding;
+    margin-left: $padding;
+    margin-right: $padding;
+
+    padding: $padding;
+}
+
+#svg-accommodates {
+    text {
+        font-family: "GilroyLight";
+    }
+
+    .tick text {
+        fill: #635F5D;
+        font-size: 1em;
+    }
+
+    .chart-title{
+        font-family: "GilroyBold";
+    }
+
+    .tick line {
+        stroke: #C0C0BB;
+    }
+
+    line#accommodates-line-marker {
+        stroke: #FFBA01;
+        stroke-width: 3;
+        stroke-dasharray: 3 6;
+    }
+
+    .accommodates-price-text {
+        pointer-events: none;
+        fill: white;
+        font-size: 0.8em;
+    }
+}

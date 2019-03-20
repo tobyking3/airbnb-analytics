@@ -1,48 +1,5 @@
 $padding: 15px;
 
-.calendar-title {
-    margin-left: $padding;
-    margin-right: $padding;
-    border-top: 3px dotted $off-white;
-}
-
-.calendar-borough-wrapper {
-    width: calc(100% - #{$padding} * 2);
-    select  {
-      width: calc(100% - #{$padding} * 2);
-    }
-}
-
-.calendar-panel {
-    margin-left: $padding;
-    margin-right: $padding;
-    p {
-        margin-top: 0;
-    }
-};
-
-.calendar-panel::after { 
-   content: " ";
-   display: block; 
-   height: 0; 
-   clear: both;
-}
-
-.calendar-panel-text {
-    font-family: 'GilroyLight';
-    float: left;
-    width: 70%;
-};
-.calendar-panel-selector {
-    float: left;
-    width: 30%;
-
-    p {
-        margin-left: $padding;
-        font-family: 'GilroyBold';
-    }
-};
-
 //=====================Chart===========================
 
 .line-chart {
