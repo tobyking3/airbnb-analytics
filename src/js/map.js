@@ -70,7 +70,8 @@ d3.csv("listings-cleansed.csv").then(function(csv){
     //append borough points on map
     g.selectAll('.map_borough-point')
     .data(json.features)
-    .enter().append('circle')
+    .enter()
+    .append('circle')
     .each(function(d) {
       d3.select(this)
       .attrs({
@@ -204,22 +205,37 @@ function clicked(d, i) {
   //show property points
   d3.selectAll(".point-" + d.properties.neighbourhood.replace(/\s+/g, '-')).style("display", "block");
 
-  //initiate zoom
+
+
+
+  //zoom out
   if (active.node() === this) return reset();
   active.classed("active", false);
   active = d3.select(this).classed("active", true);
 
+
   var bounds = path.bounds(d),
+      //          x-max          x-min
+      // width  = bounds[1][0] - bounds[0][0];
       dx = bounds[1][0] - bounds[0][0],
+      //          y-max          y-min
+      // height = bounds[1][1] - bounds[0][1];
       dy = bounds[1][1] - bounds[0][1],
+      //x-max + x-min
       x = (bounds[0][0] + bounds[1][0]) / 2,
+      //y-max + y-min
       y = (bounds[0][1] + bounds[1][1]) / 2,
+
       scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / mapWidth, dy / mapHeight))),
       translate = [mapWidth / 2 - scale * x, mapHeight / 2 - scale * y];
 
   svgMap.transition()
       .duration(750)
       .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) );
+
+
+
+
 
   //update panel
   createPieChart(d, i);

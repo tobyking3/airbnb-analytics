@@ -8,19 +8,25 @@ mapData.features.forEach(function(borough, boroughIndex){
     neighbourhoodList.push(borough.properties.neighbourhood);
 });
 
-console.log(JSON.stringify(neighbourhoodList));
+// console.log(JSON.stringify(neighbourhoodList));
 
 //Sort listings by borough
 var sortedListings = [];
 
 neighbourhoodList.forEach(function(nItem, nIndex){
+  //For each neighborhood add a borough key to the new array
   sortedListings[nItem] = [];
+  //Push each item in the listing data to the array if the neighborhood matches the key 
     listingsData.forEach(function(item, index){
         if(item['neighbourhood'] === nItem){
           sortedListings[nItem].push(item);
         }
     });
 });
+
+// console.log(sortedListings);
+
+
 
 var dAverages = {};
 
@@ -88,4 +94,4 @@ mapData["features"].forEach(function(featuresItem){
   featuresItem["properties"]["stats"] = dAverages[neighbourhood];
 })
 
-//console.log(JSON.stringify(mapData));
+console.log(JSON.stringify(mapData));

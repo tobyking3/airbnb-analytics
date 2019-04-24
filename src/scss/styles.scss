@@ -3,6 +3,7 @@
 @import "map";
 @import "calendar";
 @import "accommodates";
+@import "about";
 
 @font-face {
   font-family: 'GilroyLight';
@@ -21,7 +22,44 @@ body {
   margin: 0;
 }
 
-/*=================PAGE SECTION================*/
+/*=================HEADER SECTION================*/
+
+.header {
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.logo {
+  width: 14vw;
+}
+
+h1 {
+    font-family: 'GilroyBold';
+    font-size: 6vw;
+    margin: 0;
+    margin-top: 10.5%;
+    float: right;
+}
+
+h1 span {
+  display: block;
+  line-height: 0.8;
+}
+
+h1 .heading-airbnb {
+  font-size: 0.9em;
+  color: $darkblue;
+}
+
+h1 .heading-insights {
+  font-size: 2em;
+  color: $toyblue;
+}
 
 .page-section1 {
   background-color: $off-white;
@@ -29,14 +67,15 @@ body {
   width: 100%;
 }
 
+/*=================PAGE SECTION================*/
+
 .page-section2 {
-  background-color: $lavender;
+  background-color: $off-white;
   height: calc(100vh - 47px);
   width: 100%;
 }
 
 .page-section3 {
-  padding-top: $padding;
   background-color: $lavender;
   height: calc(100vh - 47px);
   width: 100%;
@@ -49,19 +88,14 @@ body {
   width: 100%;
 }
 
-/*=================HEADERS====================*/
-
-h1 {
-    text-align: center;
-    color: $darkblue;
-    font-family: 'GilroyBold';
-    font-size: 6em;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.page-section5 {
+  padding-top: $padding;
+  background-color: $lavender;
+  height: calc(100vh - 47px);
+  width: 100%;
 }
+
+/*=================HEADERS====================*/
 
 h2 {
   font-family: 'GilroyBold';

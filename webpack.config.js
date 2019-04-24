@@ -48,6 +48,12 @@ module.exports = {
         ],
       },
       {
+        test: /\.png$/,
+        use: [
+           'file-loader'
+        ],
+      },
+      {
         test: /\.xml$/,
          use: [
           'xml-loader'
