@@ -1,8 +1,42 @@
 import mapData from '../data/map-before.json';
 import listingsData from '../data/listings.json'
 
+let Averages = {};
+let neighbourhoodList = [];
+
+Averages.createBoroughList = function(dMap) {
+
+  let boroughList = [];
+
+  dMap.features.forEach(function(borough, boroughIndex){
+    boroughList.push(borough.properties.neighbourhood);
+  });
+
+  return boroughList;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Create list of neighborhoods
-var neighbourhoodList = [];
 
 mapData.features.forEach(function(borough, boroughIndex){
     neighbourhoodList.push(borough.properties.neighbourhood);
@@ -94,4 +128,6 @@ mapData["features"].forEach(function(featuresItem){
   featuresItem["properties"]["stats"] = dAverages[neighbourhood];
 })
 
-console.log(JSON.stringify(mapData));
+// console.log(JSON.stringify(mapData));
+
+module.exports = Averages;
