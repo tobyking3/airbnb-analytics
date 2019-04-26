@@ -1,45 +1,38 @@
 $padding: 15px;
 
-
-
 .flat-image {
     width: 60%;
     padding-left: 20%;
     padding-right: 20%;
 }
 
-/* STRUCTURE */
-
-.wrapper {
-    padding: 5px;
-    max-width: 1200px;
-    margin: 20px auto;
-    margin-top: 0;
-    padding-top: 12%;
-}
-
 header {
     padding: 0 15px;
+}
+
+.vert-align {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .columns {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    margin: 5px 0;
+    margin: 10px;
 }
 
 .column {
+    background-color: white;
     flex: 1;
-    margin: 2px;
+    margin: 5px;
     padding: 10px;
+    padding-top: 60px;
+    padding-bottom: 60px;
     &:first-child { margin-left: 0; }
     &:last-child { margin-right: 0; }
     
-}
-
-footer {
-    padding: 0 15px;
 }
 
 

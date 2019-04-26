@@ -7,40 +7,44 @@
 
   <main>
     <div class="content">
+
       <section>
-        <div class="text">
+        <div class="component">
           <%= require('./html/landing-page.html') %>
         </div>
       </section>
       <section>
-        <div class="text">
-          <div class="page-section2">
+        <div class="component vert-align">
             <%= require('./html/about.html') %>
-          </div>
         </div>
       </section>
       <section>
-        <div class="text">
-          <div class="page-section3">
+        <div class="component">
             <%= require('./html/map.html') %>
-          </div>
         </div>
       </section>
       <section>
-        <div class="text">
+        <div class="component">
           <%= require('./html/calendar.html') %>
         </div>
       </section>
       <section>
-        <div class="text">
+        <div class="component">
           <%= require('./html/accommodates.html') %>
         </div>
       </section>
     </div>
+
     <div class="nav">
-      <button class="prev">prev</button>
-      <button class="next">next</button>
+      <button class="home-btn">Home</button>
+      <button class="about-btn">About</button>
+      <button class="map-btn">Map</button>
+      <button class="calendar-btn">Calendar</button>
+      <button class="accommodates-btn">Accommodates</button>
+      <button class="fl-right next">Next</button>
+      <button class="fl-right prev">Prev</button>
     </div>
+
   </main>
 
 </body>
