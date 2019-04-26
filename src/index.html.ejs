@@ -5,32 +5,43 @@
 </head>
 <body>
 
-  <div class="page-section1">
-    <%= require('./html/landing-page.html') %>
-  </div>
-
-  <ul class="main-menu">
-    <li><a class="active" href="#about">About</a></li>
-    <li><a href="#location">Location</a></li>
-    <li><a href="#calendar">Calendar</a></li>
-    <li><a href="#calculator">Calculator</a></li>
-  </ul>
-
-  <div class="page-section2">
-    <%= require('./html/about.html') %>
-  </div>
-
-  <div class="page-section3">
-    <%= require('./html/map.html') %>
-  </div>
-
-  <div class="page-section4">
-    <%= require('./html/calendar.html') %>
-  </div>
-
-  <div class="page-section5">
-    <%= require('./html/accommodates.html') %>
-  </div>
+  <main>
+    <div class="content">
+      <section>
+        <div class="text">
+          <%= require('./html/landing-page.html') %>
+        </div>
+      </section>
+      <section>
+        <div class="text">
+          <div class="page-section2">
+            <%= require('./html/about.html') %>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="text">
+          <div class="page-section3">
+            <%= require('./html/map.html') %>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="text">
+          <%= require('./html/calendar.html') %>
+        </div>
+      </section>
+      <section>
+        <div class="text">
+          <%= require('./html/accommodates.html') %>
+        </div>
+      </section>
+    </div>
+    <div class="nav">
+      <button class="prev">prev</button>
+      <button class="next">next</button>
+    </div>
+  </main>
 
 </body>
 </html>
