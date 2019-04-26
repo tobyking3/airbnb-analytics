@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import createPieChart from './pie-chart.js';
 
-var color = {
+let color = {
   highlighted: "#3E67FF",
   unhighlighted: "#C6DAFB",
   entire: "#DC2B61",
@@ -9,11 +9,11 @@ var color = {
   shared: "#57DEE3"
 };
 
-var mapWidth = 400;
-var mapHeight = 250;
-var mapScale = 20000;
+let mapWidth = 400;
+let mapHeight = 250;
+let mapScale = 20000;
 
-var tooltip = {
+let tooltip = {
   div: d3.select(".map-tooltip"),
   price: d3.select(".map-tooltip_price"),
   property_type: d3.select(".map-tooltip_type"),
@@ -23,15 +23,15 @@ var tooltip = {
 
 //================Initialize Map====================================
 
-var active = d3.select(null);
+let active = d3.select(null);
 
-var projection = d3.geoMercator().center([-0.330679,51.329011]).scale(mapScale).translate([mapWidth/4, mapHeight - 40]);
+let projection = d3.geoMercator().center([-0.330679,51.329011]).scale(mapScale).translate([mapWidth/4, mapHeight - 40]);
 
-var path = d3.geoPath().projection(projection);
+let path = d3.geoPath().projection(projection);
 
-var zoom = d3.zoom().scaleExtent([1, 8]).on("zoom", zoomed);
+let zoom = d3.zoom().scaleExtent([1, 8]).on("zoom", zoomed);
 
-var svgMap = d3.select(".map").append("svg")
+let svgMap = d3.select(".map").append("svg")
   .attrs({
     "preserveAspectRatio": "xMinYMin meet",
     "viewBox": "0 0 " + mapWidth + " " + mapHeight
@@ -47,7 +47,7 @@ svgMap.append("rect")
   .style("pointer-events", "all")
   .on("click", reset);
 
-var g = svgMap.append("g");
+let g = svgMap.append("g");
 
 svgMap.call(zoom);
 
@@ -180,7 +180,7 @@ d3.selectAll(".panel-properties-value_entire").style("display", "block");
 
 d3.select(".panel-select-type select")
 .on("change", function(d, i){
-  var select = d3.select("#panel-select-type-property").node().value;
+  let select = d3.select("#panel-select-type-property").node().value;
   if(select === 'Entire home/apt'){
     d3.selectAll(".panel-value").style("display", "none");
     d3.selectAll(".panel-average-value_entire").style("display", "block");
@@ -196,7 +196,6 @@ d3.select(".panel-select-type select")
     d3.selectAll(".panel-average-value_shared").style("display", "block");
     d3.selectAll(".panel-properties-value_shared").style("display", "block");
   };
-  
 })
 
 //===============================ZOOM========================================
@@ -205,16 +204,12 @@ function clicked(d, i) {
   //show property points
   d3.selectAll(".point-" + d.properties.neighbourhood.replace(/\s+/g, '-')).style("display", "block");
 
-
-
-
   //zoom out
   if (active.node() === this) return reset();
   active.classed("active", false);
   active = d3.select(this).classed("active", true);
 
-
-  var bounds = path.bounds(d),
+  let bounds = path.bounds(d),
       //          x-max          x-min
       // width  = bounds[1][0] - bounds[0][0];
       dx = bounds[1][0] - bounds[0][0],
@@ -232,10 +227,6 @@ function clicked(d, i) {
   svgMap.transition()
       .duration(750)
       .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) );
-
-
-
-
 
   //update panel
   createPieChart(d, i);

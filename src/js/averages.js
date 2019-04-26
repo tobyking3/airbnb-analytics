@@ -1,19 +1,19 @@
 import mapData from '../data/map-before.json';
 import listingsData from '../data/listings.json'
 
-let totalEntirePrice = 0;
-let totalPrivatePrice = 0;
-let totalSharedPrice = 0;
+let totalEntirePrice;
+let totalPrivatePrice;
+let totalSharedPrice;
 
-let numberOfEntireProperties = 0;
-let numberOfPrivateProperties = 0;
-let numberOfSharedProperties = 0;
+let numberOfEntireProperties;
+let numberOfPrivateProperties;
+let numberOfSharedProperties;
 
-let entireAverage = 0;
-let privateAverage = 0;
-let sharedAverage = 0;
+let entireAverage;
+let privateAverage;
+let sharedAverage;
 
-class Polygon {
+class Aggregate {
 
   constructor(dMap, dListings) {
     let dBoroughList = this.createList(dMap);
@@ -33,8 +33,6 @@ class Polygon {
   }
 
   sortListings(dListings, boroughArray) {
-
-    //*********HIGHLIGHTS ERROR - ARRAY INSTEAD OF OBJECT************
 
     var sortedListings = {};
 
@@ -62,7 +60,20 @@ class Polygon {
 
     Object.keys(dListings).forEach(function(key) {
 
+      totalEntirePrice = 0;
+      totalPrivatePrice = 0;
+      totalSharedPrice = 0;
+
+      numberOfEntireProperties = 0;
+      numberOfPrivateProperties = 0;
+      numberOfSharedProperties = 0;
+
+      entireAverage = 0;
+      privateAverage = 0;
+      sharedAverage = 0;
+
       dListings[key].forEach(function(nItem, nIndex){
+
         if(nItem["room_type"] === "Entire home/apt"){
           numberOfEntireProperties++;
           totalEntirePrice = totalEntirePrice + nItem["price"];
@@ -123,4 +134,4 @@ class Polygon {
 
 }
 
-export default new Polygon(mapData, listingsData);
+export default new Aggregate(mapData, listingsData);
