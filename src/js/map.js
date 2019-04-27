@@ -135,8 +135,7 @@ function propertyTypeColor(type){
 function showPropertyDetails(d, i) {
   tooltip.div.transition().duration(200).style("opacity", 1);    
   tooltip.div.style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY) + "px");
-  tooltip.price.html("£" + d.price.substr(1))
-  .style("background", propertyTypeColor(d.room_type));
+  tooltip.price.html("£" + d.price.substr(1)).style("background", propertyTypeColor(d.room_type));
   tooltip.property_type.html(d.room_type);
   tooltip.description.html(d.name);
   tooltip.img.attr("src",d.picture_url);
@@ -202,12 +201,17 @@ d3.select(".panel-select-type select")
 
 function clicked(d, i) {
   //show property points
-  d3.selectAll(".point-" + d.properties.neighbourhood.replace(/\s+/g, '-')).style("display", "block");
 
   //zoom out
-  if (active.node() === this) return reset();
+  if (active.node() === this) {
+    d3.selectAll(".point-" + d.properties.neighbourhood.replace(/\s+/g, '-')).style("display", "none");
+    return reset()
+  };
+
   active.classed("active", false);
   active = d3.select(this).classed("active", true);
+
+  d3.selectAll(".point-" + d.properties.neighbourhood.replace(/\s+/g, '-')).style("display", "block");
 
   let bounds = path.bounds(d),
       //          x-max          x-min
