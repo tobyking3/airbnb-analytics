@@ -18,10 +18,14 @@ let tooltip = {
   price: d3.select(".map-tooltip_price"),
   property_type: d3.select(".map-tooltip_type"),
   description: d3.select(".map-tooltip_description"),
-  img: d3.select(".map-tooltip_img")
+  img: d3.select(".map-tooltip_img"),
+  button: d3.select(".map-tooltip_button")
 };
 
-//================Initialize Map====================================
+let marker = {
+  div: d3.select(".map-marker"),
+  price: d3.select(".map-marker_price")
+};
 
 let active = d3.select(null);
 
@@ -119,11 +123,11 @@ d3.csv("listings-cleansed.csv").then(function(csv){
       .style("opacity", 0.8)
       .style("display", "none")
       ;
-    })        
-    .on("mouseover", showPropertyDetails)
-    .on("mouseout", hidePropertyDetails);
+    })
+    .on("click", showPropertyDetails)        
+    .on("mouseover", showPropertyMarker)
+    .on("mouseout", hidePropertyMarker);
   });
-
 });
 
 function propertyTypeColor(type){
@@ -132,17 +136,37 @@ function propertyTypeColor(type){
   else if (type === "Shared room"){return color.shared}
 }
 
+d3.select(".map-tooltip_close").on("click", hidePropertyDetails);
+
+function showPropertyMarker(d, i) {
+
+  let p = parseFloat(d.price.substr(1));
+
+  marker.price.html("£" + p);
+  marker.div.style("background", propertyTypeColor(d.room_type));
+  marker.div.transition().duration(200).style("opacity", 1);    
+  marker.div.style("left", (d3.event.pageX - 30) + "px").style("top", (d3.event.pageY - 50) + "px");
+};
+
+function hidePropertyMarker(d, i) {
+  marker.div.transition().duration(500).style("opacity", 0);
+};
+
 function showPropertyDetails(d, i) {
-  tooltip.div.transition().duration(200).style("opacity", 1);    
-  tooltip.div.style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY) + "px");
+  tooltip.div.style("display", "block");
   tooltip.price.html("£" + d.price.substr(1)).style("background", propertyTypeColor(d.room_type));
   tooltip.property_type.html(d.room_type);
   tooltip.description.html(d.name);
   tooltip.img.attr("src",d.picture_url);
+  tooltip.button.on("click", function() { window.open(d.listing_url); });
+  tooltip.div.transition().duration(1000).style("opacity", 1);
 };
 
 function hidePropertyDetails(){
-  tooltip.div.transition().duration(500).style("opacity", 0);
+  tooltip.div.transition()
+    .duration(1000)
+    .style("opacity", 0)
+    .on("end", function() { tooltip.div.style("display", "none"); });
 }
 
 // Borough Highlighting
