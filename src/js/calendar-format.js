@@ -17,4 +17,4 @@ for (var borough in calendar_data) {
   }
 }
 
-console.log(JSON.stringify(newObj));
+console.log(newObj);

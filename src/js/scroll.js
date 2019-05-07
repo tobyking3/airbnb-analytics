@@ -82,12 +82,23 @@ accommodates.addEventListener('click', () => {
   });
 })
 
+accommodates.addEventListener('click', () => {
+  if (index === 5) return;
+  toggleText(index, 'hide');
+  index = 5;
+  content.forEach((section, i) => {
+    if (i === index) {
+      toggleText(i, 'show');
+      section.scrollIntoView({behavior: "smooth"});
+    }
+  });
+})
+
 prev.addEventListener('click', () => {
   if (index < 1) return;
   toggleText(index, 'hide');
   index--;
   content.forEach((section, i) => {
-    console.log(section);
     if (i === index) {
       toggleText(i, 'show');
       section.scrollIntoView({behavior: "smooth"});
@@ -96,7 +107,7 @@ prev.addEventListener('click', () => {
 })
 
 next.addEventListener('click', () => {
-  if (index > 3) return;
+  if (index > 4) return;
   toggleText(index, 'hide');
   index++;
   content.forEach((section, i) => {

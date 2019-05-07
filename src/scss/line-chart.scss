@@ -1,0 +1,17 @@
+$padding: 15px;
+
+//=====================Chart===========================
+
+.line-chart {
+    margin-top: $padding;
+    margin-left: $padding;
+    margin-right: $padding;
+
+    padding: $padding;
+}
+
+.path-bookings {
+    stroke: $toyblue;
+    stroke-width: 1;
+    fill: none;
+}

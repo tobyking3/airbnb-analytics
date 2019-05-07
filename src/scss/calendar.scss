@@ -1,17 +1,51 @@
-$padding: 15px;
+@import "colours";
 
-//=====================Chart===========================
-
-.line-chart {
-    margin-top: $padding;
-    margin-left: $padding;
-    margin-right: $padding;
-
-    padding: $padding;
+.heatmap {
+  background: lightgrey;
+  margin: 5px;
 }
 
-.path-bookings {
-    stroke: $toyblue;
-    stroke-width: 1;
-    fill: none;
+.month-name {
+    font-family: 'GilroyBold';
+    border-top-color: $darkblue;
+}
+
+.calendar-tooltip {
+    position: absolute;
+    background: $darkblue;
+    border-radius: 4px;
+    display: none;
+    opacity: 0;
+    padding-top: 8px;
+    padding-bottom: 4px;
+
+    p {
+        text-align: center;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        color: white;
+    }
+
+    .calendar-bookings{
+        font-family: 'GilroyLight';
+    }
+
+    .calendar-date{
+        font-family: 'GilroyBold';
+    }
+
+}
+.calendar-tooltip:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: $darkblue;
+    border-width: 20px;
+    margin-left: -20px;
 }
