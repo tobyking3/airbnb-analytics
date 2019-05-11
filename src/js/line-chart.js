@@ -22,8 +22,8 @@ for(let i = 0, l = newArray.length; i < l; i++){
 }
 
 //======================CHART==================================================================
-const w = 900;
-const h = 320;
+const w = 700;
+const h = 400;
 
 const padding = 40;
 
@@ -70,7 +70,8 @@ const buildLine = ds => {
     .range([h-padding, 0]);
 
   let yAxisGen = d3.axisLeft(yScale)
-    .ticks(20);
+    .ticks(14)
+    .tickSize(-(w - 80));
 
   let xAxisGen = d3.axisBottom(xScale)
     .tickFormat(d3.timeFormat("%b"));
@@ -95,10 +96,20 @@ const buildLine = ds => {
 
   let xAxis = svg.append("g").call(xAxisGen)
     .attrs({
-      "font-family": "GilroyBold",
+      "font-family": "GilroyLight",
       "class": "x-axis",
       "transform": "translate(0, " + (h - padding) + ")"
     })
+
+  xAxis.append('text')
+        .attrs({
+            'y': 35,
+            'x': w / 2,
+            'class': 'chart-x-label'
+        })
+        .text('Number of bookings made per day during 2018')
+        .style('fill', 'black')
+        .style('font-family', 'GilroyBold');
 
   let viz = svg.append("path")
   .attrs({
@@ -124,7 +135,8 @@ const updateLine = ds => {
     .range([h-padding, 0]);
 
   let yAxisGen = d3.axisLeft(yScale)
-    .ticks(20);
+    .ticks(14)
+    .tickSize(-(w - 80));
 
   let externalLine = d3.line()
     .x(d => xScale(getDate(d.date)))
