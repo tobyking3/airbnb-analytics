@@ -55,56 +55,56 @@ let g = svgMap.append("g");
 
 svgMap.call(zoom);
 
-d3.csv("listings-cleansed.csv").then(function(csv){
-  d3.json("map.geojson").then(function(json){
+d3.csv("listings-cleansed.csv").then(csv => {
+  d3.json("map.geojson").then(json => {
 
     g.selectAll("path")
-    .data(json.features)
-    .enter()
-    .append("path")
-    .attrs({
-      "d": path,
-      "class": "map_borough-path",
-      "fill": color.unhighlighted,
-    })
-    .on("click", clicked)
-    .on("mouseover", highlightBorough)
-    .on("mouseout", unhighlightBorough);
+      .data(json.features)
+      .enter()
+      .append("path")
+      .attrs({
+        "d": path,
+        "class": "map_borough-path",
+        "fill": color.unhighlighted,
+      })
+      .on("click", clicked)
+      .on("mouseover", highlightBorough)
+      .on("mouseout", unhighlightBorough);
 
     //append borough points on map
     g.selectAll('.map_borough-point')
-    .data(json.features)
-    .enter()
-    .append('circle')
-    .each(function(d) {
-      d3.select(this)
-      .attrs({
-        "r": 2,
-        "transform": function(d) { return "translate(" + path.centroid(d) + ")"; },
-        "fill": "#3E67FF",
-        "stroke": "#082783",
-        "class": "map_borough-point"
-      });
-    })
-    .on("mouseover", highlightBoroughPoint)
-    .on("mouseout", unhighlightBoroughPoint);
+      .data(json.features)
+      .enter()
+      .append('circle')
+      .each(function(d) {
+        d3.select(this)
+        .attrs({
+          "r": 2,
+          "transform": d => "translate(" + path.centroid(d) + ")",
+          "fill": "#3E67FF",
+          "stroke": "#082783",
+          "class": "map_borough-point"
+        });
+      })
+      .on("mouseover", highlightBoroughPoint)
+      .on("mouseout", unhighlightBoroughPoint);
 
     //append borough labels on map
     g.selectAll('.borough-label')
-    .data(json.features)
-    .enter()
-    .append('text')
-    .each(function(d) {
-      d3.select(this)
-      .text(function(d) { return d.properties.neighbourhood })
-      .attrs({
-        "transform": function(d) { return "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")"; },
-        "class": "map_borough-label",
-        "text-anchor": "left",
-        "pointer-events": "none",
-        "font-family": "GilroyLight"
-      })
-    });
+      .data(json.features)
+      .enter()
+      .append('text')
+      .each(function(d) {
+        d3.select(this)
+        .text(d => d.properties.neighbourhood)
+        .attrs({
+          "transform": d => "translate(" + (path.centroid(d)[0] + 4) + "," + (path.centroid(d)[1] + 2) + ")",
+          "class": "map_borough-label",
+          "text-anchor": "left",
+          "pointer-events": "none",
+          "font-family": "GilroyLight"
+        })
+      });
 
     //append property points on map
     g.selectAll('.property-label')
@@ -130,35 +130,39 @@ d3.csv("listings-cleansed.csv").then(function(csv){
   });
 });
 
-function propertyTypeColor(type){
-  if(type === "Entire home/apt"){return color.entire}
-  else if (type === "Private room"){return color.private}
-  else if (type === "Shared room"){return color.shared}
+const propertyTypeColor = type => {
+  if(type === "Entire home/apt") return color.entire;
+  else if (type === "Private room") return color.private;
+  else if (type === "Shared room") return color.shared;
 }
 
 d3.select(".map-tooltip_close").on("click", hidePropertyDetails);
 
-function showPropertyMarker(d, i) {
+const showPropertyMarker = (d, i) => {
 
   let p = parseFloat(d.price.substr(1));
 
   marker.price.html("£" + p);
   marker.div.style("background", propertyTypeColor(d.room_type));
-  marker.div.transition().duration(200).style("opacity", 1);    
+  marker.div.transition()
+    .duration(200)
+    .style("opacity", 1);    
   marker.div.style("left", (d3.event.pageX - 30) + "px").style("top", (d3.event.pageY - 50) + "px");
 };
 
-function hidePropertyMarker(d, i) {
-  marker.div.transition().duration(500).style("opacity", 0);
+const hidePropertyMarker = (d, i) => {
+  marker.div.transition()
+    .duration(500)
+    .style("opacity", 0);
 };
 
-function showPropertyDetails(d, i) {
+const showPropertyDetails = (d, i) => {
   tooltip.div.style("display", "block");
   tooltip.price.html("£" + d.price.substr(1)).style("background", propertyTypeColor(d.room_type));
   tooltip.property_type.html(d.room_type);
   tooltip.description.html(d.name);
   tooltip.img.attr("src",d.picture_url);
-  tooltip.button.on("click", function() { window.open(d.listing_url); });
+  tooltip.button.on("click", () => window.open(d.listing_url));
   tooltip.div.transition().duration(1000).style("opacity", 1);
 };
 
@@ -166,7 +170,7 @@ function hidePropertyDetails(){
   tooltip.div.transition()
     .duration(1000)
     .style("opacity", 0)
-    .on("end", function() { tooltip.div.style("display", "none"); });
+    .on("end", () => tooltip.div.style("display", "none"));
 }
 
 // Borough Highlighting
@@ -202,8 +206,10 @@ d3.selectAll(".panel-average-value_entire").style("display", "block");
 d3.selectAll(".panel-properties-value_entire").style("display", "block");
 
 d3.select(".panel-select-type select")
-.on("change", function(d, i){
+.on("change", (d, i) => {
+
   let select = d3.select("#panel-select-type-property").node().value;
+
   if(select === 'Entire home/apt'){
     d3.selectAll(".panel-value").style("display", "none");
     d3.selectAll(".panel-average-value_entire").style("display", "block");
@@ -258,7 +264,11 @@ function clicked(d, i) {
 
   //update panel
   createPieChart(d, i);
+  populateStats(d);
 
+}
+
+const populateStats = d => {
   d3.select(".map-value-borough").text(d.properties.neighbourhood);
   d3.select(".map-value-properties").text(d.properties["stats"]["totalNumProperties"]);
 
@@ -271,7 +281,7 @@ function clicked(d, i) {
   d3.select(".panel-properties-value_shared").text(d.properties["stats"]["sharedNumProperties"]);
 }
 
-function reset() {
+const reset = () => {
   active.classed("active", false);
   active = d3.select(null);
   svgMap.transition().duration(750).call( zoom.transform, d3.zoomIdentity );
@@ -281,6 +291,6 @@ function zoomed() {
   g.attr("transform", d3.event.transform);
 }
 
-function stopped() {
+const stopped = () => {
   if (d3.event.defaultPrevented) d3.event.stopPropagation();
 }

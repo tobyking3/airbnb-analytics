@@ -1,5 +1,19 @@
 import * as d3 from 'd3';
 
+/***************************************************************************************
+
+  The calendar is an adaptation of the Calendar heat map (vertical) demonstration.
+
+  The code has been adapted and completey refactored to suit the needs of the application.
+
+*    Title: Update and transition of pie chart
+*    Author: Joseph, D
+*    Date: 2019
+*    Code version: 1.0
+*    Availability: https://bl.ocks.org/danbjoseph/13d9365450c27ed3bf5a568721296dcc
+*
+***************************************************************************************/
+
 const monthWords = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const containerWidth = document.getElementsByClassName("heatmap")[0].offsetWidth;
@@ -154,7 +168,15 @@ const render = dateData => {
     }
 }
 
+console.log(d3.select("#calendar-borough-select"));
+
 d3.json("calendar-array.json").then(json => {
     let data = json["City of London"];
     render(data);
+
+    d3.select("#calendar-borough-select").on("change", (d, i) => {
+        console.log("SLECTED");
+        // sel = d3.select("#calendar-borough-select").node().value;
+        // update(data[sel]);
+    })
 })

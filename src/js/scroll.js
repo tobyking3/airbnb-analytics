@@ -1,3 +1,18 @@
+/***************************************************************************************
+
+  Page scrolling has been implemented following a tutorial found on Youtube.
+  https://www.youtube.com/watch?v=HLgGnwwrJ0Y
+
+  The code has been adapted to suit the needs of the application.
+
+*    Title: Full page scroll using javascript time and scrollIntoview
+*    Author: Codify
+*    Date: 2019
+*    Code version: 1.0
+*    Availability: http://www.kodhus.com/kodnest/codify/yhxQeaX/layout/1
+
+***************************************************************************************/
+
 const content = document.querySelectorAll('section');
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');

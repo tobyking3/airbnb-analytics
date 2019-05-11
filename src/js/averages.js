@@ -34,20 +34,14 @@ class Aggregate {
 
   sortListings(dListings, boroughArray) {
 
-    var sortedListings = {};
+    let sortedListings = {};
 
     boroughArray.forEach(function(nItem, nIndex){
-
       sortedListings[nItem] = [];
-
       dListings.forEach(function(item, index){
-
         if(item['neighbourhood'] === nItem){
-
           sortedListings[nItem].push(item);
-
         }
-
       });
     });
 
