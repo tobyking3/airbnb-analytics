@@ -22,9 +22,9 @@ for(let i = 0, l = newArray.length; i < l; i++){
 }
 
 //======================CHART==================================================================
-
-const h = 320;
 const w = 900;
+const h = 320;
+
 const padding = 40;
 
 d3.json("calendar-array.json").then(data => {
