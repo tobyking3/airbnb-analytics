@@ -31,6 +31,8 @@ for(let i = 0, l = neighbourhoods.length; i < l; i++){
   selectBox.options.add( new Option(borough, borough) );
 }
 
+// create container svg scalable to window size
+
 let barChartSVG = d3.select(".bar-chart")
 .append("svg")
 .attrs({
@@ -86,6 +88,7 @@ const render = data => {
         .style('font-family', 'GilroyBold');
 
     //d3 selection which contains all existing rectangles
+
     g.selectAll("rect")
         .data(data)
         .enter()
@@ -95,7 +98,7 @@ const render = data => {
             'width': d => xScale(xValue(d)),
             'height': yScale.bandwidth()
         })
-        .style("fill", "#DC2B61")
+        .style("fill", "#FFBA01")
         .on('mouseenter', (actual, i) => {
             d3.select(this)
             .attr('opacity', 0.8);
@@ -123,6 +126,8 @@ const render = data => {
             g.selectAll('.accommodates-price-text').remove()
         });
 }
+
+// Called when borough is selected
 
 const update = data => {
 
@@ -173,7 +178,7 @@ const update = data => {
         .data(data)
         .enter()
         .append('rect')
-        .style("fill", "#DC2B61")
+        .style("fill", "#FFBA01")
         .attrs({
             'y': d => yScale(yValue(d)),
             'height': yScale.bandwidth()

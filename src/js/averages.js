@@ -88,6 +88,8 @@ class Aggregate {
 
       sharedAverage = totalSharedPrice / numberOfSharedProperties;
 
+      // format new object to be added to GeoJSON
+
       dAverages[key] = {
         "totalNumProperties": dListings[key].length,
         "entireAveragePrice": entireAverage,

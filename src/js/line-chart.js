@@ -27,9 +27,11 @@ const h = 400;
 
 const padding = 40;
 
+// Load data, call initial chart render and set listener on borough select
+
 d3.json("calendar-array.json").then(data => {
 
-  buildLine(data['Barking and Dagenham']);
+  buildLine(data['City of London']);
 
   d3.select("#line-chart-borough-select").on("change", (d, i) => {
 
@@ -40,6 +42,8 @@ d3.json("calendar-array.json").then(data => {
   })
 
 })
+
+// get unix time stamp from string
 
 const getDate = d => {
 
@@ -58,6 +62,8 @@ const buildLine = ds => {
   let yMin = d3.min(ds, d => d.booked);
   let yMax = d3.max(ds, d => d.booked);
 
+  // min and max dates are relevant to order
+
   let minDate = getDate(ds[0]['date']);
   let maxDate = getDate(ds[ds.length - 1]['date']);
 
@@ -68,6 +74,8 @@ const buildLine = ds => {
   let yScale = d3.scaleLinear()
     .domain([yMin, yMax])
     .range([h-padding, 0]);
+
+  // Generate the axis
 
   let yAxisGen = d3.axisLeft(yScale)
     .ticks(14)
@@ -80,12 +88,16 @@ const buildLine = ds => {
     .x(d => xScale(getDate(d.date)))
     .y(d => yScale(d.booked));
 
+  // Define the chart container
+
   let svg = d3.select(".line-chart").append("svg")
     .attrs({
       "preserveAspectRatio": "xMinYMin meet",
       "viewBox": "0 0 " + w + " " + h,
       "id": "svg-bookings"
     });
+
+  // Value labels
 
   let yAxis = svg.append("g").call(yAxisGen)
     .attrs({
@@ -100,6 +112,8 @@ const buildLine = ds => {
       "class": "x-axis",
       "transform": "translate(0, " + (h - padding) + ")"
     })
+
+  // Axis label
 
   xAxis.append('text')
         .attrs({
@@ -117,6 +131,8 @@ const buildLine = ds => {
     "class": "path-bookings"
   })
 }
+
+// Called when a click event is registered on the select element
 
 const updateLine = ds => {
 
@@ -138,6 +154,8 @@ const updateLine = ds => {
     .ticks(14)
     .tickSize(-(w - 80));
 
+  // update the line
+
   let externalLine = d3.line()
     .x(d => xScale(getDate(d.date)))
     .y(d => yScale(d.booked));
@@ -147,6 +165,8 @@ const updateLine = ds => {
 
   let yAxis = svg.selectAll("g.y-axis")
     .call(yAxisGen);
+
+  // set the animation on change
 
   let viz = svg.selectAll(".path-bookings")
     .transition()

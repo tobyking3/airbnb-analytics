@@ -41,6 +41,8 @@ let svgMap = d3.select(".map").append("svg")
     "viewBox": "0 0 " + mapWidth + " " + mapHeight
   });
 
+// Create a bounding box for zoom
+
 svgMap.append("rect")
   .attrs({
     "class": "background",
@@ -114,21 +116,23 @@ d3.csv("listings-cleansed.csv").then(csv => {
     .each(function(d) {
       d3.select(this)
       .attrs({
-        "r": "0.3px",
+        "r": "0.4px",
         "cx": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[0],
         "cy": projection([parseFloat(d.longitude), parseFloat(d.latitude)])[1],
         "fill": propertyTypeColor(d.room_type),
-        "class": "point-" + d.neighbourhood_cleansed.replace(/\s+/g, '-')
+        "class": "pointer-focus point-" + d.neighbourhood_cleansed.replace(/\s+/g, '-')
       })
       .style("opacity", 0.8)
       .style("display", "none")
-      ;
+      .style("pointer-events", "pointer");
     })
     .on("click", showPropertyDetails)        
     .on("mouseover", showPropertyMarker)
     .on("mouseout", hidePropertyMarker);
   });
 });
+
+// Determine the colour to set based on property type
 
 const propertyTypeColor = type => {
   if(type === "Entire home/apt") return color.entire;

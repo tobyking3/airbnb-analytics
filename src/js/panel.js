@@ -9,6 +9,8 @@ typeHome.addEventListener("click", () => {showPanel(0, "#17c4ff");}, false);
 typePrivate.addEventListener("click", () => {showPanel(1, "#00688b");}, false);
 typeShared.addEventListener("click", () => {showPanel(2, "#003445");}, false);
 
+// Update the panel element 
+
 export default function showPanel(panelIndex, colorCode) {
 
   typeButtons.forEach(node => {

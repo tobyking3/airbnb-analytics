@@ -20,6 +20,7 @@ const next = document.querySelector('.next');
 const home = document.querySelector('.home-btn');
 const about = document.querySelector('.about-btn');
 const map = document.querySelector('.map-btn');
+const bookings = document.querySelector('.bookings-btn');
 const calendar = document.querySelector('.calendar-btn');
 const accommodates = document.querySelector('.accommodates-btn');
 
@@ -36,6 +37,8 @@ const toggleText = (index, state) => {
 }
 
 toggleText(0, 'show');
+
+// Add click event listeners to each element in the navigation
 
 home.addEventListener('click', () => {
   if (index === 0) return;
@@ -73,7 +76,7 @@ map.addEventListener('click', () => {
   });
 })
 
-calendar.addEventListener('click', () => {
+bookings.addEventListener('click', () => {
   if (index === 3) return;
   toggleText(index, 'hide');
   index = 3;
@@ -85,7 +88,7 @@ calendar.addEventListener('click', () => {
   });
 })
 
-accommodates.addEventListener('click', () => {
+calendar.addEventListener('click', () => {
   if (index === 4) return;
   toggleText(index, 'hide');
   index = 4;
@@ -132,6 +135,8 @@ next.addEventListener('click', () => {
     }
   })
 })
+
+// Add wheel event listener to jump to next section when event is fired
 
 document.addEventListener('wheel', event => {
   let delta = event.wheelDelta;

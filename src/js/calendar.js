@@ -16,6 +16,8 @@ import * as d3 from 'd3';
 
 const monthWords = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+// sets the calendar with using the width of the wrapper
+
 const containerWidth = document.getElementsByClassName("heatmap")[0].offsetWidth;
 
 const labelArea = 50;
@@ -30,6 +32,8 @@ const calendarDate = d3.select(".calendar-date");
 const calendarBookings = d3.select(".calendar-bookings");
 const calendarTooltip = d3.select(".calendar-tooltip").style("width", tooltipWidth + "px");
 
+// format the data as unix
+
 const getDate = d => {
     let strDate = new String(d);
     let selectYear = strDate.substr(0, 4);
@@ -38,10 +42,14 @@ const getDate = d => {
     return new Date(selectYear, selectMonth, selectDay);
 };
 
+// convert the date into words for display
+
 const dateStr = dateDashed => {
   let dateString = dateDashed.split("-");
   return dateString[2] + " " + monthWords[Number(dateString[1]) - 1];
 }
+
+// calculate the number of weeks in the month
 
 const weeksInMonth = month => {
     let m = d3.timeMonth.floor(month)
@@ -66,6 +74,8 @@ const render = dateData => {
         months: d3.timeMonth.range(d3.timeMonth.floor(minDate), maxDate)
     }
 
+    // create month wrapper svgs as group
+
     let svg = d3.select(".heatmap")
         .selectAll("svg")
         .data(dateFormat.months)
@@ -82,6 +92,8 @@ const render = dateData => {
         })
         .append("g");
 
+    // append the month name to each svg
+
     svg.append("text")
         .attrs({
             "class": "month-name",
@@ -91,6 +103,7 @@ const render = dateData => {
         })
         .text(d => dateFormat.monthName(d));
 
+    // append the days of the week text
 
     ["Mon", "Tues", "Weds", "Thu", "Fri", "Sat", "Sun"].forEach(function(d, i) { 
         svg.append("text")
@@ -103,6 +116,8 @@ const render = dateData => {
             .text(d);
     });
 
+    // create a lookup for ordered data comparison
+
     let lookup = d3.nest()
         .key(d => d.date)
         .rollup(item => d3.sum(item, d => d.booked))
@@ -112,9 +127,13 @@ const render = dateData => {
         .domain(d3.extent(dateData, d => d.booked))
         .range([0,1]);
 
+    // generate colour between to hex values
+
     let colorScale = d3.scaleLinear().domain([1,length])
         .interpolate(d3.interpolateHcl)
-        .range([d3.rgb("#3E67FF"), d3.rgb('#C6DAFB')])
+        .range([d3.rgb("#f9004b"), d3.rgb('#e899b1')])
+
+    // create a rectangle for every day in the month, binding the data to it
 
     let rect = svg.selectAll("rect.day")
         .data((d, i) => d3.timeDays(d, new Date(d.getFullYear(), d.getMonth()+1, 1)))
@@ -172,7 +191,7 @@ const render = dateData => {
 
 
 
-//======================================================================================================
+//=========================================Updates the chart to match the selected borough=================================================
 
 
 
@@ -292,11 +311,7 @@ const update = (newData) => {
     }
 }
 
-
-
-
-
-
+// Load in the dataset
 
 d3.json("calendar-array.json").then(json => {
     let data = json["City of London"];

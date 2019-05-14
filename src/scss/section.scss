@@ -37,8 +37,17 @@ $padding: 15px;
     float: left;
     width: 30%;
 
-    p {
+    h4 {
         margin-left: $padding;
         font-family: 'GilroyBold';
     }
+
+    p {
+        margin-left: $padding;
+        font-family: 'GilroyLight';
+    }
 };
+
+.extra-margin {
+    padding-top: 30px;
+}

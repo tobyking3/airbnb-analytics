@@ -1,5 +1,9 @@
 $padding: 15px;
 
+.pointer-focus {
+  cursor: pointer;
+}
+
 /*-----------------MAP LAYOUT-------------------*/
 .map-layout-left {
   background:$lavender;
@@ -19,7 +23,7 @@ $padding: 15px;
 
     .map-label-borough {
       font-family: 'GilroyLight';
-      font-size:12px;
+      font-size:10px;
       color:$toyblue;
       margin: 5px;
       margin-left: 10px;
